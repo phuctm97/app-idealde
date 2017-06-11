@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Gemini.Framework.Controls
+namespace Idealde.Framework.Controls
 {
     public class DynamicStyle
     {
