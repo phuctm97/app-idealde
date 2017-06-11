@@ -1,12 +1,12 @@
 ﻿#region Using Namespace
 
-using System;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
+using Idealde.Modules.MainMenu;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 
@@ -27,6 +27,8 @@ namespace Idealde.Modules.Shell.ViewModels
         // Bind models
 
         #region Bind models
+
+        public IMenu MainMenu { get; }
 
         public IStatusBar StatusBar { get; }
 
@@ -63,9 +65,10 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IStatusBar statusBar)
+        public ShellViewModel(IMenu mainMenu, IStatusBar statusBar)
         {
             StatusBar = statusBar;
+            MainMenu = mainMenu;
 
             Documents = new BindableCollection<IDocument>();
             Documents.CollectionChanged += OnDocumentsCollectionChanged;
@@ -164,12 +167,11 @@ namespace Idealde.Modules.Shell.ViewModels
             return null;
         }
 
-        private void OnToolsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnToolsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-           
         }
 
-        private void OnDocumentsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnDocumentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {
