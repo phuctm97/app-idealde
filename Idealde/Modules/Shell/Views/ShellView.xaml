@@ -25,8 +25,8 @@
         <ContentControl Grid.Row="1" cal:View.Model="{Binding StatusBar}"/>
         
         <!--Main content-->
-        <xcad:DockingManager Grid.Row="0" DocumentsSource="{Binding Documents, Mode=OneWay}"
-                             AnchorablesSource="{Binding Tools, Mode=OneWay}"
+        <xcad:DockingManager Grid.Row="0" DocumentsSource="{Binding Documents}"
+                             AnchorablesSource="{Binding Tools}"
                              ActiveContent="{Binding ActiveItem, Mode=TwoWay}">
 
             <!--Item templates-->
@@ -59,6 +59,7 @@
                         <Style TargetType="{x:Type xcad:LayoutDocumentItem}">
                             <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
                             <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand, Mode=OneWay}" />
                         </Style>
                     </controls:PaneStyleSelector.DocumentStyle>
 
@@ -66,6 +67,7 @@
                         <Style TargetType="{x:Type xcad:LayoutAnchorableItem}">
                             <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
                             <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand, Mode=OneWay}" />
                             <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         </Style>
                     </controls:PaneStyleSelector.ToolStyle>

@@ -1,16 +1,34 @@
-﻿namespace Idealde.Framework.Panes
+﻿#region Using Namespace
+
+using System.Windows.Input;
+using Idealde.Framework.Commands;
+
+#endregion
+
+namespace Idealde.Framework.Panes
 {
     public abstract class Tool : LayoutItem, ITool
     {
         // Backing fields
+
         #region Backing fields
+
         private double _preferredWidth;
         private double _preferredHeight;
         private bool _isVisible;
+        protected ICommand _closeCommand;
+
         #endregion
 
         // Bind properties
+
         #region Backing properties
+
+        public override ICommand CloseCommand
+        {
+            get { return _closeCommand ?? new RelayCommand(p => IsVisible = false, p => true); }
+        }
+
         public PaneLocation PreferredLocation { get; }
 
         public double PreferredWidth
@@ -47,14 +65,18 @@
         }
 
         #endregion
-        
+
         // Initializations
+
         #region Initializations
 
         protected Tool(PaneLocation preferredLocation)
         {
             PreferredLocation = preferredLocation;
-        } 
+
+            _closeCommand = null;
+        }
+
         #endregion
     }
 }

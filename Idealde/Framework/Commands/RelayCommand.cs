@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace Idealde.Framework.Commands
 {
-    public class RelayCommand<T> : ICommand
+    public class RelayCommand : ICommand
     {
-        private readonly Predicate<T> _canExecute;
-        private readonly Action<T> _execute;
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
 
-        public RelayCommand(Action<T> execute, Predicate<T> canExecute = null)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
@@ -22,12 +22,12 @@ namespace Idealde.Framework.Commands
 
         public bool CanExecute(object parameter)
         {
-            return _canExecute?.Invoke((T) parameter) ?? true;
+            return _canExecute?.Invoke(parameter) ?? true;
         }
 
         public void Execute(object parameter)
         {
-            _execute((T) parameter);
+            _execute(parameter);
         }
 
         public event EventHandler CanExecuteChanged

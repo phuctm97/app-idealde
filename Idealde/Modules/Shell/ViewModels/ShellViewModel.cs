@@ -1,6 +1,5 @@
 ﻿#region Using Namespace
 
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
@@ -70,15 +69,8 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Item actions
 
-        [SuppressMessage("ReSharper", "CanBeReplacedWithTryCastAndCheckForNull")]
         protected override void ChangeActiveItem(ILayoutItem newItem, bool closePrevious)
         {
-            //remove old item
-            if (ActiveItem is IDocument && closePrevious)
-            {
-                Documents.Remove((IDocument) ActiveItem);
-            }
-
             base.ChangeActiveItem(newItem, closePrevious);
 
             //new item behaviors
@@ -101,6 +93,23 @@ namespace Idealde.Modules.Shell.ViewModels
                 }
                 tool.IsVisible = true;
             }
+        }
+
+        public override void DeactivateItem(ILayoutItem item, bool close)
+        {
+            //check to remove document from list
+            if (close && item is IDocument)
+            {
+                var document = (IDocument)item;
+                Documents.Remove(document);
+            }
+
+            base.DeactivateItem(item, close);
+        }
+
+        public override void ActivateItem(ILayoutItem item)
+        {
+            base.ActivateItem(item);
         }
 
         public void OpenDocument(IDocument document)
