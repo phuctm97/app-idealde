@@ -5,7 +5,7 @@ using System.Windows.Controls;
 namespace Idealde.Framework.Controls
 {
     public class DynamicStyle
-    {
+    {   
         public static readonly DependencyProperty BaseStyleProperty = DependencyProperty.RegisterAttached(
             "BaseStyle", typeof(Style), typeof(DynamicStyle),
             new PropertyMetadata(OnStylesChanged));
