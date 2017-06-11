@@ -1,19 +1,28 @@
 ﻿#region Using Namespace
 
+using System;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.Tests;
+using Idealde.Modules.Tests.ViewModels;
 
 #endregion
 
 namespace Idealde.Modules.Shell.ViewModels
 {
-    public class ShellViewModel : Conductor<ILayoutItem>.Collection.OneActive, IShell
+    public class ShellViewModel : Screen, IShell
     {
-        private IDocument _selectedDocument;
+        // Backing fields
+
+        #region Backing fields
+
+        private ILayoutItem _activeItem;
+
+        #endregion
 
         // Bind models
 
@@ -21,19 +30,32 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IStatusBar StatusBar { get; }
 
+        public ILayoutItem ActiveItem
+        {
+            get { return _activeItem; }
+            set
+            {
+                if (Equals(value, _activeItem)) return;
+                _activeItem = value;
+
+                if (_activeItem is IDocument)
+                {
+                    OpenDocument((IDocument) _activeItem);
+                }
+                else if (_activeItem is ITool)
+                {
+                    ShowTool((ITool) _activeItem);
+                }
+
+                NotifyOfPropertyChange(() => ActiveItem);
+            }
+        }
+
+        public IDocument SelectedDocument { get; private set; }
+
         public IObservableCollection<IDocument> Documents { get; }
 
         public IObservableCollection<ITool> Tools { get; }
-
-        public IDocument SelectedDocument
-        {
-            get { return _selectedDocument; }
-            set
-            {
-                if (value == null || Equals(value, _selectedDocument)) return;
-                OpenDocument(_selectedDocument);
-            }
-        }
 
         #endregion
 
@@ -44,19 +66,31 @@ namespace Idealde.Modules.Shell.ViewModels
         public ShellViewModel(IStatusBar statusBar)
         {
             StatusBar = statusBar;
-            Documents = new BindableCollection<IDocument>
-            {
-                new DocumentTest {DisplayName = "Document 1"},
-                new DocumentTest {DisplayName = "Document 2"},
-                new DocumentTest {DisplayName = "Document 3"}
-            };
 
-            Tools = new BindableCollection<ITool>
+            Documents = new BindableCollection<IDocument>();
+            Documents.CollectionChanged += OnDocumentsCollectionChanged;
+
+            Tools = new BindableCollection<ITool>();
+            Tools.CollectionChanged += OnToolsCollectionChanged;
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            Documents.AddRange(new IDocument[]
             {
-                new ToolTest(PaneLocation.Left) {DisplayName = "Tool 1", IsVisible = true},
-                new ToolTest(PaneLocation.Right) {DisplayName = "Tool 2", IsVisible = true},
-                new ToolTest(PaneLocation.Bottom) {DisplayName = "Tool 3", IsVisible = true}
-            };
+                new DocumentTestViewModel {DisplayName = "Document 1"},
+                new DocumentTestViewModel {DisplayName = "Document 2"},
+                new DocumentTestViewModel {DisplayName = "Document 3"}
+            });
+
+            Tools.AddRange(new ITool[]
+            {
+                new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1", IsVisible = true},
+                new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2", IsVisible = true},
+                new ToolTestViewModel(PaneLocation.Bottom) {DisplayName = "Tool 3", IsVisible = true}
+            });
 
             StatusBar.AddItem("Status 1", new GridLength(100));
             StatusBar.AddItem("Status 2", new GridLength(100));
@@ -69,74 +103,104 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Item actions
 
-        protected override void ChangeActiveItem(ILayoutItem newItem, bool closePrevious)
-        {
-            base.ChangeActiveItem(newItem, closePrevious);
-
-            //new item behaviors
-            if (newItem is IDocument)
-            {
-                var document = (IDocument) newItem;
-                if (!Documents.Contains(document))
-                {
-                    Documents.Add(document);
-                }
-                _selectedDocument = document;
-                NotifyOfPropertyChange(() => SelectedDocument);
-            }
-            else if (newItem is ITool)
-            {
-                var tool = (ITool) newItem;
-                if (!Tools.Contains(tool))
-                {
-                    Tools.Add(tool);
-                }
-                tool.IsVisible = true;
-            }
-        }
-
-        public override void DeactivateItem(ILayoutItem item, bool close)
-        {
-            //check to remove document from list
-            if (close && item is IDocument)
-            {
-                var document = (IDocument)item;
-                Documents.Remove(document);
-            }
-
-            base.DeactivateItem(item, close);
-        }
-
-        public override void ActivateItem(ILayoutItem item)
-        {
-            base.ActivateItem(item);
-        }
-
         public void OpenDocument(IDocument document)
         {
-            ActivateItem(document);
+            if (Equals(document, SelectedDocument)) return;
+
+            //deactivate old document
+            SelectedDocument?.Deactivate(false);
+
+            //add to opened documents
+            if (!Documents.Contains(document))
+            {
+                Documents.Add(document);
+            }
+
+            //update selected one
+            SelectedDocument = document;
+            SelectedDocument.Activate();
+            NotifyOfPropertyChange(() => SelectedDocument);
         }
 
         public void CloseDocument(IDocument document)
         {
-            DeactivateItem(document, true);
+            ActiveItem = ChooseNextActiveItem(document);
+
+            document.Deactivate(true);
         }
 
         public void ShowTool(ITool tool)
         {
-            ActivateItem(tool);
+            if (!Tools.Contains(tool))
+            {
+                Tools.Add(tool);
+            }
+            tool.IsVisible = true;
         }
 
         public void ShowTool<TTool>() where TTool : ITool
         {
-            ActivateItem(IoC.Get<TTool>());
+            ShowTool(IoC.Get<TTool>());
+        }
+
+        protected virtual ILayoutItem ChooseNextActiveItem(ILayoutItem oldItem)
+        {
+            if (oldItem is ITool)
+            {
+                return SelectedDocument;
+            }
+
+            if (oldItem is IDocument)
+            {
+                for (var i = 0; i < Documents.Count - 1; i++)
+                {
+                    if (oldItem == Documents[i + 1])
+                    {
+                        return Documents[i];
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private void OnToolsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+           
+        }
+
+        private void OnDocumentsCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    e.NewItems?.OfType<IDocument>().Apply(p => p.Parent = this);
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    var collection = sender as IObservableCollection<IDocument>;
+                    collection?.Apply(p => p.Parent = this);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    e.OldItems?.OfType<IDocument>().Apply(p => p.Parent = null);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    e.OldItems?.OfType<IDocument>().Apply(p => p.Parent = null);
+                    e.NewItems?.OfType<IDocument>().Apply(p => p.Parent = this);
+                    break;
+            }
         }
 
         #endregion
+
+        // Closing
+
+        #region Closing
 
         public void Close()
         {
             Application.Current.MainWindow.Close();
         }
+
+        #endregion
     }
 }

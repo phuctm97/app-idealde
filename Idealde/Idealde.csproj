@@ -120,6 +120,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\Tests\Views\DocumentTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Tests\Views\ToolTestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -153,8 +161,14 @@
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Tests\DocumentTest.cs" />
-    <Compile Include="Modules\Tests\ToolTest.cs" />
+    <Compile Include="Modules\Tests\ViewModels\DocumentTestViewModel.cs" />
+    <Compile Include="Modules\Tests\ViewModels\ToolTestViewModel.cs" />
+    <Compile Include="Modules\Tests\Views\DocumentTestView.xaml.cs">
+      <DependentUpon>DocumentTestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Tests\Views\ToolTestView.xaml.cs">
+      <DependentUpon>ToolTestView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

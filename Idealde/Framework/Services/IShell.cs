@@ -17,7 +17,7 @@ namespace Idealde.Framework.Services
         ILayoutItem ActiveItem { get; set; }
 
         // Documents
-        IDocument SelectedDocument { get; set; }
+        IDocument SelectedDocument { get; }
 
         IObservableCollection<IDocument> Documents { get; }
         void OpenDocument(IDocument document);

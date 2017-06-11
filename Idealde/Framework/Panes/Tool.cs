@@ -73,8 +73,6 @@ namespace Idealde.Framework.Panes
         protected Tool(PaneLocation preferredLocation)
         {
             PreferredLocation = preferredLocation;
-
-            _closeCommand = null;
         }
 
         #endregion

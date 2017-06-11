@@ -17,36 +17,34 @@
     
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
+        <!--Menu bar-->
+        <ContentControl Grid.Row="0" cal:View.Model="{Binding MainMenu}" />
+
         <!--Status bar-->
-        <ContentControl Grid.Row="1" cal:View.Model="{Binding StatusBar}"/>
+        <ContentControl Grid.Row="2" cal:View.Model="{Binding StatusBar}"/>
         
         <!--Main content-->
-        <xcad:DockingManager Grid.Row="0" DocumentsSource="{Binding Documents}"
+        <xcad:DockingManager Grid.Row="1" 
+                             DocumentsSource="{Binding Documents}"
                              AnchorablesSource="{Binding Tools}"
                              ActiveContent="{Binding ActiveItem, Mode=TwoWay}">
-
-            <!--Item templates-->
-            <xcad:DockingManager.LayoutItemTemplate>
-                <DataTemplate>
-                    <ContentControl cal:View.Model="{Binding}" />
-                </DataTemplate>
-            </xcad:DockingManager.LayoutItemTemplate>
-
+            <!--Item template-->
             <xcad:DockingManager.LayoutItemTemplateSelector>
                 <controls:PaneTemplateSelector>
                     <controls:PaneTemplateSelector.DocumentTemplate>
                         <DataTemplate>
-                            <ContentControl cal:View.Model="{Binding}" />
+                            <ContentControl cal:View.Model="{Binding Model}" />
                         </DataTemplate>
                     </controls:PaneTemplateSelector.DocumentTemplate>
 
                     <controls:PaneTemplateSelector.ToolTemplate>
                         <DataTemplate>
-                            <ContentControl cal:View.Model="{Binding}" />
+                            <ContentControl cal:View.Model="{Binding Model}" />
                         </DataTemplate>
                     </controls:PaneTemplateSelector.ToolTemplate>
                 </controls:PaneTemplateSelector>
@@ -56,7 +54,7 @@
             <xcad:DockingManager.LayoutItemContainerStyleSelector>
                 <controls:PaneStyleSelector>
                     <controls:PaneStyleSelector.DocumentStyle>
-                        <Style TargetType="{x:Type xcad:LayoutDocumentItem}">
+                        <Style TargetType="{x:Type xcad:LayoutItem}">
                             <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
                             <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
                             <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand, Mode=OneWay}" />
