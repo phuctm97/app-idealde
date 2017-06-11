@@ -9,6 +9,12 @@ namespace Idealde.Framework.Services
 {
     public interface IShell : IGuardClose, IDeactivate
     {
+        ILayoutItem ActiveItem { get; set; }
 
+        ILayoutItem SelectedDocument { get; set; }
+
+        IObservableCollection<ILayoutItem> Documents { get; }
+
+        IObservableCollection<ILayoutItem> Tools { get; }
     }
 }
