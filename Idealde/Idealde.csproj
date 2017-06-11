@@ -92,12 +92,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Modules\Statusbar\Views\StatusBarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Controls\DynamicStyle.cs" />
+    <Compile Include="Modules\Statusbar\IStatusbar.cs" />
+    <Compile Include="Modules\Statusbar\ViewModels\StatusBarItemViewModel.cs" />
+    <Compile Include="Modules\Statusbar\ViewModels\StatusBarViewModel.cs" />
+    <Compile Include="Modules\Statusbar\Views\StatusBarView.xaml.cs">
+      <DependentUpon>StatusBarView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -121,6 +132,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Framework\Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
