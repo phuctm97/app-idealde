@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="Idealde.Modules.MainMenu.Views.MainMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Idealde.Modules.MainMenu.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="700">
+    <Menu ItemsSource="{Binding Items}">
+        <Menu.ItemTemplate>
+            <HierarchicalDataTemplate DataType="{x:Type local:MenuItemViewModel}"
+                                      ItemsSource="{Binding Path=Items}">
+                <MenuItem Header="{Binding Text}" />
+            </HierarchicalDataTemplate>
+        </Menu.ItemTemplate>
+    </Menu>
+</UserControl>

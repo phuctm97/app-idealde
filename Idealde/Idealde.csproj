@@ -144,6 +144,9 @@
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
+    <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
+    <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainWindow\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
@@ -193,7 +196,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\MainMenu\Views\" />
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
