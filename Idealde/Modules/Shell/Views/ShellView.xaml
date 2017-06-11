@@ -7,32 +7,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="720" d:DesignWidth="1280">
-    <xcad:DockingManager DocumentsSource="{Binding Documents, Mode=OneWay}"
-                         AnchorablesSource="{Binding Tools, Mode=OneWay}"
-                         ActiveContent="{Binding ActiveItem, Mode=TwoWay}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         
-        <!--Item templates-->
-        <xcad:DockingManager.LayoutItemTemplate>
-            <DataTemplate>
-                <ContentControl cal:View.Model="{Binding}" />
-            </DataTemplate>
-        </xcad:DockingManager.LayoutItemTemplate>
+        <!--Status bar-->
+        <ContentControl Grid.Row="1" cal:View.Model="{Binding StatusBar}"/>
         
-        <!--Item styles-->
-        <xcad:DockingManager.LayoutItemContainerStyle>
-            <Style TargetType="{x:Type xcad:LayoutItem}">
-                <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
-                <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
-            </Style>
-        </xcad:DockingManager.LayoutItemContainerStyle>
-        
-        <!--Layout-->
-        <xcad:LayoutRoot>
-            <xcad:LayoutPanel Orientation="Vertical">
-                <xcad:LayoutPanel Orientation="Horizontal">
-                    <xcad:LayoutDocumentPane />
+        <!--Main content-->
+        <xcad:DockingManager Grid.Row="0" DocumentsSource="{Binding Documents, Mode=OneWay}"
+                             AnchorablesSource="{Binding Tools, Mode=OneWay}"
+                             ActiveContent="{Binding ActiveItem, Mode=TwoWay}">
+
+            <!--Item templates-->
+            <xcad:DockingManager.LayoutItemTemplate>
+                <DataTemplate>
+                    <ContentControl cal:View.Model="{Binding}" />
+                </DataTemplate>
+            </xcad:DockingManager.LayoutItemTemplate>
+
+            <!--Item styles-->
+            <xcad:DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type xcad:LayoutItem}">
+                    <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
+                    <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
+                </Style>
+            </xcad:DockingManager.LayoutItemContainerStyle>
+
+            <!--Layout-->
+            <xcad:LayoutRoot>
+                <xcad:LayoutPanel Orientation="Vertical">
+                    <xcad:LayoutPanel Orientation="Horizontal">
+                        <xcad:LayoutDocumentPane />
+                    </xcad:LayoutPanel>
                 </xcad:LayoutPanel>
-            </xcad:LayoutPanel>
-        </xcad:LayoutRoot>
-    </xcad:DockingManager>
+            </xcad:LayoutRoot>
+        </xcad:DockingManager>
+    </Grid>
 </UserControl>

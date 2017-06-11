@@ -7,6 +7,8 @@ using Caliburn.Micro;
 using Idealde.Framework.Services;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
+using Idealde.Modules.Statusbar;
+using Idealde.Modules.Statusbar.ViewModels;
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -46,6 +48,10 @@ namespace Idealde
             _container.RegisterType<IMainWindow, MainWindowViewModel>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IShell, ShellViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //status bar
+            _container.RegisterType<IStatusBar, StatusBarViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 

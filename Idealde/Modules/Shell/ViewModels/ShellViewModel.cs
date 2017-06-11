@@ -4,6 +4,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework;
 using Idealde.Framework.Services;
+using Idealde.Modules.Statusbar;
 using Idealde.Modules.Tests;
 
 #endregion
@@ -13,9 +14,12 @@ namespace Idealde.Modules.Shell.ViewModels
     public class ShellViewModel : Conductor<ILayoutItem>.Collection.OneActive, IShell
     {
         private ILayoutItem _selectedDocument;
+
         // Bind models
 
         #region Bind models
+
+        public IStatusBar StatusBar { get; }
 
         public IObservableCollection<ILayoutItem> Documents { get; }
 
@@ -34,11 +38,11 @@ namespace Idealde.Modules.Shell.ViewModels
         #endregion
 
         // Initializations
-
         #region Initializations
 
-        public ShellViewModel()
+        public ShellViewModel(IStatusBar statusBar)
         {
+            StatusBar = statusBar;
             Documents = new BindableCollection<ILayoutItem>
             {
                 new LayoutItemTest {DisplayName = "Document 1"},
@@ -52,10 +56,16 @@ namespace Idealde.Modules.Shell.ViewModels
                 new LayoutItemTest {DisplayName = "Tool 2"},
                 new LayoutItemTest {DisplayName = "Tool 3"}
             };
+
+            StatusBar.AddItem("Status 1", new GridLength(100));
+            StatusBar.AddItem("Status 2", new GridLength(100));
+            StatusBar.AddItem("Status 3", new GridLength(100));
         }
 
         #endregion
 
+        // Item actions
+        #region Item actions
         protected override void ChangeActiveItem(ILayoutItem newItem, bool closePrevious)
         {
             base.ChangeActiveItem(newItem, closePrevious);
@@ -86,6 +96,8 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
 
         public void Close()
         {

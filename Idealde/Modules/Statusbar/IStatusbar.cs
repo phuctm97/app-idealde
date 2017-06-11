@@ -4,7 +4,7 @@ using Idealde.Modules.Statusbar.ViewModels;
 
 namespace Idealde.Modules.Statusbar
 {
-    internal interface IStatusBar
+    public interface IStatusBar
     {
         IObservableCollection<StatusBarItemViewModel> Items { get; }
 
