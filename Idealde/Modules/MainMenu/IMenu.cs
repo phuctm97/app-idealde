@@ -6,6 +6,6 @@ namespace Idealde.Modules.MainMenu
 {
     public interface IMenu
     {
-        IObservableCollection<MenuItemBase> Items { get; }
+        IObservableCollection<MenuItemModel> Items { get; }
     }
 }
