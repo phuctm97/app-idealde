@@ -7,14 +7,9 @@ namespace Idealde.Modules.StatusBar.ViewModels
     {
         private int _index;
 
-
         private string _message;
 
-        public StatusBarItemViewModel(string message, GridLength width)
-        {
-            _message = message;
-            _width = width;
-        }
+        private readonly GridLength _width;
 
         public int Index
         {
@@ -36,8 +31,12 @@ namespace Idealde.Modules.StatusBar.ViewModels
             }
         }
 
-        private readonly GridLength _width;
-
         public GridLength Width => _width;
+
+        public StatusBarItemViewModel(string message, GridLength width)
+        {
+            _message = message;
+            _width = width;
+        }
     }
 }
