@@ -4,7 +4,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework;
 using Idealde.Framework.Services;
-using Idealde.Modules.Statusbar;
+using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests;
 
 #endregion

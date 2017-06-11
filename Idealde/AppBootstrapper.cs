@@ -7,8 +7,8 @@ using Caliburn.Micro;
 using Idealde.Framework.Services;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
-using Idealde.Modules.Statusbar;
-using Idealde.Modules.Statusbar.ViewModels;
+using Idealde.Modules.StatusBar;
+using Idealde.Modules.StatusBar.ViewModels;
 using Microsoft.Practices.Unity;
 
 #endregion

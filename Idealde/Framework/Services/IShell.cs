@@ -1,7 +1,7 @@
 ﻿#region Using Namespace
 
 using Caliburn.Micro;
-using Idealde.Modules.Statusbar;
+using Idealde.Modules.StatusBar;
 
 #endregion
 
