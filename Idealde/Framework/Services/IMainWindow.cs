@@ -15,6 +15,6 @@ namespace Idealde.Framework.Services
 
         WindowState WindowState { get; set; }
 
-        IShell Shell { get; set; }
+        IShell Shell { get; }
     }
 }

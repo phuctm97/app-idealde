@@ -9,16 +9,24 @@ using Idealde.Framework.Services;
 
 namespace Idealde.Modules.MainWindow.ViewModels
 {
-    public class MainWindowViewModel : PropertyChangedBase, IMainWindow
+    public class MainWindowViewModel : Conductor<IShell>, IMainWindow
     {
         // Backing fields
+
+        #region Backing fields
+
         private string _title;
         private ImageSource _icon;
         private double _width;
         private double _height;
         private WindowState _windowState;
 
+        #endregion
+
         // Bind properties
+
+        #region Bind properties
+
         public string Title
         {
             get { return _title; }
@@ -74,7 +82,20 @@ namespace Idealde.Modules.MainWindow.ViewModels
             }
         }
 
+        #endregion
+
+        // Bind models
+
+        #region Bind models
+
+        public IShell Shell => ActiveItem;
+
+        #endregion
+
         // Initializations
+
+        #region Initializations
+
         public MainWindowViewModel()
         {
             Title = @"Idealde";
@@ -85,5 +106,14 @@ namespace Idealde.Modules.MainWindow.ViewModels
 
             WindowState = WindowState.Normal;
         }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            ActivateItem(IoC.Get<IShell>());
+        }
+
+        #endregion
     }
 }

@@ -6,6 +6,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Services;
 using Idealde.Modules.MainWindow.ViewModels;
+using Idealde.Modules.Shell.ViewModels;
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -43,6 +44,8 @@ namespace Idealde
 
             //main window
             _container.RegisterType<IMainWindow, MainWindowViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IShell, ShellViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 
