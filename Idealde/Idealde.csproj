@@ -116,7 +116,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\Statusbar\Views\StatusBarView.xaml">
+    <Page Include="Modules\StatusBar\Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,10 +140,10 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Framework\Controls\DynamicStyle.cs" />
-    <Compile Include="Modules\Statusbar\IStatusbar.cs" />
-    <Compile Include="Modules\Statusbar\ViewModels\StatusBarItemViewModel.cs" />
-    <Compile Include="Modules\Statusbar\ViewModels\StatusBarViewModel.cs" />
-    <Compile Include="Modules\Statusbar\Views\StatusBarView.xaml.cs">
+    <Compile Include="Modules\StatusBar\IStatusBar.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemViewModel.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
+    <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Tests\LayoutItemTest.cs" />
@@ -172,9 +172,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="Framework\Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,7 +3,7 @@ using System.Windows;
 using Caliburn.Micro;
 namespace Idealde.Modules.Statusbar.ViewModels
 {
-    public class StatusBarViewModel :PropertyChangedBase, IStatusbar
+    public class StatusBarViewModel :PropertyChangedBase, IStatusBar
     {
         private readonly IObservableCollection<StatusBarItemViewModel> _items;
         public IObservableCollection<StatusBarItemViewModel> Items => _items;
