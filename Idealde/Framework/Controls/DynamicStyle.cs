@@ -6,6 +6,9 @@ namespace Idealde.Framework.Controls
 {
     public class DynamicStyle
     {   
+
+        // Object base style
+
         public static readonly DependencyProperty BaseStyleProperty = DependencyProperty.RegisterAttached(
             "BaseStyle", typeof(Style), typeof(DynamicStyle),
             new PropertyMetadata(OnStylesChanged));

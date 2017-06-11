@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Caliburn.Micro;
-namespace Idealde.Modules.Statusbar.ViewModels
+namespace Idealde.Modules.StatusBar.ViewModels
 {
     public class StatusBarViewModel :PropertyChangedBase, IStatusBar
     {
