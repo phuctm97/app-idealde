@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Idealde.Modules.Statusbar.ViewModels;
+using Idealde.Modules.StatusBar.ViewModels;
 
-namespace Idealde.Modules.Statusbar.Views
+namespace Idealde.Modules.StatusBar.Views
 {
     /// <summary>
     /// Interaction logic for StatusBarView.xaml

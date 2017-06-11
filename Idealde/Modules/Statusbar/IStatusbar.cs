@@ -1,8 +1,8 @@
 ﻿using System.Windows;
 using Caliburn.Micro;
-using Idealde.Modules.Statusbar.ViewModels;
+using Idealde.Modules.StatusBar.ViewModels;
 
-namespace Idealde.Modules.Statusbar
+namespace Idealde.Modules.StatusBar
 {
     public interface IStatusBar
     {

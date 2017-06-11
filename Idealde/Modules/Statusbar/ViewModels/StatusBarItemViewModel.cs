@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Caliburn.Micro;
 
-namespace Idealde.Modules.Statusbar.ViewModels
+namespace Idealde.Modules.StatusBar.ViewModels
 {
     public class StatusBarItemViewModel : PropertyChangedBase
     {
@@ -38,9 +38,6 @@ namespace Idealde.Modules.Statusbar.ViewModels
 
         private readonly GridLength _width;
 
-        public GridLength Width
-        {
-            get { return _width; }
-        }
+        public GridLength Width => _width;
     }
 }
