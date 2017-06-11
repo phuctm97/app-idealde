@@ -1,5 +1,6 @@
 ﻿#region Using Namespace
 
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework;
 using Idealde.Framework.Services;
@@ -64,6 +65,31 @@ namespace Idealde.Modules.Shell.ViewModels
                 _selectedDocument = newItem;
                 NotifyOfPropertyChange(() => SelectedDocument);
             }
+        }
+
+        public void OpenDocument(ILayoutItem document)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void CloseDocument(ILayoutItem document)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowTool(ILayoutItem tool)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ShowTool<TTool>() where TTool : ILayoutItem
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Close()
+        {
+            Application.Current.MainWindow.Close();
         }
     }
 }

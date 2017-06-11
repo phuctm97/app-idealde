@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Namespace
+
 using Caliburn.Micro;
+
+#endregion
 
 namespace Idealde.Framework.Services
 {
@@ -14,7 +13,13 @@ namespace Idealde.Framework.Services
         ILayoutItem SelectedDocument { get; set; }
 
         IObservableCollection<ILayoutItem> Documents { get; }
+        void OpenDocument(ILayoutItem document);
+        void CloseDocument(ILayoutItem document);
 
         IObservableCollection<ILayoutItem> Tools { get; }
+        void ShowTool(ILayoutItem tool);
+        void ShowTool<TTool>() where TTool : ILayoutItem;
+
+        void Close();
     }
 }
