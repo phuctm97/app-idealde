@@ -1,6 +1,7 @@
 ﻿#region Using Namespace
 
 using Caliburn.Micro;
+using Idealde.Framework.Panes;
 using Idealde.Modules.StatusBar;
 
 #endregion
@@ -16,16 +17,16 @@ namespace Idealde.Framework.Services
         ILayoutItem ActiveItem { get; set; }
 
         // Documents
-        ILayoutItem SelectedDocument { get; set; }
+        IDocument SelectedDocument { get; set; }
 
-        IObservableCollection<ILayoutItem> Documents { get; }
-        void OpenDocument(ILayoutItem document);
-        void CloseDocument(ILayoutItem document);
+        IObservableCollection<IDocument> Documents { get; }
+        void OpenDocument(IDocument document);
+        void CloseDocument(IDocument document);
 
         // Tools
-        IObservableCollection<ILayoutItem> Tools { get; }
-        void ShowTool(ILayoutItem tool);
-        void ShowTool<TTool>() where TTool : ILayoutItem;
+        IObservableCollection<ITool> Tools { get; }
+        void ShowTool(ITool tool);
+        void ShowTool<TTool>() where TTool : ITool;
 
         // Close
         void Close();

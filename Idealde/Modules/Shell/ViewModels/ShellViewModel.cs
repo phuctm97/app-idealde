@@ -1,8 +1,9 @@
 ﻿#region Using Namespace
 
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using Caliburn.Micro;
-using Idealde.Framework;
+using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests;
@@ -13,7 +14,7 @@ namespace Idealde.Modules.Shell.ViewModels
 {
     public class ShellViewModel : Conductor<ILayoutItem>.Collection.OneActive, IShell
     {
-        private ILayoutItem _selectedDocument;
+        private IDocument _selectedDocument;
 
         // Bind models
 
@@ -21,40 +22,41 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IStatusBar StatusBar { get; }
 
-        public IObservableCollection<ILayoutItem> Documents { get; }
+        public IObservableCollection<IDocument> Documents { get; }
 
-        public IObservableCollection<ILayoutItem> Tools { get; }
+        public IObservableCollection<ITool> Tools { get; }
 
-        public ILayoutItem SelectedDocument
+        public IDocument SelectedDocument
         {
             get { return _selectedDocument; }
             set
             {
-                if (Equals(value, _selectedDocument)) return;
-                ActivateItem(_selectedDocument);
+                if (value == null || Equals(value, _selectedDocument)) return;
+                OpenDocument(_selectedDocument);
             }
         }
 
         #endregion
 
         // Initializations
+
         #region Initializations
 
         public ShellViewModel(IStatusBar statusBar)
         {
             StatusBar = statusBar;
-            Documents = new BindableCollection<ILayoutItem>
+            Documents = new BindableCollection<IDocument>
             {
-                new LayoutItemTest {DisplayName = "Document 1"},
-                new LayoutItemTest {DisplayName = "Document 2"},
-                new LayoutItemTest {DisplayName = "Document 3"}
+                new DocumentTest {DisplayName = "Document 1"},
+                new DocumentTest {DisplayName = "Document 2"},
+                new DocumentTest {DisplayName = "Document 3"}
             };
 
-            Tools = new BindableCollection<ILayoutItem>
+            Tools = new BindableCollection<ITool>
             {
-                new LayoutItemTest {DisplayName = "Tool 1"},
-                new LayoutItemTest {DisplayName = "Tool 2"},
-                new LayoutItemTest {DisplayName = "Tool 3"}
+                new ToolTest(PaneLocation.Left) {DisplayName = "Tool 1", IsVisible = true},
+                new ToolTest(PaneLocation.Right) {DisplayName = "Tool 2", IsVisible = true},
+                new ToolTest(PaneLocation.Bottom) {DisplayName = "Tool 3", IsVisible = true}
             };
 
             StatusBar.AddItem("Status 1", new GridLength(100));
@@ -65,36 +67,60 @@ namespace Idealde.Modules.Shell.ViewModels
         #endregion
 
         // Item actions
+
         #region Item actions
+
+        [SuppressMessage("ReSharper", "CanBeReplacedWithTryCastAndCheckForNull")]
         protected override void ChangeActiveItem(ILayoutItem newItem, bool closePrevious)
         {
+            //remove old item
+            if (ActiveItem is IDocument && closePrevious)
+            {
+                Documents.Remove((IDocument) ActiveItem);
+            }
+
             base.ChangeActiveItem(newItem, closePrevious);
 
-            if (Documents.Contains(newItem))
+            //new item behaviors
+            if (newItem is IDocument)
             {
-                _selectedDocument = newItem;
+                var document = (IDocument) newItem;
+                if (!Documents.Contains(document))
+                {
+                    Documents.Add(document);
+                }
+                _selectedDocument = document;
                 NotifyOfPropertyChange(() => SelectedDocument);
+            }
+            else if (newItem is ITool)
+            {
+                var tool = (ITool) newItem;
+                if (!Tools.Contains(tool))
+                {
+                    Tools.Add(tool);
+                }
+                tool.IsVisible = true;
             }
         }
 
-        public void OpenDocument(ILayoutItem document)
+        public void OpenDocument(IDocument document)
         {
-            throw new System.NotImplementedException();
+            ActivateItem(document);
         }
 
-        public void CloseDocument(ILayoutItem document)
+        public void CloseDocument(IDocument document)
         {
-            throw new System.NotImplementedException();
+            DeactivateItem(document, true);
         }
 
-        public void ShowTool(ILayoutItem tool)
+        public void ShowTool(ITool tool)
         {
-            throw new System.NotImplementedException();
+            ActivateItem(tool);
         }
 
-        public void ShowTool<TTool>() where TTool : ILayoutItem
+        public void ShowTool<TTool>() where TTool : ITool
         {
-            throw new System.NotImplementedException();
+            ActivateItem(IoC.Get<TTool>());
         }
 
         #endregion

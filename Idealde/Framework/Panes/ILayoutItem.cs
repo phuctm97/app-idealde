@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace Idealde.Framework
+namespace Idealde.Framework.Panes
 {
     public interface ILayoutItem : IScreen
     {   

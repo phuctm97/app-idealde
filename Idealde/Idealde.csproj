@@ -127,14 +127,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Framework\ILayoutItem.cs" />
-    <Compile Include="Framework\LayoutItemBase.cs" />
+    <Compile Include="Framework\Commands\RelayCommand.cs" />
+    <Compile Include="Framework\Panes\Document.cs" />
+    <Compile Include="Framework\Panes\IDocument.cs" />
+    <Compile Include="Framework\Panes\ILayoutItem.cs" />
+    <Compile Include="Framework\Panes\ITool.cs" />
+    <Compile Include="Framework\Panes\LayoutItem.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
+    <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Modules\MainWindow\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
+    <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -146,7 +153,8 @@
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Tests\LayoutItemTest.cs" />
+    <Compile Include="Modules\Tests\DocumentTest.cs" />
+    <Compile Include="Modules\Tests\ToolTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
