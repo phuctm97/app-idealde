@@ -8,5 +8,7 @@ namespace Idealde.Framework.Panes
         string ContentId { get; }
 
         ICommand CloseCommand { get; }
+
+        bool IsSelected { get; set; }
     }
 }

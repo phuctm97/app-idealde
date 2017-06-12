@@ -5,6 +5,7 @@ using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.MainMenu;
+using Idealde.Modules.Output;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 
@@ -70,7 +71,12 @@ namespace Idealde.Modules.Shell.ViewModels
 
             ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
             ShowTool(new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2"});
-            ShowTool(new ToolTestViewModel(PaneLocation.Bottom) {DisplayName = "Tool 3"});
+            ShowTool(IoC.Get<IOutput>());
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            base.OnViewReady(view);
         }
 
         // Item actions
@@ -112,6 +118,7 @@ namespace Idealde.Modules.Shell.ViewModels
                 Tools.Add(tool);
             }
             tool.IsVisible = true;
+            tool.IsSelected = true;
         }
 
         public void ShowTool<TTool>() where TTool : ITool

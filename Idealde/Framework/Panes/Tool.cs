@@ -9,12 +9,13 @@ using Idealde.Framework.Commands;
 
 namespace Idealde.Framework.Panes
 {
-    public abstract class Tool : PropertyChangedBase, ITool
+    public abstract class Tool : ViewAware, ITool
     {
         // Backing fields
         private ICommand _closeCommand;
         private bool _isVisible;
         private string _displayName;
+        private bool _isSelected;
 
         // Bind properties
         public string ContentId { get; }
@@ -52,10 +53,23 @@ namespace Idealde.Framework.Panes
             }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value == _isSelected) return;
+                _isSelected = value;
+                NotifyOfPropertyChange(() => IsSelected);
+            }
+        }
+
         // Initializations
         protected Tool()
         {
             _isVisible = false;
+
+            _isSelected = false;
 
             _displayName = string.Empty;
 

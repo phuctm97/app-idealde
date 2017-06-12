@@ -8,6 +8,8 @@ using Idealde.Framework.Services;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
+using Idealde.Modules.Output;
+using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
@@ -62,6 +64,10 @@ namespace Idealde
 
             //mennu bar
             _container.RegisterType<IMenu, MainMenuViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //tools
+            _container.RegisterType<IOutput, OutputViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 

@@ -58,6 +58,7 @@
                             <Setter Property="ContentId" Value="{Binding Path=Model.ContentId, Mode=OneWay}" />
                             <Setter Property="Title" Value="{Binding Path=Model.DisplayName, Mode=OneWay}" />
                             <Setter Property="CloseCommand" Value="{Binding Path=Model.CloseCommand, Mode=OneWay}" />
+                            <Setter Property="IsSelected" Value="{Binding Path=Model.IsSelected, Mode=TwoWay}" />
                         </Style>
                     </controls:PaneStyleSelector.DocumentStyle>
 
@@ -68,6 +69,7 @@
                             <Setter Property="CloseCommand" Value="{Binding Path=Model.CloseCommand, Mode=OneWay}" />
                             <Setter Property="Visibility"
                                     Value="{Binding Path=Model.IsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Setter Property="IsSelected" Value="{Binding Path=Model.IsSelected, Mode=TwoWay}" />
                         </Style>
                     </controls:PaneStyleSelector.ToolStyle>
                 </controls:PaneStyleSelector>
