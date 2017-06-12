@@ -1,4 +1,6 @@
-﻿namespace Idealde.Framework.Panes
+﻿using Caliburn.Micro;
+
+namespace Idealde.Framework.Panes
 {
     public enum PaneLocation
     {
@@ -7,13 +9,14 @@
         Bottom
     }
 
-    public interface ITool : ILayoutItem
+    public interface ITool : IViewAware, ILayoutItem
     {
+        // Bind properties
         PaneLocation PreferredLocation { get; }
 
-        double PreferredWidth { get; set; }
+        double PreferredWidth { get; }
 
-        double PreferredHeight { get; set; }
+        double PreferredHeight { get; }
 
         bool IsVisible { get; set; }
     }

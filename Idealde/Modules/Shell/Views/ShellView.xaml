@@ -14,37 +14,37 @@
             <xcad:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <!--Menu bar-->
         <ContentControl Grid.Row="0" cal:View.Model="{Binding MainMenu}" />
 
         <!--Status bar-->
-        <ContentControl Grid.Row="2" cal:View.Model="{Binding StatusBar}"/>
-        
+        <ContentControl Grid.Row="2" cal:View.Model="{Binding StatusBar}" />
+
         <!--Main content-->
-        <xcad:DockingManager Grid.Row="1" 
+        <xcad:DockingManager Grid.Row="1"
                              DocumentsSource="{Binding Documents}"
                              AnchorablesSource="{Binding Tools}"
-                             ActiveContent="{Binding ActiveItem, Mode=TwoWay}">
+                             ActiveContent="{Binding ActiveLayoutItem, Mode=TwoWay}">
             <!--Item template-->
             <xcad:DockingManager.LayoutItemTemplateSelector>
                 <controls:PaneTemplateSelector>
                     <controls:PaneTemplateSelector.DocumentTemplate>
                         <DataTemplate>
-                            <ContentControl cal:View.Model="{Binding Model}" />
+                            <ContentControl cal:View.Model="{Binding}" />
                         </DataTemplate>
                     </controls:PaneTemplateSelector.DocumentTemplate>
 
                     <controls:PaneTemplateSelector.ToolTemplate>
                         <DataTemplate>
-                            <ContentControl cal:View.Model="{Binding Model}" />
+                            <ContentControl cal:View.Model="{Binding}" />
                         </DataTemplate>
                     </controls:PaneTemplateSelector.ToolTemplate>
                 </controls:PaneTemplateSelector>
@@ -55,22 +55,30 @@
                 <controls:PaneStyleSelector>
                     <controls:PaneStyleSelector.DocumentStyle>
                         <Style TargetType="{x:Type xcad:LayoutItem}">
-                            <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
-                            <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
-                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand, Mode=OneWay}" />
+                            <Setter Property="ContentId" Value="{Binding Path=Model.ContentId, Mode=OneWay}" />
+                            <Setter Property="Title" Value="{Binding Path=Model.DisplayName, Mode=OneWay}" />
+                            <Setter Property="CloseCommand" Value="{Binding Path=Model.CloseCommand, Mode=OneWay}" />
+                            <Setter Property="IsSelected" Value="{Binding Path=Model.IsSelected, Mode=TwoWay}" />
                         </Style>
                     </controls:PaneStyleSelector.DocumentStyle>
 
                     <controls:PaneStyleSelector.ToolStyle>
                         <Style TargetType="{x:Type xcad:LayoutAnchorableItem}">
-                            <Setter Property="ContentId" Value="{Binding Model.ContentId, Mode=OneWay}" />
-                            <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
-                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand, Mode=OneWay}" />
-                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Setter Property="ContentId" Value="{Binding Path=Model.ContentId, Mode=OneWay}" />
+                            <Setter Property="Title" Value="{Binding Path=Model.DisplayName, Mode=OneWay}" />
+                            <Setter Property="CloseCommand" Value="{Binding Path=Model.CloseCommand, Mode=OneWay}" />
+                            <Setter Property="Visibility"
+                                    Value="{Binding Path=Model.IsVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            <Setter Property="IsSelected" Value="{Binding Path=Model.IsSelected, Mode=TwoWay}" />
                         </Style>
                     </controls:PaneStyleSelector.ToolStyle>
                 </controls:PaneStyleSelector>
             </xcad:DockingManager.LayoutItemContainerStyleSelector>
+
+            <!--Initializer-->
+            <xcad:DockingManager.LayoutUpdateStrategy>
+                <controls:LayoutInitializer />
+            </xcad:DockingManager.LayoutUpdateStrategy>
 
             <!--Layout-->
             <xcad:LayoutRoot>

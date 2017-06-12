@@ -1,57 +1,49 @@
 ﻿#region Using Namespace
 
+using System;
 using System.Windows.Input;
+using Caliburn.Micro;
 using Idealde.Framework.Commands;
 
 #endregion
 
 namespace Idealde.Framework.Panes
 {
-    public abstract class Tool : LayoutItem, ITool
+    public abstract class Tool : ViewAware, ITool
     {
         // Backing fields
-
         #region Backing fields
-
-        private double _preferredWidth;
-        private double _preferredHeight;
+        private ICommand _closeCommand;
         private bool _isVisible;
-        protected ICommand _closeCommand;
-
+        private string _displayName;
+        private bool _isSelected;
         #endregion
 
         // Bind properties
+        #region Bind properties
+        public string ContentId { get; }
 
-        #region Backing properties
-
-        public override ICommand CloseCommand
+        public string DisplayName
         {
-            get { return _closeCommand ?? new RelayCommand(p => IsVisible = false, p => true); }
-        }
-
-        public PaneLocation PreferredLocation { get; }
-
-        public double PreferredWidth
-        {
-            get { return _preferredWidth; }
+            get { return _displayName; }
             set
             {
-                if (value.Equals(_preferredWidth)) return;
-                _preferredWidth = value;
-                NotifyOfPropertyChange(() => PreferredWidth);
+                if (value == _displayName) return;
+                _displayName = value;
+                NotifyOfPropertyChange(() => DisplayName);
             }
         }
 
-        public double PreferredHeight
+        public ICommand CloseCommand
         {
-            get { return _preferredHeight; }
-            set
-            {
-                if (value.Equals(_preferredHeight)) return;
-                _preferredHeight = value;
-                NotifyOfPropertyChange(() => PreferredHeight);
-            }
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => IsVisible = false)); }
         }
+
+        public abstract PaneLocation PreferredLocation { get; }
+
+        public virtual double PreferredWidth => 200;
+
+        public virtual double PreferredHeight => 200;
 
         public bool IsVisible
         {
@@ -64,15 +56,29 @@ namespace Idealde.Framework.Panes
             }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                if (value == _isSelected) return;
+                _isSelected = value;
+                NotifyOfPropertyChange(() => IsSelected);
+            }
+        }
         #endregion
 
         // Initializations
-
         #region Initializations
-
-        protected Tool(PaneLocation preferredLocation)
+        protected Tool()
         {
-            PreferredLocation = preferredLocation;
+            _isVisible = false;
+
+            _isSelected = false;
+
+            _displayName = string.Empty;
+
+            ContentId = Guid.NewGuid().ToString();
         }
 
         #endregion

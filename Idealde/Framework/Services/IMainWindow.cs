@@ -5,6 +5,10 @@ namespace Idealde.Framework.Services
 {
     public interface IMainWindow
     {
+        // Bind models
+        IShell Shell { get; }
+     
+        // Bind properties
         string Title { get; set; }
 
         ImageSource Icon { get; set; }
@@ -14,7 +18,5 @@ namespace Idealde.Framework.Services
         double Height { get; set; }
 
         WindowState WindowState { get; set; }
-
-        IShell Shell { get; }
     }
 }

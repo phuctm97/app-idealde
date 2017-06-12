@@ -44,10 +44,6 @@
       <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -64,12 +60,13 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="ScintillaNET, Version=3.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jacobslusser.ScintillaNET.3.6.3\lib\net40\ScintillaNET.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -82,37 +79,50 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=3.0.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Modules\CodeEditor\Views\CodeEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\ErrorList\Views\ErrorListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\MainMenu\Views\MainMenuView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\MainWindow\Views\MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Output\Views\OutputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -144,10 +154,24 @@
     <Compile Include="Framework\Panes\Document.cs" />
     <Compile Include="Framework\Panes\IDocument.cs" />
     <Compile Include="Framework\Panes\ILayoutItem.cs" />
+    <Compile Include="Framework\Panes\IPersistedDocument.cs" />
     <Compile Include="Framework\Panes\ITool.cs" />
-    <Compile Include="Framework\Panes\LayoutItem.cs" />
+    <Compile Include="Framework\Panes\PersistedDocument.cs" />
+    <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
+    <Compile Include="Framework\Services\IResourceManager.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
+    <Compile Include="Framework\Services\ResourceManager.cs" />
+    <Compile Include="Modules\CodeEditor\ViewModels\CodeEditorViewModel.cs" />
+    <Compile Include="Modules\CodeEditor\Views\CodeEditorView.xaml.cs">
+      <DependentUpon>CodeEditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
+    <Compile Include="Modules\ErrorList\IErrorList.cs" />
+    <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
+    <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
+      <DependentUpon>ErrorListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuDefinition.cs" />
@@ -160,6 +184,13 @@
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Output\IOutput.cs" />
+    <Compile Include="Modules\Output\ViewModels\OutputViewModel.cs" />
+    <Compile Include="Modules\Output\IOutputView.cs" />
+    <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
+      <DependentUpon>OutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />

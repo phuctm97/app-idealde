@@ -5,9 +5,13 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Services;
+using Idealde.Modules.ErrorList;
+using Idealde.Modules.ErrorList.ViewModels;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
+using Idealde.Modules.Output;
+using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
@@ -52,12 +56,22 @@ namespace Idealde
             _container.RegisterType<IShell, ShellViewModel>(
                 new ContainerControlledLifetimeManager());
 
+            //services
+            _container.RegisterType<IResourceManager, ResourceManager>(
+                new ContainerControlledLifetimeManager());
+
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
             //mennu bar
             _container.RegisterType<IMenu, MainMenuViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //tools
+            _container.RegisterType<IOutput, OutputViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IErrorList, ErrorListViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 

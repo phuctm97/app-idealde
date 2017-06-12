@@ -7,16 +7,17 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <StatusBar x:Name="StatusBar" ItemsSource="{Binding Items}"
                Background="#FF007ACC" Foreground="White">
+        <StatusBar.ItemsPanel>
+            <ItemsPanelTemplate>
+                <Grid x:Name="StatusBarGrid" Loaded="OnStatusBarGridLoaded"/>
+            </ItemsPanelTemplate>
+        </StatusBar.ItemsPanel>
+
         <StatusBar.ItemContainerStyle>
             <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
                 <Setter Property="Grid.Column" Value="{Binding Index}"/>
                 <Setter Property="Content" Value="{Binding Message}"/>
             </Style>
         </StatusBar.ItemContainerStyle>
-        <StatusBar.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Grid x:Name="StatusBarGrid" Loaded="OnStatusBarGridLoaded"/>
-            </ItemsPanelTemplate>
-        </StatusBar.ItemsPanel>
     </StatusBar>
 </UserControl>

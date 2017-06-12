@@ -1,6 +1,7 @@
 ﻿#region Using Namespace
 
 using System;
+using System.Windows.Input;
 using Idealde.Framework.Panes;
 
 #endregion

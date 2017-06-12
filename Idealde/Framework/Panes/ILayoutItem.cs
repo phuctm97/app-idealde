@@ -3,10 +3,13 @@ using Caliburn.Micro;
 
 namespace Idealde.Framework.Panes
 {
-    public interface ILayoutItem : IScreen
-    {   
+    public interface ILayoutItem : IHaveDisplayName
+    {
+        // Bind properties
         string ContentId { get; }
 
         ICommand CloseCommand { get; }
+
+        bool IsSelected { get; set; }
     }
 }

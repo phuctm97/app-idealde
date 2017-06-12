@@ -1,12 +1,12 @@
 ﻿#region Using Namespace
 
-using System.Collections.Specialized;
-using System.Linq;
-using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
+using Idealde.Modules.CodeEditor.ViewModels;
+using Idealde.Modules.ErrorList;
 using Idealde.Modules.MainMenu;
+using Idealde.Modules.Output;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
@@ -15,13 +15,14 @@ using Idealde.Modules.Tests.ViewModels;
 
 namespace Idealde.Modules.Shell.ViewModels
 {
-    public class ShellViewModel : Screen, IShell
+    public class ShellViewModel : Conductor<IDocument>.Collection.OneActive, IShell
     {
         // Backing fields
 
         #region Backing fields
 
-        private ILayoutItem _activeItem;
+        private bool _closing;
+        private ILayoutItem _activeLayoutItem;
 
         #endregion
 
@@ -33,30 +34,27 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IStatusBar StatusBar { get; }
 
-        public ILayoutItem ActiveItem
+        public ILayoutItem ActiveLayoutItem
         {
-            get { return _activeItem; }
+            get { return _activeLayoutItem; }
             set
             {
-                if (Equals(value, _activeItem)) return;
-                _activeItem = value;
+                if (Equals(value, _activeLayoutItem)) return;
+                _activeLayoutItem = value;
 
-                if (_activeItem is IDocument)
+                if (_activeLayoutItem is IDocument)
                 {
-                    OpenDocument((IDocument) _activeItem);
+                    OpenDocument((IDocument) _activeLayoutItem);
                 }
-                else if (_activeItem is ITool)
+                if (_activeLayoutItem is ITool)
                 {
-                    ShowTool((ITool) _activeItem);
+                    ShowTool((ITool) _activeLayoutItem);
                 }
-
-                NotifyOfPropertyChange(() => ActiveItem);
+                NotifyOfPropertyChange(() => ActiveLayoutItem);
             }
         }
 
-        public IDocument SelectedDocument { get; private set; }
-
-        public IObservableCollection<IDocument> Documents { get; }
+        public IObservableCollection<IDocument> Documents => Items;
 
         public IObservableCollection<ITool> Tools { get; }
 
@@ -68,38 +66,27 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public ShellViewModel(IMenu mainMenu, IStatusBar statusBar)
         {
-            StatusBar = statusBar;
             MainMenu = mainMenu;
 
-            Documents = new BindableCollection<IDocument>();
-            Documents.CollectionChanged += OnDocumentsCollectionChanged;
+            StatusBar = statusBar;
 
             Tools = new BindableCollection<ITool>();
-            Tools.CollectionChanged += OnToolsCollectionChanged;
+
+            _closing = false;
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
 
-            Documents.AddRange(new IDocument[]
-            {
-                new DocumentTestViewModel {DisplayName = "Document 1"},
-                new DocumentTestViewModel {DisplayName = "Document 2"},
-                new DocumentTestViewModel {DisplayName = "Document 3"}
-            });
+            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
+            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
+            OpenDocument(new CodeEditorViewModel());
 
-            Tools.AddRange(new ITool[]
-            {
-                new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1", IsVisible = true},
-                new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2", IsVisible = true},
-                new ToolTestViewModel(PaneLocation.Bottom) {DisplayName = "Tool 3", IsVisible = true}
-            });
-
-            StatusBar.AddItem("Status 1", new GridLength(100));
-            StatusBar.AddItem("Status 2", new GridLength(100));
-            StatusBar.AddItem("Status 3", new GridLength(100));
-
+            ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
+            ShowTool(IoC.Get<IOutput>());
+            ShowTool(IoC.Get<IErrorList>());
+            IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
             MenuDefinition fileMenu = new MenuDefinition("File");
             MenuDefinition editMenu = new MenuDefinition("Edit");
@@ -127,30 +114,34 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Item actions
 
+        public override void ActivateItem(IDocument item)
+        {
+            //bug: complex bug, temporary solution
+            if (_closing) return;
+
+            base.ActivateItem(item);
+        }
+
+        protected override void OnActivationProcessed(IDocument item, bool success)
+        {
+            base.OnActivationProcessed(item, success);
+
+            if (!success) return;
+
+            if (Equals(item, _activeLayoutItem)) return;
+
+            _activeLayoutItem = item;
+            NotifyOfPropertyChange(() => ActiveLayoutItem);
+        }
+
         public void OpenDocument(IDocument document)
         {
-            if (Equals(document, SelectedDocument)) return;
-
-            //deactivate old document
-            SelectedDocument?.Deactivate(false);
-
-            //add to opened documents
-            if (!Documents.Contains(document))
-            {
-                Documents.Add(document);
-            }
-
-            //update selected one
-            SelectedDocument = document;
-            SelectedDocument.Activate();
-            NotifyOfPropertyChange(() => SelectedDocument);
+            ActivateItem(document);
         }
 
         public void CloseDocument(IDocument document)
         {
-            ActiveItem = ChooseNextActiveItem(document);
-
-            document.Deactivate(true);
+            DeactivateItem(document, true);
         }
 
         public void ShowTool(ITool tool)
@@ -160,6 +151,7 @@ namespace Idealde.Modules.Shell.ViewModels
                 Tools.Add(tool);
             }
             tool.IsVisible = true;
+            tool.IsSelected = true;
         }
 
         public void ShowTool<TTool>() where TTool : ITool
@@ -167,61 +159,18 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<TTool>());
         }
 
-        protected virtual ILayoutItem ChooseNextActiveItem(ILayoutItem oldItem)
-        {
-            if (oldItem is ITool)
-            {
-                return SelectedDocument;
-            }
-
-            if (oldItem is IDocument)
-            {
-                for (var i = 0; i < Documents.Count - 1; i++)
-                {
-                    if (oldItem == Documents[i + 1])
-                    {
-                        return Documents[i];
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private void OnToolsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-        }
-
-        private void OnDocumentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    e.NewItems?.OfType<IDocument>().Apply(p => p.Parent = this);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    var collection = sender as IObservableCollection<IDocument>;
-                    collection?.Apply(p => p.Parent = this);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    e.OldItems?.OfType<IDocument>().Apply(p => p.Parent = null);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    e.OldItems?.OfType<IDocument>().Apply(p => p.Parent = null);
-                    e.NewItems?.OfType<IDocument>().Apply(p => p.Parent = this);
-                    break;
-            }
-        }
-
         #endregion
 
-        // Closing
+        // Shell behaviors
 
-        #region Closing
+        #region Shell behaviors
 
-        public void Close()
+        protected override void OnDeactivate(bool close)
         {
-            Application.Current.MainWindow.Close();
+            //bug: complex bug, temporary solution
+            _closing = close;
+
+            base.OnDeactivate(close);
         }
 
         #endregion

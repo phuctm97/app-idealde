@@ -1,55 +1,52 @@
 ﻿#region Using Namespace
 
+using System;
 using System.Windows.Input;
+using Caliburn.Micro;
 using Idealde.Framework.Commands;
-using Idealde.Framework.Services;
 
 #endregion
 
 namespace Idealde.Framework.Panes
 {
-    public abstract class Document : LayoutItem, IDocument
+    public abstract class Document : Screen, IDocument
     {
         // Backing fields
-
         #region Backing fields
-
-        protected ICommand _closeCommand;
+        private ICommand _closeCommand;
+        private bool _isSelected;
 
         #endregion
 
         // Bind properties
-
         #region Bind properties
+        public string ContentId { get; }
 
-        public override ICommand CloseCommand
+        public ICommand CloseCommand
         {
-            get { return _closeCommand ?? new RelayCommand(p => TryClose(), p => true); }
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => TryClose())); }
         }
 
-        #endregion
-
-        // Behaviors
-        public override void TryClose(bool? dialogResult = default(bool?))
+        public bool IsSelected
         {
-            CanClose(canClose =>
+            get { return _isSelected; }
+            set
             {
-                if (canClose) Close();
-            });
-        }
-
-        private void Close()
-        {
-            var shell = Parent as IShell;
-            shell?.Documents.Remove(this);
-        }
-
-        protected override void OnDeactivate(bool close)
-        {
-            if (close)
-            {
-                TryClose();
+                if (value == _isSelected) return;
+                _isSelected = value;
+                NotifyOfPropertyChange(() => IsSelected);
             }
         }
+        #endregion
+
+        // Initializations
+        #region Initializations
+        protected Document()
+        {
+            _isSelected = false;
+
+            ContentId = Guid.NewGuid().ToString();
+        } 
+        #endregion
     }
 }

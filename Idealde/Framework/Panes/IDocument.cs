@@ -2,7 +2,8 @@
 
 namespace Idealde.Framework.Panes
 {
-    public interface IDocument : ILayoutItem, IChild
+    public interface IDocument : IScreen, ILayoutItem
     {
+        
     }
 }
