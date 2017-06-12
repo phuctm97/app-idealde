@@ -172,7 +172,6 @@
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuDefinition.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemDefinition.cs" />
