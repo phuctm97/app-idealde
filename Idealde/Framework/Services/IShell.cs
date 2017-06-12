@@ -16,9 +16,13 @@ namespace Idealde.Framework.Services
 
         IStatusBar StatusBar { get; }
 
-        // Bind models 
-        IDocument SelectedDocument { get; set; }
+        // Bind models
+        ILayoutItem ActiveItem { get; set; }
+
+        IDocument SelectedDocument { get; }
 
         IObservableCollection<IDocument> Documents { get; }
+
+        IObservableCollection<ITool> Tools { get; }
     }
 }

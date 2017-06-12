@@ -13,6 +13,9 @@ namespace Idealde.Modules.Shell.ViewModels
 {
     public class ShellViewModel : Conductor<IDocument>.Collection.OneActive, IShell
     {
+        // Backing fields
+        private bool _closing;
+
         // Bind models
         public IMenu MainMenu { get; }
 
@@ -31,6 +34,8 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             MainMenu = mainMenu;
             StatusBar = statusBar;
+
+            _closing = false;
         }
 
         protected override void OnInitialize()
@@ -40,6 +45,23 @@ namespace Idealde.Modules.Shell.ViewModels
             ActivateItem(new DocumentTestViewModel {DisplayName = "Document 1"});
             ActivateItem(new DocumentTestViewModel {DisplayName = "Document 2"});
             ActivateItem(new DocumentTestViewModel {DisplayName = "Document 3"});
+        }
+
+        // Item actions
+        public override void ActivateItem(IDocument item)
+        {
+            //bug: complex bug, temporary solution
+            if (_closing) return;
+
+            base.ActivateItem(item);
+        }
+
+        protected override void OnDeactivate(bool close)
+        {
+            //bug: complex bug, temporary solution
+            _closing = close;
+
+            base.OnDeactivate(close);
         }
     }
 }
