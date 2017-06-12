@@ -3,6 +3,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Controls/Window.xaml" />
         <ResourceDictionary Source="Controls/WindowCommands.xaml" />
+        <ResourceDictionary Source="Controls/Menu.xaml" />
+        <ResourceDictionary Source="Controls/Tooltip.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- Menu -->
