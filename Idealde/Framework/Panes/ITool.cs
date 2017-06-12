@@ -11,9 +11,9 @@
     {
         PaneLocation PreferredLocation { get; }
 
-        double PreferredWidth { get; set; }
+        double PreferredWidth { get; }
 
-        double PreferredHeight { get; set; }
+        double PreferredHeight { get; }
 
         bool IsVisible { get; set; }
     }

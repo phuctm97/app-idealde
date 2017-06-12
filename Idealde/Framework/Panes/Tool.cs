@@ -10,48 +10,20 @@ namespace Idealde.Framework.Panes
     public abstract class Tool : LayoutItem, ITool
     {
         // Backing fields
-
-        #region Backing fields
-
-        private double _preferredWidth;
-        private double _preferredHeight;
+        private ICommand _closeCommand;
         private bool _isVisible;
-        protected ICommand _closeCommand;
-
-        #endregion
 
         // Bind properties
-
-        #region Backing properties
-
         public override ICommand CloseCommand
         {
-            get { return _closeCommand ?? new RelayCommand(p => IsVisible = false, p => true); }
+            get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => IsVisible = false)); }
         }
 
-        public PaneLocation PreferredLocation { get; }
+        public abstract PaneLocation PreferredLocation { get; }
 
-        public double PreferredWidth
-        {
-            get { return _preferredWidth; }
-            set
-            {
-                if (value.Equals(_preferredWidth)) return;
-                _preferredWidth = value;
-                NotifyOfPropertyChange(() => PreferredWidth);
-            }
-        }
+        public virtual double PreferredWidth => 200;
 
-        public double PreferredHeight
-        {
-            get { return _preferredHeight; }
-            set
-            {
-                if (value.Equals(_preferredHeight)) return;
-                _preferredHeight = value;
-                NotifyOfPropertyChange(() => PreferredHeight);
-            }
-        }
+        public virtual double PreferredHeight => 200;
 
         public bool IsVisible
         {
@@ -64,17 +36,10 @@ namespace Idealde.Framework.Panes
             }
         }
 
-        #endregion
-
         // Initializations
-
-        #region Initializations
-
-        protected Tool(PaneLocation preferredLocation)
+        protected Tool()
         {
-            PreferredLocation = preferredLocation;
+            _isVisible = false;
         }
-
-        #endregion
     }
 }

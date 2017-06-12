@@ -1,6 +1,5 @@
 ﻿#region Using Namespace
 
-using System.Windows.Controls.Primitives;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Modules.MainMenu;
@@ -17,22 +16,9 @@ namespace Idealde.Framework.Services
 
         IStatusBar StatusBar { get; }
 
-        // Active item (document or tool)
-        ILayoutItem ActiveItem { get; set; }
-
-        // Documents
-        IDocument SelectedDocument { get; }
+        // Bind models 
+        IDocument SelectedDocument { get; set; }
 
         IObservableCollection<IDocument> Documents { get; }
-        void OpenDocument(IDocument document);
-        void CloseDocument(IDocument document);
-
-        // Tools
-        IObservableCollection<ITool> Tools { get; }
-        void ShowTool(ITool tool);
-        void ShowTool<TTool>() where TTool : ITool;
-
-        // Close
-        void Close();
     }
 }

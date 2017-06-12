@@ -4,8 +4,11 @@ namespace Idealde.Modules.Tests.ViewModels
 {
     public class ToolTestViewModel : Tool
     {
-        public ToolTestViewModel(PaneLocation preferredLocation) : base(preferredLocation)
+        public override PaneLocation PreferredLocation { get; }
+
+        public ToolTestViewModel(PaneLocation preferredLocation)
         {
+            PreferredLocation = preferredLocation;
         }
     }
 }

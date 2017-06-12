@@ -146,9 +146,9 @@
     <Compile Include="Framework\Panes\ILayoutItem.cs" />
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\LayoutItem.cs" />
+    <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
-    <Compile Include="Framework\Panes\Tool.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemModel.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
@@ -159,6 +159,7 @@
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />

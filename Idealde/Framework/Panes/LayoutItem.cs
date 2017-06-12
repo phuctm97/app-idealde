@@ -10,19 +10,15 @@ namespace Idealde.Framework.Panes
 {
     public abstract class LayoutItem : Screen, ILayoutItem
     {
-        // Backing fields
-        protected readonly Guid _id;
-
-        // Bind models
-        public string ContentId => _id.ToString();
+        // Bind properties
+        public string ContentId { get; }
 
         public abstract ICommand CloseCommand { get; }
 
         // Initializations
-
         protected LayoutItem()
         {
-            _id = Guid.NewGuid();
+            ContentId = Guid.NewGuid().ToString();
         }
     }
 }
