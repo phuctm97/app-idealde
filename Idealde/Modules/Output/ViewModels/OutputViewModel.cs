@@ -4,7 +4,6 @@ using System;
 using System.Text;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
-using Idealde.Modules.Output.Views;
 
 #endregion
 
@@ -13,13 +12,20 @@ namespace Idealde.Modules.Output.ViewModels
     public sealed class OutputViewModel : Tool, IOutput
     {
         // Backing fields
+        #region Backing fields
         private readonly StringBuilder _stringBuilder;
         private IOutputView _view;
+        #endregion
 
         // Bind properties
+        #region Bind properties
+
         public override PaneLocation PreferredLocation => PaneLocation.Bottom;
 
+        #endregion
+
         // Initializations 
+        #region Initializations
         public OutputViewModel()
         {
             _stringBuilder = new StringBuilder();
@@ -29,7 +35,7 @@ namespace Idealde.Modules.Output.ViewModels
 
         protected override void OnViewLoaded(object view)
         {
-            _view = (IOutputView) view;
+            _view = (IOutputView)view;
             if (_view == null) throw new InvalidCastException();
 
             _view.SetText(_stringBuilder.ToString());
@@ -38,7 +44,10 @@ namespace Idealde.Modules.Output.ViewModels
             base.OnViewLoaded(view);
         }
 
-        // Behaviors
+        #endregion
+
+        // Output behaviors
+        #region Output behaviors
         public void Append(string text)
         {
             _stringBuilder.Append(text);
@@ -66,6 +75,7 @@ namespace Idealde.Modules.Output.ViewModels
             {
                 Execute.OnUIThread(() => _view.SetText(_stringBuilder.ToString()));
             }
-        }
+        } 
+        #endregion
     }
 }

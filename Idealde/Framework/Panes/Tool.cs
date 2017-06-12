@@ -12,12 +12,15 @@ namespace Idealde.Framework.Panes
     public abstract class Tool : ViewAware, ITool
     {
         // Backing fields
+        #region Backing fields
         private ICommand _closeCommand;
         private bool _isVisible;
         private string _displayName;
         private bool _isSelected;
+        #endregion
 
         // Bind properties
+        #region Bind properties
         public string ContentId { get; }
 
         public string DisplayName
@@ -63,8 +66,10 @@ namespace Idealde.Framework.Panes
                 NotifyOfPropertyChange(() => IsSelected);
             }
         }
+        #endregion
 
         // Initializations
+        #region Initializations
         protected Tool()
         {
             _isVisible = false;
@@ -76,5 +81,6 @@ namespace Idealde.Framework.Panes
             ContentId = Guid.NewGuid().ToString();
         }
 
+        #endregion
     }
 }

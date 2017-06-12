@@ -11,12 +11,11 @@ namespace Idealde.Framework.Services
 {
     public interface IShell : IGuardClose, IDeactivate
     {
-        // Dependencies
+        // Bind models
         IMenu MainMenu { get; }
 
         IStatusBar StatusBar { get; }
 
-        // Bind models
         ILayoutItem ActiveLayoutItem { get; set; }
 
         IDocument ActiveItem { get; }

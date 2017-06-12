@@ -11,6 +11,7 @@ namespace Idealde.Framework.Panes
 
     public interface ITool : IViewAware, ILayoutItem
     {
+        // Bind properties
         PaneLocation PreferredLocation { get; }
 
         double PreferredWidth { get; }

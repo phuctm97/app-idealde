@@ -5,6 +5,7 @@ namespace Idealde.Framework.Panes
 {
     public interface ILayoutItem : IHaveDisplayName
     {
+        // Bind properties
         string ContentId { get; }
 
         ICommand CloseCommand { get; }

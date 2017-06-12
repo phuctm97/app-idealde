@@ -12,10 +12,14 @@ namespace Idealde.Framework.Panes
     public abstract class Document : Screen, IDocument
     {
         // Backing fields
+        #region Backing fields
         private ICommand _closeCommand;
         private bool _isSelected;
 
+        #endregion
+
         // Bind properties
+        #region Bind properties
         public string ContentId { get; }
 
         public ICommand CloseCommand
@@ -33,14 +37,16 @@ namespace Idealde.Framework.Panes
                 NotifyOfPropertyChange(() => IsSelected);
             }
         }
+        #endregion
 
         // Initializations
+        #region Initializations
         protected Document()
         {
             _isSelected = false;
 
             ContentId = Guid.NewGuid().ToString();
-        }
-
+        } 
+        #endregion
     }
 }

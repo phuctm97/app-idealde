@@ -162,6 +162,9 @@
     <Compile Include="Modules\CodeEditor\Views\CodeEditorView.xaml.cs">
       <DependentUpon>CodeEditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
+    <Compile Include="Modules\ErrorList\IErrorList.cs" />
+    <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemModel.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
@@ -174,7 +177,7 @@
     </Compile>
     <Compile Include="Modules\Output\IOutput.cs" />
     <Compile Include="Modules\Output\ViewModels\OutputViewModel.cs" />
-    <Compile Include="Modules\Output\Views\IOutputView.cs" />
+    <Compile Include="Modules\Output\IOutputView.cs" />
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
@@ -223,7 +226,9 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Modules\ErrorList\Views\" />
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

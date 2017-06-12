@@ -16,10 +16,13 @@ namespace Idealde.Modules.Shell.ViewModels
     public class ShellViewModel : Conductor<IDocument>.Collection.OneActive, IShell
     {
         // Backing fields
+        #region Backing fields
         private bool _closing;
         private ILayoutItem _activeLayoutItem;
+        #endregion
 
         // Bind models
+        #region Bind models
         public IMenu MainMenu { get; }
 
         public IStatusBar StatusBar { get; }
@@ -34,11 +37,11 @@ namespace Idealde.Modules.Shell.ViewModels
 
                 if (_activeLayoutItem is IDocument)
                 {
-                    OpenDocument((IDocument) _activeLayoutItem);
+                    OpenDocument((IDocument)_activeLayoutItem);
                 }
                 if (_activeLayoutItem is ITool)
                 {
-                    ShowTool((ITool) _activeLayoutItem);
+                    ShowTool((ITool)_activeLayoutItem);
                 }
                 NotifyOfPropertyChange(() => ActiveLayoutItem);
             }
@@ -47,9 +50,11 @@ namespace Idealde.Modules.Shell.ViewModels
         public IObservableCollection<IDocument> Documents => Items;
 
         public IObservableCollection<ITool> Tools { get; }
+        #endregion
 
         // Initializations
 
+        #region Initializations
         public ShellViewModel(IMenu mainMenu, IStatusBar statusBar)
         {
             MainMenu = mainMenu;
@@ -65,12 +70,12 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             base.OnInitialize();
 
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
+            OpenDocument(new DocumentTestViewModel { DisplayName = "Document 1" });
+            OpenDocument(new DocumentTestViewModel { DisplayName = "Document 2" });
             OpenDocument(new CodeEditorViewModel());
 
-            ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
-            ShowTool(new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2"});
+            ShowTool(new ToolTestViewModel(PaneLocation.Left) { DisplayName = "Tool 1" });
+            ShowTool(new ToolTestViewModel(PaneLocation.Right) { DisplayName = "Tool 2" });
             ShowTool(IoC.Get<IOutput>());
         }
 
@@ -78,9 +83,11 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             base.OnViewReady(view);
         }
+        #endregion
 
         // Item actions
 
+        #region Item actions
         public override void ActivateItem(IDocument item)
         {
             //bug: complex bug, temporary solution
@@ -126,12 +133,17 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<TTool>());
         }
 
+        #endregion
+
+        // Shell behaviors
+        #region Shell behaviors
         protected override void OnDeactivate(bool close)
         {
             //bug: complex bug, temporary solution
             _closing = close;
 
             base.OnDeactivate(close);
-        }
+        } 
+        #endregion
     }
 }
