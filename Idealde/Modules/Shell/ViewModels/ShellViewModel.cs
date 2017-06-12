@@ -98,6 +98,11 @@ namespace Idealde.Modules.Shell.ViewModels
             StatusBar.AddItem("Status 1", new GridLength(100));
             StatusBar.AddItem("Status 2", new GridLength(100));
             StatusBar.AddItem("Status 3", new GridLength(100));
+
+            MainMenu.AddMenu("File");
+            MainMenu.AddMenu("Edit");
+            MainMenu.AddMenu("View");
+
         }
 
         #endregion

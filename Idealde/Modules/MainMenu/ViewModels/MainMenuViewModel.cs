@@ -9,9 +9,9 @@ namespace Idealde.Modules.MainMenu.ViewModels
         private readonly IObservableCollection<MenuItemModel> _items;
         public IObservableCollection<MenuItemModel> Items { get { return _items; } }
 
-        public void AddMenuItem(string text, Uri iconSource)
+        public void AddMenu(string text)
         {
-            _items.Add(new MenuItemModel(text, iconSource));
+            _items.Add(new MenuItemModel(text));
         }
 
         public MainMenuViewModel()

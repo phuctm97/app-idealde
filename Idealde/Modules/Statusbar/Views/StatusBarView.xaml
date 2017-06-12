@@ -6,16 +6,14 @@
              xmlns:controls="clr-namespace:Idealde.Framework.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <Style x:Key="StatusBarItemStyle" TargetType="StatusBarItem">
-            <Setter Property="Grid.Column" Value="{Binding Index}"/>
-            <Setter Property="Content" Value="{Binding Message}"/>
-        </Style>
-    </UserControl.Resources>
     <StatusBar x:Name="StatusBar" ItemsSource="{Binding Items}"
-               controls:DynamicStyle.ItemContainerBaseStyle="{DynamicResource {x:Type StatusBarItem}}"
-               controls:DynamicStyle.ItemContainerDerivedStyle="{StaticResource StatusBarItemStyle}"
                Background="#FF007ACC" Foreground="White">
+        <StatusBar.ItemContainerStyle>
+            <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
+                <Setter Property="Grid.Column" Value="{Binding Index}"/>
+                <Setter Property="Content" Value="{Binding Message}"/>
+            </Style>
+        </StatusBar.ItemContainerStyle>
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
                 <Grid x:Name="StatusBarGrid" Loaded="OnStatusBarGridLoaded"/>

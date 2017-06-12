@@ -8,10 +8,8 @@
              d:DesignHeight="100" d:DesignWidth="700">
     <Menu ItemsSource="{Binding Items}">
         <Menu.ItemTemplate>
-            <HierarchicalDataTemplate 
-                ItemsSource="{Binding Path=Items}">
-                <MenuItem Header="{Binding Text}" ItemsSource="{Binding Children}">
-                </MenuItem>
+            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
+                <TextBlock Text="{Binding Text}"></TextBlock>
             </HierarchicalDataTemplate>
         </Menu.ItemTemplate>
     </Menu>

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Services;
+using Idealde.Modules.MainMenu;
+using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
@@ -52,6 +54,10 @@ namespace Idealde
 
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //mennu bar
+            _container.RegisterType<IMenu, MainMenuViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 
