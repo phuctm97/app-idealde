@@ -8,8 +8,7 @@ namespace Idealde.Modules.MainMenu
         IObservableCollection<MenuDefinition> Items { get; }
 
         void AddMenu(params MenuDefinition[] menu);
+
         void AddMenuItem(MenuDefinition parent, params MenuItemDefinition[] menuItem);
-        void AddMenuItem(MenuItemDefinition parent, params MenuItemDefinition[] menuItem);
-        MenuItemDefinition FindMenuItemByName(MenuDefinition menu, string name);
     }
 }

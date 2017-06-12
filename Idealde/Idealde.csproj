@@ -139,8 +139,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Framework\Commands\CommandMenuItem.cs" />
     <Compile Include="Framework\Commands\RelayCommand.cs" />
-    <Compile Include="Framework\Controls\DynamicStyle.cs" />
     <Compile Include="Framework\Panes\Document.cs" />
     <Compile Include="Framework\Panes\IDocument.cs" />
     <Compile Include="Framework\Panes\ILayoutItem.cs" />
@@ -149,9 +149,10 @@
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
-    <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
-    <Compile Include="Modules\MainMenu\Models\MenuItemModel.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuDefinition.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemDefinition.cs" />
+    <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
@@ -166,7 +167,7 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
-    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemViewModel.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemBase.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
@@ -203,8 +204,13 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Framework\Controls\" />
+    <Folder Include="Framework\Menus\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Modules.MainMenu;
+using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 
@@ -99,9 +100,24 @@ namespace Idealde.Modules.Shell.ViewModels
             StatusBar.AddItem("Status 2", new GridLength(100));
             StatusBar.AddItem("Status 3", new GridLength(100));
 
-            MainMenu.AddMenu("File");
-            MainMenu.AddMenu("Edit");
-            MainMenu.AddMenu("View");
+
+            MenuDefinition fileMenu = new MenuDefinition("File");
+            MenuDefinition editMenu = new MenuDefinition("Edit");
+
+            MainMenu.AddMenu(fileMenu);
+            MainMenu.AddMenu(editMenu);
+
+            MenuItemDefinition open = new MenuItemDefinition("Open");
+            MenuItemDefinition fromFile = new MenuItemDefinition("From File...");
+            MenuItemDefinition desktop = new MenuItemDefinition("Desktop");
+            MenuItemDefinition desktop2 = new MenuItemDefinition("Desktop","Desktop of desktop");
+
+            MainMenu.AddMenuItem(fileMenu, open);
+            MainMenu.AddMenuItem(open, fromFile);
+            MainMenu.AddMenuItem(fromFile, desktop);
+            MainMenu.AddMenuItem(fromFile, desktop2);
+
+
 
         }
 

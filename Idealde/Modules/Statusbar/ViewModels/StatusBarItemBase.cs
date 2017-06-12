@@ -3,7 +3,7 @@ using Caliburn.Micro;
 
 namespace Idealde.Modules.StatusBar.ViewModels
 {
-    public class StatusBarItemViewModel : PropertyChangedBase
+    public class StatusBarItemBase : PropertyChangedBase
     {
         private int _index;
 
@@ -33,7 +33,7 @@ namespace Idealde.Modules.StatusBar.ViewModels
 
         public GridLength Width => _width;
 
-        public StatusBarItemViewModel(string message, GridLength width)
+        public StatusBarItemBase(string message, GridLength width)
         {
             _message = message;
             _width = width;
