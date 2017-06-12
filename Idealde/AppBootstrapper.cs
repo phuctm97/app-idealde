@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Services;
+using Idealde.Modules.ErrorList;
+using Idealde.Modules.ErrorList.ViewModels;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
@@ -68,6 +70,8 @@ namespace Idealde
 
             //tools
             _container.RegisterType<IOutput, OutputViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IErrorList, ErrorListViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 

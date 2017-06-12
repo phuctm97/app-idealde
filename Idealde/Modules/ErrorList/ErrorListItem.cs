@@ -73,8 +73,11 @@ namespace Idealde.Modules.ErrorList
                 if (value == _path) return;
                 _path = value;
                 NotifyOfPropertyChange(() => Path);
+                NotifyOfPropertyChange(() => File);
             }
         }
+
+        public string File => System.IO.Path.GetFileName(Path);
 
         public int? Line
         {

@@ -2,12 +2,13 @@
 
 using System.Collections.Generic;
 using Caliburn.Micro;
+using Idealde.Framework.Panes;
 
 #endregion
 
 namespace Idealde.Modules.ErrorList
 {
-    public interface IErrorList
+    public interface IErrorList : ITool
     {
         // Bind properties
         bool IsErrorsVisible { get; set; }

@@ -116,9 +116,11 @@ namespace Idealde.Modules.ErrorList.ViewModels
         public ErrorListViewModel()
         {
             DisplayName = "Error List";
+            IsErrorsVisible = true;
+            IsWarningsVisible = true;
+            IsMesagesVisible = true;
 
             Items = new BindableCollection<ErrorListItem>();
-
             Items.CollectionChanged += OnItemsCollectionChanged; ;
         }
 
