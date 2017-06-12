@@ -1,21 +1,24 @@
-﻿using System;
+﻿#region Using Namespace
+
+using System;
 using System.Windows.Input;
 using Caliburn.Micro;
-using Idealde.Framework.Commands;
+
+#endregion
 
 namespace Idealde.Modules.MainMenu.Models
 {
-    public class MenuItemDefinition: PropertyChangedBase
+    public class MenuItemDefinition : PropertyChangedBase
     {
         private string _name;
         private string _text;
         private Uri _iconSource;
         private KeyGesture _keyGesture;
-        private ICommandMenuItem _command;
+        private ICommand _command;
 
         public IObservableCollection<MenuItemDefinition> Childrens { get; set; }
 
-        public  string Name
+        public string Name
         {
             get { return _name; }
             set
@@ -28,10 +31,7 @@ namespace Idealde.Modules.MainMenu.Models
 
         public string Text
         {
-            get
-            {
-                return _text;
-            }
+            get { return _text; }
             set
             {
                 if (Equals(_text, value)) return;
@@ -42,10 +42,7 @@ namespace Idealde.Modules.MainMenu.Models
 
         public Uri IconSource
         {
-            get
-            {
-                return _iconSource;
-            }
+            get { return _iconSource; }
             set
             {
                 if (Equals(_iconSource, value)) return;
@@ -56,10 +53,7 @@ namespace Idealde.Modules.MainMenu.Models
 
         public KeyGesture KeyGesture
         {
-            get
-            {
-                return _keyGesture;
-            }
+            get { return _keyGesture; }
             set
             {
                 if (Equals(_keyGesture, value)) return;
@@ -68,7 +62,7 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public ICommandMenuItem Command
+        public ICommand Command
         {
             get { return _command; }
             set
@@ -80,7 +74,7 @@ namespace Idealde.Modules.MainMenu.Models
         }
 
 
-        public MenuItemDefinition(string text, string name="")
+        public MenuItemDefinition(string text, string name = "")
         {
             Childrens = new BindableCollection<MenuItemDefinition>();
             _text = text;
