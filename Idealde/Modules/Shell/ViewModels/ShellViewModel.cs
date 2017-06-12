@@ -94,6 +94,10 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<IErrorList>());
             IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
+            StatusBar.AddItem("Status 1", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 2", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 3", new System.Windows.GridLength(100));
+
             MenuDefinition fileMenu = new MenuDefinition("File");
             MenuDefinition editMenu = new MenuDefinition("Edit");
 
