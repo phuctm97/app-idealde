@@ -26,7 +26,7 @@ namespace Idealde.Modules.StatusBar.Views
         private void RefreshGridColumns()
         {
             _statusBarGrid.ColumnDefinitions.Clear();
-            foreach (var item in StatusBar.Items.Cast<StatusBarItemViewModel>())
+            foreach (var item in StatusBar.Items.Cast<StatusBarItemBase>())
                 _statusBarGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = item.Width });
         }
     }

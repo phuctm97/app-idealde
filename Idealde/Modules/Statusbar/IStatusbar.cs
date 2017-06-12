@@ -6,7 +6,7 @@ namespace Idealde.Modules.StatusBar
 {
     public interface IStatusBar
     {
-        IObservableCollection<StatusBarItemViewModel> Items { get; }
+        IObservableCollection<StatusBarItemBase> Items { get; }
 
         void AddItem(string message, GridLength width);
     }
