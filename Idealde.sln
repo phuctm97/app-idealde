@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idealde", "Idealde\Idealde.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Idealde.Demo", "Idealde.Demo\Idealde.Demo.csproj", "{F28FBF6C-2C5A-41B3-BB27-CA57473ADEDC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{E50005F6-7659-42C2-A07E-6C71E7A9D1BC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A2336A8C-5448-4BB3-A70D-8235281883D9}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection

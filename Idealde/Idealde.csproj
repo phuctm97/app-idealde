@@ -157,7 +157,6 @@
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Framework\Controls\DynamicStyle.cs" />
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemViewModel.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
