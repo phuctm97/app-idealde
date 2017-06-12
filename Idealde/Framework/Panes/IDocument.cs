@@ -1,6 +1,8 @@
-﻿namespace Idealde.Framework.Panes
+﻿using Caliburn.Micro;
+
+namespace Idealde.Framework.Panes
 {
-    public interface IDocument : ILayoutItem
+    public interface IDocument : IScreen, ILayoutItem
     {
         
     }

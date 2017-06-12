@@ -52,6 +52,10 @@ namespace Idealde
             _container.RegisterType<IShell, ShellViewModel>(
                 new ContainerControlledLifetimeManager());
 
+            //services
+            _container.RegisterType<IResourceManager, ResourceManager>(
+                new ContainerControlledLifetimeManager());
+
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
                 new ContainerControlledLifetimeManager());

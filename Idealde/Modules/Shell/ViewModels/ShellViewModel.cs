@@ -3,6 +3,7 @@
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
+using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
@@ -65,7 +66,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
             OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
             OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 3"});
+            OpenDocument(new CodeEditorViewModel());
 
             ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
             ShowTool(new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2"});
