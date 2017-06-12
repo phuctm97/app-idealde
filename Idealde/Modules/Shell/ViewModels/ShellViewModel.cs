@@ -109,9 +109,6 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenuItem(open, fromFile);
             MainMenu.AddMenuItem(fromFile, desktop);
             MainMenu.AddMenuItem(fromFile, desktop2);
-
-
-
         }
 
         protected override void OnViewLoaded(object view)
