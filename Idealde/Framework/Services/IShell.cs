@@ -17,12 +17,21 @@ namespace Idealde.Framework.Services
         IStatusBar StatusBar { get; }
 
         // Bind models
-        ILayoutItem ActiveItem { get; set; }
+        ILayoutItem ActiveLayoutItem { get; set; }
 
-        IDocument SelectedDocument { get; }
+        IDocument ActiveItem { get; }
 
         IObservableCollection<IDocument> Documents { get; }
 
         IObservableCollection<ITool> Tools { get; }
+
+        // Item actions
+        void OpenDocument(IDocument document);
+
+        void CloseDocument(IDocument document);
+
+        void ShowTool(ITool tool);
+
+        void ShowTool<TTool>() where TTool : ITool;
     }
 }

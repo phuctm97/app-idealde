@@ -15,25 +15,46 @@ namespace Idealde.Modules.Shell.ViewModels
     {
         // Backing fields
         private bool _closing;
+        private ILayoutItem _activeLayoutItem;
 
         // Bind models
         public IMenu MainMenu { get; }
 
         public IStatusBar StatusBar { get; }
 
-        public IDocument SelectedDocument
+        public ILayoutItem ActiveLayoutItem
         {
-            get { return ActiveItem; }
-            set { ActiveItem = value; }
+            get { return _activeLayoutItem; }
+            set
+            {
+                if (Equals(value, _activeLayoutItem)) return;
+                _activeLayoutItem = value;
+
+                if (_activeLayoutItem is IDocument)
+                {
+                    OpenDocument((IDocument) _activeLayoutItem);
+                }
+                if (_activeLayoutItem is ITool)
+                {
+                    ShowTool((ITool) _activeLayoutItem);
+                }
+                NotifyOfPropertyChange(() => ActiveLayoutItem);
+            }
         }
 
         public IObservableCollection<IDocument> Documents => Items;
 
+        public IObservableCollection<ITool> Tools { get; }
+
         // Initializations
+
         public ShellViewModel(IMenu mainMenu, IStatusBar statusBar)
         {
             MainMenu = mainMenu;
+
             StatusBar = statusBar;
+
+            Tools = new BindableCollection<ITool>();
 
             _closing = false;
         }
@@ -42,18 +63,59 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             base.OnInitialize();
 
-            ActivateItem(new DocumentTestViewModel {DisplayName = "Document 1"});
-            ActivateItem(new DocumentTestViewModel {DisplayName = "Document 2"});
-            ActivateItem(new DocumentTestViewModel {DisplayName = "Document 3"});
+            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
+            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
+            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 3"});
+
+            ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
+            ShowTool(new ToolTestViewModel(PaneLocation.Right) {DisplayName = "Tool 2"});
+            ShowTool(new ToolTestViewModel(PaneLocation.Bottom) {DisplayName = "Tool 3"});
         }
 
         // Item actions
+
         public override void ActivateItem(IDocument item)
         {
             //bug: complex bug, temporary solution
             if (_closing) return;
 
             base.ActivateItem(item);
+        }
+
+        protected override void OnActivationProcessed(IDocument item, bool success)
+        {
+            base.OnActivationProcessed(item, success);
+
+            if (!success) return;
+
+            if (Equals(item, _activeLayoutItem)) return;
+
+            _activeLayoutItem = item;
+            NotifyOfPropertyChange(() => ActiveLayoutItem);
+        }
+
+        public void OpenDocument(IDocument document)
+        {
+            ActivateItem(document);
+        }
+
+        public void CloseDocument(IDocument document)
+        {
+            DeactivateItem(document, true);
+        }
+
+        public void ShowTool(ITool tool)
+        {
+            if (!Tools.Contains(tool))
+            {
+                Tools.Add(tool);
+            }
+            tool.IsVisible = true;
+        }
+
+        public void ShowTool<TTool>() where TTool : ITool
+        {
+            ShowTool(IoC.Get<TTool>());
         }
 
         protected override void OnDeactivate(bool close)

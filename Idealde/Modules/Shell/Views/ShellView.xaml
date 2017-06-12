@@ -31,7 +31,8 @@
         <!--Main content-->
         <xcad:DockingManager Grid.Row="1"
                              DocumentsSource="{Binding Documents}"
-                             ActiveContent="{Binding SelectedDocument, Mode=TwoWay}">
+                             AnchorablesSource="{Binding Tools}"
+                             ActiveContent="{Binding ActiveLayoutItem, Mode=TwoWay}">
             <!--Item template-->
             <xcad:DockingManager.LayoutItemTemplateSelector>
                 <controls:PaneTemplateSelector>
