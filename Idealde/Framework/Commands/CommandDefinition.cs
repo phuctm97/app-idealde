@@ -1,16 +1,12 @@
-﻿#region Using Namespace
-
-using System;
-
-#endregion
+﻿using System;
 
 namespace Idealde.Framework.Commands
 {
     public abstract class CommandDefinition
     {
         public abstract string Name { get; }
-        public abstract string Text { get; }
-        public virtual string ToolTip => string.Empty;
+        public virtual string Text => string.Empty;
+        public virtual string Tooltip => string.Empty;
         public virtual Uri IconSource => null;
     }
 }

@@ -15,14 +15,17 @@ namespace Idealde.Framework.Commands
         private string _text;
         private string _tooltip;
         private Uri _iconSource;
+        private object _tag;
 
         public Command(CommandDefinition commandDefinition)
         {
             CommandDefinition = commandDefinition;
-            Text = commandDefinition.Text;
-            Tooltip = commandDefinition.ToolTip;
-            IconSource = commandDefinition.IconSource;
+            Text = CommandDefinition.Text;
+            Tooltip = CommandDefinition.Tooltip;
+            IconSource = CommandDefinition.IconSource;
         }
+
+        public CommandDefinition CommandDefinition { get; }
 
         public bool IsVisible
         {
@@ -90,6 +93,15 @@ namespace Idealde.Framework.Commands
             }
         }
 
-        public CommandDefinition CommandDefinition { get; }
+        public object Tag
+        {
+            get { return _tag; }
+            set
+            {
+                if (Equals(value, _tag)) return;
+                _tag = value;
+                NotifyOfPropertyChange(() => Tag);
+            }
+        }
     }
 }

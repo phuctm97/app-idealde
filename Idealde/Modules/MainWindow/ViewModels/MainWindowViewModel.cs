@@ -15,9 +15,6 @@ namespace Idealde.Modules.MainWindow.ViewModels
         // Dependencies
 
         #region Dependencies
-
-        private readonly ICommandKeyGestureService _commandKeyGestureService;
-
         #endregion
 
         // Backing fields

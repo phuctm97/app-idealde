@@ -8,33 +8,23 @@ using Caliburn.Micro;
 
 namespace Idealde.Modules.MainMenu.Models
 {
-    public class MenuItemDefinition : PropertyChangedBase
+    public class MenuItem : PropertyChangedBase
     {
-        private string _name;
         private string _text;
         private Uri _iconSource;
         private KeyGesture _keyGesture;
         private ICommand _command;
 
-        public IObservableCollection<MenuItemDefinition> Childrens { get; set; }
+        public IObservableCollection<MenuItem> Children { get; }
 
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (Equals(_name, value)) return;
-                _name = value;
-                NotifyOfPropertyChange(() => Name);
-            }
-        }
+        public string Name { get; }
 
         public string Text
         {
             get { return _text; }
             set
             {
-                if (Equals(_text, value)) return;
+                if (value == _text) return;
                 _text = value;
                 NotifyOfPropertyChange(() => Text);
             }
@@ -45,7 +35,7 @@ namespace Idealde.Modules.MainMenu.Models
             get { return _iconSource; }
             set
             {
-                if (Equals(_iconSource, value)) return;
+                if (Equals(value, _iconSource)) return;
                 _iconSource = value;
                 NotifyOfPropertyChange(() => IconSource);
             }
@@ -56,7 +46,7 @@ namespace Idealde.Modules.MainMenu.Models
             get { return _keyGesture; }
             set
             {
-                if (Equals(_keyGesture, value)) return;
+                if (Equals(value, _keyGesture)) return;
                 _keyGesture = value;
                 NotifyOfPropertyChange(() => KeyGesture);
             }
@@ -73,12 +63,10 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-
-        public MenuItemDefinition(string text, string name = "")
+        public MenuItem(string name)
         {
-            Childrens = new BindableCollection<MenuItemDefinition>();
-            _text = text;
-            _name = name == "" ? text : name;
+            Children = new BindableCollection<MenuItem>();
+            Name = name;
         }
     }
 }
