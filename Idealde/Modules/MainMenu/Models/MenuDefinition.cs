@@ -7,7 +7,7 @@ namespace Idealde.Modules.MainMenu.Models
 {
     public class MenuDefinition : PropertyChangedBase
     {
-        private String _name;
+        private string _name;
         private string _text;
         private Uri _iconSource;
         private KeyGesture _keyGesture;
