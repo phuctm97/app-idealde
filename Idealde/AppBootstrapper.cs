@@ -17,6 +17,10 @@ using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
+using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBar.ViewModels;
+
+
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -82,6 +86,10 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IErrorList, ErrorListViewModel>(
                 new ContainerControlledLifetimeManager());
+
+            //toolbar
+            _container.RegisterType < IToolBar, ToolBarViewModel > (
+                new ContainerControlledLifetimeManager ( ) );
         }
 
         protected override object GetInstance(Type service, string key)
