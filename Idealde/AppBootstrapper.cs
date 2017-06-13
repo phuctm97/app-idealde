@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
+using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.ErrorList;
@@ -64,6 +65,8 @@ namespace Idealde
             _container.RegisterType<IThemeManager, ThemeManager>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IResourceManager, ResourceManager>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandKeyGestureService, CommandKeyGestureService>(
                 new ContainerControlledLifetimeManager());
 
             //status bar

@@ -1,9 +1,5 @@
-﻿#region Using Namespace
-
-using System;
+﻿using System;
 using System.Windows.Input;
-
-#endregion
 
 namespace Idealde.Framework.Commands
 {
