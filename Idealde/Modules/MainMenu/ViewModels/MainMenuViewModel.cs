@@ -50,7 +50,7 @@ namespace Idealde.Modules.MainMenu.ViewModels
             }
         }
 
-        public MenuItem FindMenuItemByName(Menu menu, string name)
+        public MenuItem FindMenu(Menu menu, string name)
         {
             if (!MenuItemNameList.Contains(name)) return null;
             foreach (var child in menu.Children)
@@ -71,5 +71,14 @@ namespace Idealde.Modules.MainMenu.ViewModels
             return null;
         }
 
+        public MenuItem FindMenuItem(Menu menu, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MenuItem FindMenu(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

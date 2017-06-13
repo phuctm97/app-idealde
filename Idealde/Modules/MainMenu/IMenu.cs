@@ -15,6 +15,7 @@ namespace Idealde.Modules.MainMenu
         void AddMenuItem(Menu parent, params MenuItem[] menuItem);
         void AddMenuItem(MenuItem parent, params MenuItem[] menuItem);
 
-        MenuItem FindMenuItemByName(Menu menu, string name);
+        MenuItem FindMenuItem(Menu menu, string name);
+        MenuItem FindMenu(string name);
     }
 }

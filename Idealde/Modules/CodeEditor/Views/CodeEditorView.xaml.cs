@@ -78,7 +78,6 @@ namespace Idealde.Modules.CodeEditor.Views
                 !File.Exists($"{resourcesDirectory}\\{ConfigFileName}"))
             {
                 // roll back assignment
-                editor?.SetValue(e.Property, e.OldValue);
                 return;
             }
 
