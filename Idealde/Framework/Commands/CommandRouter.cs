@@ -17,53 +17,87 @@ namespace Idealde.Framework.Commands
     public class CommandRouter : ICommandRouter
     {
         // Dependencies
+        #region Dependencies
+
         private readonly IShell _shell;
 
-        // Backing fields
-        private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
+        #endregion
 
+        // Backing fields
+        #region Backing fields
+
+        private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
+        private readonly Dictionary<Type, ICommandHandler> _commandDefinitionTypeToCommandHandlerLookup;
+
+        #endregion
+
+        // Initializations
+        #region Initializations
         public CommandRouter(IShell shell)
         {
             _shell = shell;
 
             _commandHandlerTypeToCommandDefinitionTypesLookup = new Dictionary<Type, HashSet<Type>>();
+
+            _commandDefinitionTypeToCommandHandlerLookup = new Dictionary<Type, ICommandHandler>();
+
+            BuildCommandDefinitionTypeToCommandHandlerLookup();
         }
+
+        private void BuildCommandDefinitionTypeToCommandHandlerLookup()
+        {
+            // get registered handler in container
+            var commandHandlersList = IoC.GetAll<ICommandHandler>();
+
+            foreach (var commandHandler in commandHandlersList)
+            {
+                // extract handled command definition type and hash to table
+
+                var commandHandlerType = commandHandler.GetType();
+                EnsureCommandHandlerTypeToCommandDefinitionTypesPopulated(commandHandlerType);
+                var commandDefinitionTypes = _commandHandlerTypeToCommandDefinitionTypesLookup[commandHandlerType];
+
+                foreach (var commandDefinitionType in commandDefinitionTypes)
+                {
+                    _commandDefinitionTypeToCommandHandlerLookup.Add(commandDefinitionType, commandHandler);
+                }
+            }
+        } 
+        #endregion
 
         public ICommandHandler GetHandler(CommandDefinition commandDefinition)
         {
             ICommandHandler handler = null;
 
+            // trav handler in visual tree start from shell active layout item
             if (_shell.ActiveLayoutItem != null)
             {
                 handler = GetCommandHandlerForLayoutItem(commandDefinition, _shell.ActiveLayoutItem);
                 if (handler != null) return handler;
             }
 
+            // trav handler in visual tree start from shell active document
             if (_shell.ActiveItem != null)
             {
                 handler = GetCommandHandlerForLayoutItem(commandDefinition, _shell.ActiveItem);
                 if (handler != null) return handler;
             }
 
-            try
-            {
-                handler = (ICommandHandler) IoC.GetInstance(typeof(CommandDefinition), string.Empty);
-            }
-            catch
-            {
-                return null;
-            }
-
+            // last case, find in global hash table
+            _commandDefinitionTypeToCommandHandlerLookup.TryGetValue(commandDefinition.GetType(), out handler);
             return handler;
         }
 
         private ICommandHandler GetCommandHandlerForLayoutItem(CommandDefinition commandDefinition,
             ILayoutItem layoutItem)
         {
+            // get view to trav visual tree
             var view = ViewLocator.LocateForModel(layoutItem, null, null);
+            // check for current working view
             var window = Window.GetWindow(view);
             if (window == null) return null;
 
+            // trav
             var initialElement = FocusManager.GetFocusedElement(view) ?? view;
             return FindCommandHandlerInVisualTree(commandDefinition, initialElement);
         }
@@ -71,10 +105,12 @@ namespace Idealde.Framework.Commands
         private ICommandHandler FindCommandHandlerInVisualTree(CommandDefinition commandDefinition,
             IInputElement initialElement)
         {
+            // trav object
             var visualObject = initialElement as DependencyObject;
             if (visualObject == null)
                 return null;
 
+            // to pass same data context element
             object previousDataContext = null;
             do
             {
@@ -83,6 +119,7 @@ namespace Idealde.Framework.Commands
 
                 if (dataContext != null && !ReferenceEquals(dataContext, previousDataContext))
                 {
+                    // check correct handle command definition
                     if (IsCommandHandlerForCommandDefinitionType(dataContext, commandDefinition.GetType()))
                         return (ICommandHandler) dataContext;
 
@@ -97,6 +134,7 @@ namespace Idealde.Framework.Commands
 
         private bool IsCommandHandlerForCommandDefinitionType(object handler, Type commandDefinitionType)
         {
+            // extract handled command definitions in handler type to find out current command definition
             var handlerType = handler.GetType();
             EnsureCommandHandlerTypeToCommandDefinitionTypesPopulated(handlerType);
             var commandDefinitionTypes = _commandHandlerTypeToCommandDefinitionTypesLookup[handlerType];
@@ -107,6 +145,7 @@ namespace Idealde.Framework.Commands
         {
             if (_commandHandlerTypeToCommandDefinitionTypesLookup.ContainsKey(commandHandlerType)) return;
 
+            // extract handled command definitions in handler type and hash to table
             var commandDefinitionTypes =
                 _commandHandlerTypeToCommandDefinitionTypesLookup[commandHandlerType] = new HashSet<Type>();
 
@@ -134,5 +173,6 @@ namespace Idealde.Framework.Commands
 
             return result;
         }
+
     }
 }

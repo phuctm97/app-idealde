@@ -12,14 +12,12 @@ namespace Idealde.Modules.MainMenu.Models
     {
         private string _text;
         private Uri _iconSource;
-        private KeyGesture _keyGesture;
-        private ICommand _command;
 
         public IObservableCollection<MenuItem> Children { get; }
 
         public string Name { get; }
 
-        public string Text
+        public virtual string Text
         {
             get { return _text; }
             set
@@ -30,7 +28,7 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public Uri IconSource
+        public virtual Uri IconSource
         {
             get { return _iconSource; }
             set
@@ -41,27 +39,9 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public KeyGesture KeyGesture
-        {
-            get { return _keyGesture; }
-            set
-            {
-                if (Equals(value, _keyGesture)) return;
-                _keyGesture = value;
-                NotifyOfPropertyChange(() => KeyGesture);
-            }
-        }
+        public virtual KeyGesture KeyGesture => null;
 
-        public ICommand Command
-        {
-            get { return _command; }
-            set
-            {
-                if (Equals(value, _command)) return;
-                _command = value;
-                NotifyOfPropertyChange(() => Command);
-            }
-        }
+        public virtual ICommand Command => null;
 
         public MenuItem(string name)
         {

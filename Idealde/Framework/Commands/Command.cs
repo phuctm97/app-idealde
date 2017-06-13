@@ -9,6 +9,10 @@ namespace Idealde.Framework.Commands
 {
     public class Command : PropertyChangedBase
     {
+        // Backing fields
+
+        #region Backing fields
+
         private bool _isVisible;
         private bool _isEnabled;
         private bool _isChecked;
@@ -17,16 +21,31 @@ namespace Idealde.Framework.Commands
         private Uri _iconSource;
         private object _tag;
 
+        #endregion
+
+        // Initializations
+
+        #region Initializations
+
         public Command(CommandDefinition commandDefinition)
         {
             CommandDefinition = commandDefinition;
             Text = CommandDefinition.Text;
             Tooltip = CommandDefinition.Tooltip;
             IconSource = CommandDefinition.IconSource;
+            IsEnabled = true;
+            IsVisible = true;
         }
+
+        #endregion
+
+        // Bind properites
+
+        #region Bind properties
 
         public CommandDefinition CommandDefinition { get; }
 
+        // Command state visible
         public bool IsVisible
         {
             get { return _isVisible; }
@@ -38,6 +57,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command state enable
         public bool IsEnabled
         {
             get { return _isEnabled; }
@@ -49,6 +69,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command state checked
         public bool IsChecked
         {
             get { return _isChecked; }
@@ -60,6 +81,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command display name
         public string Text
         {
             get { return _text; }
@@ -71,6 +93,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command display description
         public string Tooltip
         {
             get { return _tooltip; }
@@ -82,6 +105,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command display icon
         public Uri IconSource
         {
             get { return _iconSource; }
@@ -93,6 +117,7 @@ namespace Idealde.Framework.Commands
             }
         }
 
+        // Command helper object
         public object Tag
         {
             get { return _tag; }
@@ -103,5 +128,7 @@ namespace Idealde.Framework.Commands
                 NotifyOfPropertyChange(() => Tag);
             }
         }
+
+        #endregion
     }
 }

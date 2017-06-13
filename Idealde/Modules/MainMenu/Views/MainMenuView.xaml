@@ -7,6 +7,11 @@
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="700">
     <Menu ItemsSource="{Binding Items}">
+        <Menu.ItemContainerStyle>
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                <Setter Property="Command" Value="{Binding Command}" />
+            </Style>
+        </Menu.ItemContainerStyle>
         <Menu.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                 <TextBlock Text="{Binding Text}"></TextBlock>

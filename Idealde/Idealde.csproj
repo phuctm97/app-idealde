@@ -189,8 +189,10 @@
     <Compile Include="Framework\Commands\Command.cs" />
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
     <Compile Include="Framework\Commands\CommandRouter.cs" />
+    <Compile Include="Framework\Commands\CommandService.cs" />
     <Compile Include="Framework\Commands\ICommandHandler.cs" />
     <Compile Include="Framework\Commands\ICommandRouter.cs" />
+    <Compile Include="Framework\Commands\ICommandService.cs" />
     <Compile Include="Framework\Commands\RelayCommand.cs" />
     <Compile Include="Framework\Commands\TargatableCommand.cs" />
     <Compile Include="Framework\Panes\Document.cs" />
@@ -219,6 +221,7 @@
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\MainMenu\IMenu.cs" />
+    <Compile Include="Modules\MainMenu\Models\CommandMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItem.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
@@ -235,6 +238,8 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />

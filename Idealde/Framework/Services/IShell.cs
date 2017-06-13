@@ -35,5 +35,8 @@ namespace Idealde.Framework.Services
         void ShowTool(ITool tool);
 
         void ShowTool<TTool>() where TTool : ITool;
+
+        // Shell actions
+        void Close();
     }
 }

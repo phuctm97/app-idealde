@@ -1,5 +1,6 @@
 ﻿#region Using Namespace
 
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
@@ -9,6 +10,7 @@ using Idealde.Modules.ErrorList;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output;
+using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 using Idealde.Modules.ToolBar;
@@ -98,9 +100,9 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<IErrorList>());
             IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
-            StatusBar.AddItem("Status 1", new System.Windows.GridLength(100));
-            StatusBar.AddItem("Status 2", new System.Windows.GridLength(100));
-            StatusBar.AddItem("Status 3", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 1", new GridLength(100));
+            StatusBar.AddItem("Status 2", new GridLength(100));
+            StatusBar.AddItem("Status 3", new GridLength(100));
 
             var fileMenu = new Menu("File");
 
@@ -110,7 +112,7 @@ namespace Idealde.Modules.Shell.ViewModels
             var open = new MenuItem("Open") {Text = "Open"};
             var save = new MenuItem("Save") {Text = "Save"};
             var saveAs = new MenuItem("SaveAs") {Text = "Save As ..."};
-            var exit = new MenuItem("Exit") {Text = "Exit"};
+            var exit = new CommandMenuItem<ExitCommandDefinition>("Exit") {Text = "Exit"};
 
             MainMenu.AddMenuItem(fileMenu, newFile, open, save, saveAs, exit);
         }
@@ -188,6 +190,11 @@ namespace Idealde.Modules.Shell.ViewModels
             _closing = close;
 
             base.OnDeactivate(close);
+        }
+
+        public void Close()
+        {
+            Application.Current.MainWindow.Close();
         }
 
         #endregion
