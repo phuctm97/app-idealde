@@ -1,14 +1,62 @@
 ﻿<UserControl x:Class="Idealde.Modules.MainMenu.Views.MainMenuView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mahappsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Idealde.Modules.MainMenu.Views"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="MetroMenuItem" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="8,2,10,2" />
+                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey}}" />
+                <Style.Resources>
+                    <!--Disabled all images placed inside a button - most common scenario-->
+                    <Style TargetType="Image">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                    <Style TargetType="Path">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Style.Resources>
+                <Style.Triggers>
+                    <Trigger Property="Role" Value="TopLevelHeader">
+                        <Setter Property="Padding" Value="7,2,8,3" />
+                        <Setter Property="Template"
+                        Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey}}" />
+                    </Trigger>
+                    <Trigger Property="Role" Value="TopLevelItem">
+                        <Setter Property="Padding" Value="7,2,8,3" />
+                        <Setter Property="Template"
+                        Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey}}" />
+                    </Trigger>
+                    <Trigger Property="Role" Value="SubmenuHeader">
+                        <Setter Property="Padding" Value="2,3,2,3" />
+                        <Setter Property="Template"
+                        Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey}}" />
+                    </Trigger>
+                    <Trigger Property="Role" Value="SubmenuItem">
+                        <Setter Property="Padding" Value="2,3,2,3" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Menu ItemsSource="{Binding Items}">
         <Menu.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+            <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
                 <Setter Property="Command" Value="{Binding Command}" />
             </Style>
         </Menu.ItemContainerStyle>
