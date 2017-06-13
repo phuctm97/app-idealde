@@ -78,6 +78,7 @@ namespace Idealde.Modules.CodeEditor.Views
                 !File.Exists($"{resourcesDirectory}\\{ConfigFileName}"))
             {
                 // roll back assignment
+                if (e.OldValue != null && e.OldValue == "") return;
                 editor?.SetValue(e.Property, e.OldValue);
                 return;
             }
@@ -142,6 +143,7 @@ namespace Idealde.Modules.CodeEditor.Views
 
             // Autocomplete suggestions for new language
             ReloadAutocompleteMenu();
+            ScintillaFolding();
         }
 
         // code Folding ( after Lexer changed )
@@ -540,9 +542,6 @@ namespace Idealde.Modules.CodeEditor.Views
             return ScintillaEditor.Text;
         }
         #endregion //behaviors
-
         
     }
-
-
 }
