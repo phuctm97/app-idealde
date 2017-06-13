@@ -1,5 +1,4 @@
-﻿using System;
-using ScintillaNET;
+﻿using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor
 {

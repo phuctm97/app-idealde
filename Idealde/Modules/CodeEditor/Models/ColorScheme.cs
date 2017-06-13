@@ -1,4 +1,4 @@
-﻿namespace Idealde.Modules.CodeEditor.Config
+﻿namespace Idealde.Modules.CodeEditor.Models
 {
 
     internal class RGB
