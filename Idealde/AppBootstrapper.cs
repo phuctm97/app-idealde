@@ -19,8 +19,6 @@ using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBar;
 using Idealde.Modules.ToolBar.ViewModels;
-
-
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -70,15 +68,17 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IResourceManager, ResourceManager>(
                 new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandKeyGestureService, CommandKeyGestureService>(
-                new ContainerControlledLifetimeManager());
 
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
-            //mennu bar
+            //menu bar
             _container.RegisterType<IMenu, MainMenuViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //toolbar
+            _container.RegisterType<IToolBar, ToolBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
             //tools
@@ -86,10 +86,6 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IErrorList, ErrorListViewModel>(
                 new ContainerControlledLifetimeManager());
-
-            //toolbar
-            _container.RegisterType < IToolBar, ToolBarViewModel > (
-                new ContainerControlledLifetimeManager ( ) );
         }
 
         protected override object GetInstance(Type service, string key)

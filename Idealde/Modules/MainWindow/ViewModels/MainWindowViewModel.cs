@@ -105,10 +105,8 @@ namespace Idealde.Modules.MainWindow.ViewModels
 
         #region Initializations
 
-        public MainWindowViewModel(ICommandKeyGestureService commandKeyGestureService)
+        public MainWindowViewModel()
         {
-            _commandKeyGestureService = commandKeyGestureService;
-
             Title = @"Idealde";
 
             Width = 1280;
@@ -127,8 +125,6 @@ namespace Idealde.Modules.MainWindow.ViewModels
 
         protected override void OnViewLoaded(object view)
         {
-            _commandKeyGestureService.BindKeyGestures((UIElement) view);
-
             base.OnViewLoaded(view);
         }
 

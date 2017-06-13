@@ -11,6 +11,7 @@ using Idealde.Modules.Output;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
+using Idealde.Modules.ToolBar;
 
 #endregion
 
@@ -35,6 +36,8 @@ namespace Idealde.Modules.Shell.ViewModels
         #region Bind models
 
         public IMenu MainMenu { get; }
+
+        public IToolBar ToolBar { get; }
 
         public IStatusBar StatusBar { get; }
 
@@ -68,13 +71,14 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IStatusBar statusBar)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar)
         {
             _themeManager = themeManager;
 
             MainMenu = mainMenu;
 
             StatusBar = statusBar;
+            ToolBar = toolBar;
 
             Tools = new BindableCollection<ITool>();
 

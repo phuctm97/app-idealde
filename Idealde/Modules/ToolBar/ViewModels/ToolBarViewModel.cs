@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Namespace
 
 using Caliburn.Micro;
-
 using Idealde.Modules.ToolBar.Model;
+
+#endregion
 
 namespace Idealde.Modules.ToolBar.ViewModels
 {
-    class ToolBarViewModel:ViewAware,IToolBar
+    class ToolBarViewModel : ViewAware, IToolBar
     {
         #region Fields
 
-        public IObservableCollection<ToolBarDefiniton> Items
-        {
-            get;
-        }
+        public IObservableCollection<ToolBarDefiniton> Items { get; }
 
         #endregion
 
         #region Initiliazation
 
-        public ToolBarViewModel ( )
+        public ToolBarViewModel()
         {
-            Items=new BindableCollection < ToolBarDefiniton > ();
+            Items = new BindableCollection<ToolBarDefiniton>();
         }
 
         #endregion
@@ -34,7 +28,7 @@ namespace Idealde.Modules.ToolBar.ViewModels
 
         public void AddToolBarItem(ToolBarGroupItemDefinition parent, params ToolBarItemDefinition[] toolBarItems)
         {
-            foreach ( var toolBarItem in toolBarItems )
+            foreach (var toolBarItem in toolBarItems)
             {
                 parent.Children.Add(toolBarItem);
             }
@@ -42,15 +36,15 @@ namespace Idealde.Modules.ToolBar.ViewModels
 
         public void AddToolBarGroupItem(ToolBarDefiniton parent, params ToolBarGroupItemDefinition[] toolBarGroupItems)
         {
-            foreach ( var toolBarGroupItem in toolBarGroupItems )
+            foreach (var toolBarGroupItem in toolBarGroupItems)
             {
                 parent.Children.Add(toolBarGroupItem);
             }
         }
 
-        public void AddToolBar ( params ToolBarDefiniton [ ] toolBars )
+        public void AddToolBar(params ToolBarDefiniton[] toolBars)
         {
-            foreach ( var toolBar in toolBars )
+            foreach (var toolBar in toolBars)
             {
                 Items.Add(toolBar);
             }
