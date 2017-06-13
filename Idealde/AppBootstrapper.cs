@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Services;
+using Idealde.Framework.Themes;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.ErrorList.ViewModels;
 using Idealde.Modules.MainMenu;
@@ -54,6 +55,9 @@ namespace Idealde
             _container.RegisterType<IEventAggregator, EventAggregator>(
                 new ContainerControlledLifetimeManager());
 
+            //themes
+            _container.RegisterType<ITheme, BlueTheme>("Blue");
+
             //main window
             _container.RegisterType<IMainWindow, MainWindowViewModel>(
                 new ContainerControlledLifetimeManager());
@@ -61,6 +65,8 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
 
             //services
+            _container.RegisterType<IThemeManager, ThemeManager>(
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<IResourceManager, ResourceManager>(
                 new ContainerControlledLifetimeManager());
 

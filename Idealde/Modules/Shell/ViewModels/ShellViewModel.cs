@@ -3,6 +3,7 @@
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
+using Idealde.Framework.Themes;
 using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.MainMenu;
@@ -17,6 +18,9 @@ namespace Idealde.Modules.Shell.ViewModels
 {
     public class ShellViewModel : Conductor<IDocument>.Collection.OneActive, IShell
     {
+        // Dependencies
+        private readonly IThemeManager _themeManager;
+
         // Backing fields
 
         #region Backing fields
@@ -64,8 +68,10 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IMenu mainMenu, IStatusBar statusBar)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IStatusBar statusBar)
         {
+            _themeManager = themeManager;
+
             MainMenu = mainMenu;
 
             StatusBar = statusBar;
@@ -88,6 +94,10 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<IErrorList>());
             IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
+            StatusBar.AddItem("Status 1", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 2", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 3", new System.Windows.GridLength(100));
+
             MenuDefinition fileMenu = new MenuDefinition("File");
             MenuDefinition editMenu = new MenuDefinition("Edit");
 
@@ -103,9 +113,16 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenuItem(open, fromFile);
             MainMenu.AddMenuItem(fromFile, desktop);
             MainMenu.AddMenuItem(fromFile, desktop2);
+        }
 
+        protected override void OnViewLoaded(object view)
+        {
+            if (_themeManager.CurrentTheme == null)
+            {
+                _themeManager.SetCurrentTheme("Blue");
+            }
 
-
+            base.OnViewLoaded(view);
         }
 
         #endregion

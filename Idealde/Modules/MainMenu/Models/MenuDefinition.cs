@@ -11,7 +11,7 @@ namespace Idealde.Modules.MainMenu.Models
         private string _text;
         private Uri _iconSource;
         private KeyGesture _keyGesture;
-        private ICommandMenuItem _command;
+        private ICommand _command;
 
         public String Name
         {
@@ -57,7 +57,7 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public ICommandMenuItem Command
+        public ICommand Command
         {
             get { return _command; }
             set

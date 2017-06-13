@@ -44,6 +44,10 @@
       <HintPath>..\packages\Caliburn.Micro.3.1.0\lib\net45\Caliburn.Micro.Platform.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="MahApps.Metro, Version=1.5.0.23, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +71,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -94,6 +102,10 @@
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
       <HintPath>..\packages\Extended.Wpf.Toolkit.2.9\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2013, Version=2.9.0.1, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xceed.Wpf.AvalonDock.Themes.VS2013.2.9.0.1\lib\net40-client\Xceed.Wpf.AvalonDock.Themes.VS2013.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Xceed.Wpf.DataGrid, Version=2.9.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
@@ -150,10 +162,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Themes\VS2013\BlueTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\Tooltip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\WindowCommands.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Framework\Commands\CommandMenuItem.cs" />
     <Compile Include="Framework\Commands\RelayCommand.cs" />
     <Compile Include="Framework\Panes\Document.cs" />
     <Compile Include="Framework\Panes\IDocument.cs" />
@@ -166,6 +197,10 @@
     <Compile Include="Framework\Services\IResourceManager.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
     <Compile Include="Framework\Services\ResourceManager.cs" />
+    <Compile Include="Framework\Themes\BlueTheme.cs" />
+    <Compile Include="Framework\Themes\ITheme.cs" />
+    <Compile Include="Framework\Themes\IThemeManager.cs" />
+    <Compile Include="Framework\Themes\ThemeManager.cs" />
     <Compile Include="Modules\CodeEditor\ViewModels\CodeEditorViewModel.cs" />
     <Compile Include="Modules\CodeEditor\Views\CodeEditorView.xaml.cs">
       <DependentUpon>CodeEditorView.xaml</DependentUpon>
@@ -249,9 +284,6 @@
   <ItemGroup>
     <Folder Include="Framework\Controls\" />
     <Folder Include="Framework\Menus\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
