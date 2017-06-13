@@ -10,18 +10,14 @@
         <BooleanToVisibilityConverter x:Key="boolToVisConverter"/>
     </UserControl.Resources>
     <Menu ItemsSource="{Binding Items}">
+        <Menu.ItemContainerStyle>
+            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                <Setter Property="Command" Value="{Binding Command}" />
+            </Style>
+        </Menu.ItemContainerStyle>
         <Menu.ItemTemplate>
-            <HierarchicalDataTemplate ItemsSource="{Binding Path=Childrens}">
-                <HierarchicalDataTemplate.ItemContainerStyle>
-                    <Style TargetType="{x:Type MenuItem}">
-                        <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource boolToVisConverter}}" />
-                        <Setter Property="InputGestureText" Value="{Binding KeyGesture}" />
-                        <Setter Property="Icon" Value="{Binding IconSource}" />
-                        <Setter Property="IsCheckable" Value="{Binding IsCheckable, Mode=OneWay}" />
-                        <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=OneWay}" />
-                    </Style>
-                </HierarchicalDataTemplate.ItemContainerStyle>
-                <ContentPresenter Content="{Binding Text}"></ContentPresenter>
+            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
+                <TextBlock Text="{Binding Text}"></TextBlock>
             </HierarchicalDataTemplate>
         </Menu.ItemTemplate>
     </Menu>

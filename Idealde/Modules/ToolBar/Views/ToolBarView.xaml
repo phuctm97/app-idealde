@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Idealde.Modules.ToolBar.Views.ToolBarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Idealde.Modules.ToolBar.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <ToolBarTray>
+        <ToolBar ItemsSource="{Binding Items}">
+            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                <Button Content="{Binding Text}"></Button>
+            </HierarchicalDataTemplate>
+        </ToolBar>
+    </ToolBarTray>
+</UserControl>

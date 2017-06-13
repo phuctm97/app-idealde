@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
+using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.ErrorList;
@@ -13,9 +14,12 @@ using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Output;
 using Idealde.Modules.Output.ViewModels;
+using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
+using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBar.ViewModels;
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -59,19 +63,29 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IShell, ShellViewModel>(
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
 
             //services
             _container.RegisterType<IThemeManager, ThemeManager>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IResourceManager, ResourceManager>(
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandService, CommandService>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandRouter, CommandRouter>(
+                new ContainerControlledLifetimeManager());
 
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
-            //mennu bar
+            //menu bar
             _container.RegisterType<IMenu, MainMenuViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //toolbar
+            _container.RegisterType<IToolBar, ToolBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
             //tools

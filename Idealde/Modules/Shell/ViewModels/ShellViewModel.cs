@@ -1,5 +1,6 @@
 ﻿#region Using Namespace
 
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
@@ -7,10 +8,12 @@ using Idealde.Framework.Themes;
 using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.MainMenu;
-using Idealde.Modules.Output;
 using Idealde.Modules.MainMenu.Models;
+using Idealde.Modules.Output;
+using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
+using Idealde.Modules.ToolBar;
 
 #endregion
 
@@ -35,6 +38,8 @@ namespace Idealde.Modules.Shell.ViewModels
         #region Bind models
 
         public IMenu MainMenu { get; }
+
+        public IToolBar ToolBar { get; }
 
         public IStatusBar StatusBar { get; }
 
@@ -68,13 +73,14 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IStatusBar statusBar)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar)
         {
             _themeManager = themeManager;
 
             MainMenu = mainMenu;
 
             StatusBar = statusBar;
+            ToolBar = toolBar;
 
             Tools = new BindableCollection<ITool>();
 
@@ -94,25 +100,21 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(IoC.Get<IErrorList>());
             IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
-            StatusBar.AddItem("Status 1", new System.Windows.GridLength(100));
-            StatusBar.AddItem("Status 2", new System.Windows.GridLength(100));
-            StatusBar.AddItem("Status 3", new System.Windows.GridLength(100));
+            StatusBar.AddItem("Status 1", new GridLength(100));
+            StatusBar.AddItem("Status 2", new GridLength(100));
+            StatusBar.AddItem("Status 3", new GridLength(100));
 
-            MenuDefinition fileMenu = new MenuDefinition("File");
-            MenuDefinition editMenu = new MenuDefinition("Edit");
+            var fileMenu = new Menu("File");
 
             MainMenu.AddMenu(fileMenu);
-            MainMenu.AddMenu(editMenu);
 
-            MenuItemDefinition open = new MenuItemDefinition("Open");
-            MenuItemDefinition fromFile = new MenuItemDefinition("From File...");
-            MenuItemDefinition desktop = new MenuItemDefinition("Desktop");
-            MenuItemDefinition desktop2 = new MenuItemDefinition("Desktop","Desktop of desktop");
+            var newFile = new MenuItem("New") {Text = "New"};
+            var open = new MenuItem("Open") {Text = "Open"};
+            var save = new MenuItem("Save") {Text = "Save"};
+            var saveAs = new MenuItem("SaveAs") {Text = "Save As ..."};
+            var exit = new CommandMenuItem<ExitCommandDefinition>("Exit") {Text = "Exit"};
 
-            MainMenu.AddMenuItem(fileMenu, open);
-            MainMenu.AddMenuItem(open, fromFile);
-            MainMenu.AddMenuItem(fromFile, desktop);
-            MainMenu.AddMenuItem(fromFile, desktop2);
+            MainMenu.AddMenuItem(fileMenu, newFile, open, save, saveAs, exit);
         }
 
         protected override void OnViewLoaded(object view)
@@ -188,6 +190,11 @@ namespace Idealde.Modules.Shell.ViewModels
             _closing = close;
 
             base.OnDeactivate(close);
+        }
+
+        public void Close()
+        {
+            Application.Current.MainWindow.Close();
         }
 
         #endregion

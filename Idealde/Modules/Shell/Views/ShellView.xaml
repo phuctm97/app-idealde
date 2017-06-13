@@ -18,18 +18,22 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--Menu bar-->
         <ContentControl Grid.Row="0" cal:View.Model="{Binding MainMenu}" />
+        
+        <!--Tool bar-->
+        <!--<ContentControl Grid.Row="1" cal:View.Model="{Binding ToolBar}" />-->
 
         <!--Status bar-->
-        <ContentControl Grid.Row="2" cal:View.Model="{Binding StatusBar}" />
+        <ContentControl Grid.Row="3" cal:View.Model="{Binding StatusBar}" />
 
         <!--Main content-->
-        <xcad:DockingManager Grid.Row="1"
+        <xcad:DockingManager Grid.Row="2"
                              DocumentsSource="{Binding Documents}"
                              AnchorablesSource="{Binding Tools}"
                              ActiveContent="{Binding ActiveLayoutItem, Mode=TwoWay}">

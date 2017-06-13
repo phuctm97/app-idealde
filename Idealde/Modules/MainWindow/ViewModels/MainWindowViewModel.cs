@@ -3,6 +3,7 @@
 using System.Windows;
 using System.Windows.Media;
 using Caliburn.Micro;
+using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 
 #endregion
@@ -11,6 +12,11 @@ namespace Idealde.Modules.MainWindow.ViewModels
 {
     public class MainWindowViewModel : Conductor<IShell>, IMainWindow
     {
+        // Dependencies
+
+        #region Dependencies
+        #endregion
+
         // Backing fields
 
         #region Backing fields
@@ -112,6 +118,11 @@ namespace Idealde.Modules.MainWindow.ViewModels
             base.OnInitialize();
 
             ActivateItem(IoC.Get<IShell>());
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
         }
 
         #endregion

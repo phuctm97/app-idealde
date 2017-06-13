@@ -9,14 +9,14 @@ namespace Idealde.Modules.MainMenu.ViewModels
     {
         public MainMenuViewModel()
         {
-            Items = new BindableCollection<MenuDefinition>();
+            Items = new BindableCollection<Menu>();
             MenuItemNameList = new List<string>();
         }
 
         private List<string> MenuItemNameList { get; set; }
-        public IObservableCollection<MenuDefinition> Items { get; }
+        public IObservableCollection<Menu> Items { get; }
 
-        public void AddMenu(params MenuDefinition[] menu)
+        public void AddMenu(params Menu[] menu)
         {
             foreach (var menuDefinition in menu)
             {
@@ -27,33 +27,33 @@ namespace Idealde.Modules.MainMenu.ViewModels
             }
         }
 
-        public void AddMenuItem(MenuDefinition parent, params MenuItemDefinition[] menuItem)
+        public void AddMenuItem(Menu parent, params MenuItem[] menuItem)
         {
             foreach (var menuItemDefinition in menuItem)
             {
                 if (MenuItemNameList.Contains(menuItemDefinition.Name))
                     throw new Exception("Menu item name duplicated");
-                parent.Childrens.Add(menuItemDefinition);
+                parent.Children.Add(menuItemDefinition);
                 MenuItemNameList.Add(menuItemDefinition.Name);
 
             }
         }
 
-        public void AddMenuItem(MenuItemDefinition parent, params MenuItemDefinition[] menuItem)
+        public void AddMenuItem(MenuItem parent, params MenuItem[] menuItem)
         {
             foreach (var menuItemDefinition in menuItem)
             {
                 if (MenuItemNameList.Contains(menuItemDefinition.Name))
                     throw new Exception("Menu item name duplicated");
-                parent.Childrens.Add(menuItemDefinition);
+                parent.Children.Add(menuItemDefinition);
                 MenuItemNameList.Add(menuItemDefinition.Name);
             }
         }
 
-        public MenuItemDefinition FindMenuItemByName(MenuDefinition menu, string name)
+        public MenuItem FindMenuItemByName(Menu menu, string name)
         {
             if (!MenuItemNameList.Contains(name)) return null;
-            foreach (var child in menu.Childrens)
+            foreach (var child in menu.Children)
             {
                 if (child.Name == name) return child;
                 return FindRecursive(child, name);
@@ -61,9 +61,9 @@ namespace Idealde.Modules.MainMenu.ViewModels
             return null;
         }
 
-        private MenuItemDefinition FindRecursive(MenuItemDefinition menuItem, string name)
+        private MenuItem FindRecursive(MenuItem menuItem, string name)
         {
-            foreach (var child in menuItem.Childrens)
+            foreach (var child in menuItem.Children)
             {
                 if (menuItem.Name == name) return menuItem;
                 return FindRecursive(child, name);
