@@ -9,7 +9,7 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <WindowsFormsHost>
-            <scintilla:Scintilla x:Name="ScintillaEditor" ScrollWidth="100"/>
+            <scintilla:Scintilla x:Name="ScintillaEditor" ScrollWidth="100" TextChanged="OnTextChanged"/>
         </WindowsFormsHost>
     </Grid>
 </UserControl>

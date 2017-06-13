@@ -1,11 +1,12 @@
 ﻿using Idealde.Framework.Panes;
+using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor
 {
     public interface ICodeEditor: IPersistedDocument
     {
-        void ChangeColor();
+        void SetLanguage(Lexer lexer);
+        void Goto(int row, int column);
         string GetContent();
-        void Goto(long row, long column);
     }
 }

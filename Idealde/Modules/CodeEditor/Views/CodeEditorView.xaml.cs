@@ -13,6 +13,7 @@ namespace Idealde.Modules.CodeEditor.Views
     /// </summary>
     public partial class CodeEditorView : UserControl, ICodeEditorView
     {
+        #region CodeEditorView Definition
         public const string CodeSuggestionsDirectoryName = "Code-Suggestions";
 
         public const string ColorSchemesDirectoryName = "Color-Schemes";
@@ -28,27 +29,19 @@ namespace Idealde.Modules.CodeEditor.Views
                 new PropertyMetadata(Lexer.Null, OnLexerChanged));
 
 
-        public CodeEditorView()
+        // Define autocomplete menu and key word
+        private readonly AutocompleteMenu _autocompleteMenu;
+
+        private readonly Dictionary<Lexer, string> _keyWord1;
+
+        private readonly Dictionary<Lexer, string> _keyWord2;
+        #endregion // Definition
+
+        #region Lexer property
+        public Lexer Lexer
         {
-            InitializeComponent();
-
-            // Scintilla keyword storages
-            _keyWord1 = new Dictionary<Lexer, string>();
-
-            _keyWord2 = new Dictionary<Lexer, string>();
-
-            // Wire autocomplete menu
-            _autocompleteMenu = new AutocompleteMenu
-            {
-                TargetControlWrapper = new ScintillaWrapper(ScintillaEditor),
-                AllowsTabKey = true
-            };
-
-            ScintillaFolding();
-        }
-
-        private void ScintillaInitialize(object sender, RoutedEventArgs e)
-        {
+            get { return (Lexer)GetValue(LexerProperty); }
+            set { SetValue(LexerProperty, value); }
         }
 
         private static void OnLexerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -57,13 +50,14 @@ namespace Idealde.Modules.CodeEditor.Views
 
             editor?.ReloadLexer();
         }
+        #endregion //Lexer property
 
-        public Lexer Lexer
+        #region ResourcesDirectory property
+        public string ResourcesDirectory
         {
-            get { return (Lexer)GetValue(LexerProperty); }
-            set { SetValue(LexerProperty, value); }
+            get { return (string)GetValue(ResourcesDirectoryProperty); }
+            set { SetValue(ResourcesDirectoryProperty, value); }
         }
-
 
         private static void OnResourcesDirectoryChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -90,20 +84,35 @@ namespace Idealde.Modules.CodeEditor.Views
 
             editor?.ReloadConfig();
         }
+        #endregion // ResourcesDirectory property
 
-        public string ResourcesDirectory
+        #region CodeEditorView initialization
+        public CodeEditorView()
         {
-            get { return (string)GetValue(ResourcesDirectoryProperty); }
-            set { SetValue(ResourcesDirectoryProperty, value); }
+            InitializeComponent();
+
+            // Scintilla keyword storages
+            _keyWord1 = new Dictionary<Lexer, string>();
+
+            _keyWord2 = new Dictionary<Lexer, string>();
+
+            // Wire autocomplete menu
+            _autocompleteMenu = new AutocompleteMenu
+            {
+                TargetControlWrapper = new ScintillaWrapper(ScintillaEditor),
+                AllowsTabKey = true,
+                AppearInterval = 1
+            };
+            
+            ScintillaFolding();
         }
 
-        private readonly AutocompleteMenu _autocompleteMenu;
+        private void ScintillaInitialize(object sender, RoutedEventArgs e)
+        {
+        }
+        #endregion // initialization
 
-        private readonly Dictionary<Lexer, string> _keyWord1;
-
-        private readonly Dictionary<Lexer, string> _keyWord2;
-
-
+        // reload configuration ( After resources directory changed )
         private void ReloadConfig()
         {
             var config =
@@ -120,6 +129,7 @@ namespace Idealde.Modules.CodeEditor.Views
             LoadColorScheme(config.ColorSchemeName);
         }
 
+        // reload lexer ( After Lexer changed )
         private void ReloadLexer()
         {
             ScintillaEditor.Lexer = Lexer;
@@ -134,7 +144,7 @@ namespace Idealde.Modules.CodeEditor.Views
             ReloadAutocompleteMenu();
         }
 
-
+        // code Folding ( after Lexer changed )
         private void ScintillaFolding()
         {
             ScintillaEditor.SetProperty("fold", "1");
@@ -166,6 +176,7 @@ namespace Idealde.Modules.CodeEditor.Views
             ScintillaEditor.AutomaticFold = AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change;
         }
 
+        // Load AutocompleteItem ( after Lexer changed )
         private void ReloadAutocompleteMenu()
         {
             _autocompleteMenu.Clear();
@@ -173,14 +184,39 @@ namespace Idealde.Modules.CodeEditor.Views
             switch (ScintillaEditor.Lexer)
             {
                 case Lexer.Container:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Container.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Container.txt");
+                    }
                     break;
                 case Lexer.Null:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Null.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Null.txt");
+                    }
                     break;
                 case Lexer.Ada:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Ada.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Ada.txt");
+                    }
                     break;
                 case Lexer.Asm:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Asm.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Asm.txt");
+                    }
                     break;
                 case Lexer.Batch:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Batch.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Batch.txt");
+                    }
                     break;
                 case Lexer.Cpp:
                     if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Cpp.txt"))
@@ -190,58 +226,179 @@ namespace Idealde.Modules.CodeEditor.Views
                     }
                     break;
                 case Lexer.Css:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Css.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Css.txt");
+                    }
                     break;
                 case Lexer.Fortran:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Fortran.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Fortran.txt");
+                    }
                     break;
                 case Lexer.FreeBasic:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\FreeBasic.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\FreeBasic.txt");
+                    }
                     break;
                 case Lexer.Html:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Html.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Html.txt");
+                    }
                     break;
                 case Lexer.Json:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Json.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Json.txt");
+                    }
                     break;
                 case Lexer.Lisp:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Lisp.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Lisp.txt");
+                    }
                     break;
                 case Lexer.Lua:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Lua.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Lua.txt");
+                    }
                     break;
                 case Lexer.Pascal:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Pascal.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Pascal.txt");
+                    }
                     break;
                 case Lexer.Perl:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Perl.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Perl.txt");
+                    }
                     break;
                 case Lexer.PhpScript:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PhpScript.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PhpScript.txt");
+                    }
                     break;
                 case Lexer.PowerShell:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PowerShell.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PowerShell.txt");
+                    }
                     break;
                 case Lexer.Properties:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Properties.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Properties.txt");
+                    }
                     break;
                 case Lexer.PureBasic:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PureBasic.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\PureBasic.txt");
+                    }
                     break;
                 case Lexer.Python:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Python.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Python.txt");
+                    }
                     break;
                 case Lexer.Ruby:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Ruby.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Ruby.txt");
+                    }
                     break;
                 case Lexer.Smalltalk:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Smalltalk.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Cpp.txt");
+                    }
                     break;
                 case Lexer.Sql:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Sql.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Sql.txt");
+                    }
                     break;
                 case Lexer.Vb:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Vb.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Vb.txt");
+                    }
                     break;
                 case Lexer.VbScript:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\VbScript.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\VbScript.txt");
+                    }
                     break;
                 case Lexer.Verilog:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Verilog.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Verilog.txt");
+                    }
                     break;
                 case Lexer.Xml:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Xml.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Xml.txt");
+                    }
                     break;
                 case Lexer.BlitzBasic:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\BlitzBasic.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\BlitzBasic.txt");
+                    }
                     break;
                 case Lexer.Markdown:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Markdown.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\Markdown.txt");
+                    }
                     break;
                 case Lexer.R:
+                    if (File.Exists($"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\R.txt"))
+                    {
+                        _autocompleteMenu.LoadSuggestions(
+                            $"{ResourcesDirectory}\\{CodeSuggestionsDirectoryName}\\R.txt");
+                    }
                     break;
                 default:
                     break;
             }
         }
 
+        // Load color scheme ( after ResourcesDirectory changed )
         private void LoadColorScheme(string colorScheme)
         {
             if (!Directory.Exists($"{ResourcesDirectory}\\{ColorSchemesDirectoryName}\\{colorScheme}")) return;
@@ -340,6 +497,51 @@ namespace Idealde.Modules.CodeEditor.Views
             {
             }
         }
+
+
+        #region Scintilla event handler ( Display line number )
+
+        // OnTextChanged to display line number
+        private int _maxRowCharLength;
+        private void OnTextChanged(object sender, System.EventArgs e)
+        {
+            int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
+            if (_maxRowCharLength == newMaxRowCharLength) return;
+            ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1)) + 2;
+            _maxRowCharLength = newMaxRowCharLength;
+        }
+
+        #endregion
+
+
+        #region CodeEditorView behaviors
+        public void SetResourceDirectory(string directory)
+        {
+            ResourcesDirectory = directory;
+        }
+
+        public void SetLexer(Lexer lexer)
+        {
+            Lexer = lexer;
+        }
+
+        public void Goto(int row, int column)
+        {
+            ScintillaEditor.Lines[row].Goto();
+            ScintillaEditor.GotoPosition(ScintillaEditor.CurrentPosition + column);
+        }
+
+        public void SetContent(string text)
+        {
+            ScintillaEditor.Text = text;
+        }
+        public string GetContent()
+        {
+            return ScintillaEditor.Text;
+        }
+        #endregion //behaviors
+
+        
     }
 
 
