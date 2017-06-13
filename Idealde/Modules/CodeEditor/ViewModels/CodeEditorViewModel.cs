@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Idealde.Framework.Panes;
 
 namespace Idealde.Modules.CodeEditor.ViewModels
 {
-    public class CodeEditorViewModel : PersistedDocument
+    public class CodeEditorViewModel : PersistedDocument, ICodeEditor
     {
+        public CodeEditorViewModel()
+        {
+            
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+        }
+
         protected override Task DoNew()
         {
             throw new NotImplementedException();
@@ -20,6 +27,21 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         }
 
         protected override Task DoSave()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ChangeColor()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetContent()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Goto(long row, long column)
         {
             throw new NotImplementedException();
         }

@@ -6,10 +6,22 @@
              xmlns:local="clr-namespace:Idealde.Modules.MainMenu.Views"
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="700">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="boolToVisConverter"/>
+    </UserControl.Resources>
     <Menu ItemsSource="{Binding Items}">
         <Menu.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Path=Childrens}">
-                <TextBlock Text="{Binding Text}"></TextBlock>
+                <HierarchicalDataTemplate.ItemContainerStyle>
+                    <Style TargetType="{x:Type MenuItem}">
+                        <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource boolToVisConverter}}" />
+                        <Setter Property="InputGestureText" Value="{Binding KeyGesture}" />
+                        <Setter Property="Icon" Value="{Binding IconSource}" />
+                        <Setter Property="IsCheckable" Value="{Binding IsCheckable, Mode=OneWay}" />
+                        <Setter Property="IsChecked" Value="{Binding IsChecked, Mode=OneWay}" />
+                    </Style>
+                </HierarchicalDataTemplate.ItemContainerStyle>
+                <ContentPresenter Content="{Binding Text}"></ContentPresenter>
             </HierarchicalDataTemplate>
         </Menu.ItemTemplate>
     </Menu>

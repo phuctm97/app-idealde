@@ -11,7 +11,9 @@ namespace Idealde.Modules.MainMenu.Models
         private string _text;
         private Uri _iconSource;
         private KeyGesture _keyGesture;
-        private ICommand _command;
+        private Boolean _isCheckable;
+        private Boolean _isChecked;
+        private Boolean _isVisible;
 
         public String Name
         {
@@ -57,24 +59,47 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public ICommand Command
+        public Boolean IsCheckable
         {
-            get { return _command; }
+            get { return _isCheckable; }
             set
             {
-                if (Equals(_command, value)) return;
-                _command = value;
-                NotifyOfPropertyChange(() => Command);
+                if (Equals(_isCheckable, value)) return;
+                _isCheckable = value;
+                NotifyOfPropertyChange(() => IsCheckable);
             }
         }
-
+        public bool IsChecked
+        {
+            get { return _isChecked; }
+            set
+            {
+                if (Equals(_isChecked, value)) return;
+                _isChecked = value;
+                NotifyOfPropertyChange(() => IsChecked);
+            }
+        }
         public IObservableCollection<MenuItemDefinition> Childrens { get;set; }
+
+        public Boolean IsVisible
+        {
+            get { return _isVisible; }
+            set
+            {
+                if (Equals(_isVisible, value)) return;
+                _isVisible = value;
+                NotifyOfPropertyChange(() => IsVisible);
+            }
+        }
 
         public MenuDefinition(String text, string name="")
         {
             Childrens = new BindableCollection<MenuItemDefinition>();
             _text = text;
             _name = name == "" ? text : name;
+            IsCheckable = false;
+            IsVisible = true;
+            IsChecked = false;
         }
     }
 }
