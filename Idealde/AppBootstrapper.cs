@@ -7,6 +7,9 @@ using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
+using Idealde.Modules.CodeEditor;
+using Idealde.Modules.CodeEditor.Commands;
+using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.ErrorList.ViewModels;
@@ -96,10 +99,23 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ViewOutputCommandHandler>(ViewOutputCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
+            //code editor
+            _container.RegisterType<ICodeEditor, CodeEditorViewModel>(
+                new TransientLifetimeManager());
+            _container.RegisterType<ILanguageDefinition, LanguageDefinition>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppHeaderCommandHandler>(
+                NewCppHeaderCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppSourceCommandHandler>(
+                NewCppSourceCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+
             //error list
             _container.RegisterType<IErrorList, ErrorListViewModel>(
                 new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(ViewErrorListCommandDefinition.CommandName,
+            _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(
+                ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
         }
 

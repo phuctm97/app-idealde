@@ -156,4 +156,16 @@
   <data name="FileNewCppHeaderCommandTooltip" xml:space="preserve">
     <value>Create new C++ .h header file</value>
   </data>
+  <data name="UntitledFileName" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="CreateNewFileText" xml:space="preserve">
+    <value>Create new file</value>
+  </data>
+  <data name="FileNewCppSourceCommandText" xml:space="preserve">
+    <value>C++ Source (.cpp)</value>
+  </data>
+  <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
+    <value>Create new C++ .cpp source file</value>
+  </data>
 </root>

@@ -211,6 +211,8 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
+    <Compile Include="Modules\CodeEditor\ILanguageDefinition.cs" />
+    <Compile Include="Modules\CodeEditor\LanguageDefinition.cs" />
     <Compile Include="Modules\CodeEditor\Models\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -255,8 +257,8 @@
     </Compile>
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
-    <Compile Include="Modules\Shell\Commands\NewCppHeaderCommandDefinition.cs" />
-    <Compile Include="Modules\Shell\Commands\NewCppHeaderCommandHandler.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewFileCommandHandler.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Idealde.Framework.Commands;
 using Idealde.Properties;
 
-namespace Idealde.Modules.Shell.Commands
+namespace Idealde.Modules.CodeEditor.Commands
 {
     public class NewCppHeaderCommandDefinition : CommandDefinition
     {
@@ -17,6 +17,19 @@ namespace Idealde.Modules.Shell.Commands
         public override string Tooltip => Resources.FileNewCppHeaderCommandTooltip;
 
         public override string Text => Resources.FileNewCppHeaderCommandText;
+
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/CppFile.png");
+    }
+
+    public class NewCppSourceCommandDefinition : CommandDefinition
+    {
+        public const string CommandName = "File.New.CppSource";
+
+        public override string Name => CommandName;
+
+        public override string Tooltip => Resources.FileNewCppSourceCommandTooltip;
+
+        public override string Text => Resources.FileNewCppSourceCommandText;
 
         public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/CppFile.png");
     }

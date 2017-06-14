@@ -5,7 +5,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
-using Idealde.Modules.CodeEditor.ViewModels;
+using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
@@ -124,8 +124,8 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
 
             // File.New menu
-            var fileNewCppHeaderMenu = new DisplayMenuItem("File.New.CppHeader", Resources.FileNewCppHeaderCommandText);
-            var fileNewCppSourceMenu = new DisplayMenuItem("File.New.CppSource", Resources.FileNewCppSourceMenuText);
+            var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
+            var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
             MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
 
             // View menu
@@ -145,7 +145,6 @@ namespace Idealde.Modules.Shell.ViewModels
 
         private void LoadDefaultDocuments()
         {
-            OpenDocument(new CodeEditorViewModel());
         }
 
         private void LoadDefaultTools()

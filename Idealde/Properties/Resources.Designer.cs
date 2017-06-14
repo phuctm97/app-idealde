@@ -61,6 +61,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new file.
+        /// </summary>
+        internal static string CreateNewFileText {
+            get {
+                return ResourceManager.GetString("CreateNewFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string FileMenuText {
@@ -84,6 +93,24 @@ namespace Idealde.Properties {
         internal static string FileNewCppHeaderCommandTooltip {
             get {
                 return ResourceManager.GetString("FileNewCppHeaderCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C++ Source (.cpp).
+        /// </summary>
+        internal static string FileNewCppSourceCommandText {
+            get {
+                return ResourceManager.GetString("FileNewCppSourceCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new C++ .cpp source file.
+        /// </summary>
+        internal static string FileNewCppSourceCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileNewCppSourceCommandTooltip", resourceCulture);
             }
         }
         
@@ -129,6 +156,15 @@ namespace Idealde.Properties {
         internal static string FileSaveMenuText {
             get {
                 return ResourceManager.GetString("FileSaveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Untitled.
+        /// </summary>
+        internal static string UntitledFileName {
+            get {
+                return ResourceManager.GetString("UntitledFileName", resourceCulture);
             }
         }
         
