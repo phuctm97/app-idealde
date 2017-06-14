@@ -34,15 +34,27 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             var current = Directory.GetDirectories(path);
             foreach (var direct in current)
             {
-                var item = new TreeViewItemModel(direct, direct);
-                item.ObjectType = 0;
-                item.ImageSource = new Uri("pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder.png", UriKind.Absolute);
+                var item = new TreeViewItemModel(direct, direct)
+                {
+                    ObjectType = 0,
+                    ImageSource =
+                        new Uri(
+                            "pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder.png",
+                            UriKind.Absolute)
+                };
                 InitFromRootDirectory(item, direct);
                 tItem.SubItems.Add(item);
             }
             foreach (string file in Directory.GetFiles(path))
             {
-                tItem.SubItems.Add(new TreeViewItemModel(file, file));
+                var fItem = new TreeViewItemModel(file, file)
+                {
+                    ObjectType = 1,
+                    ImageSource =
+                        new Uri("pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/file.png",
+                            UriKind.Absolute)
+                };
+                tItem.SubItems.Add(fItem);
             }
         }
 

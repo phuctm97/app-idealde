@@ -507,7 +507,7 @@ namespace Idealde.Modules.CodeEditor.Views
         private void OnTextChanged(object sender, System.EventArgs e)
         {
             IsDirty = true;
-            IsDirtyChanged?.Invoke(this, e);
+            IsDirtyChanged?.Invoke(true);
             int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
             if (_maxRowCharLength == newMaxRowCharLength) return;
             ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1)) + 2;
@@ -518,7 +518,7 @@ namespace Idealde.Modules.CodeEditor.Views
 
         #region CodeEditorView behaviors
 
-        public event EventHandler IsDirtyChanged;
+        public event DirtyChangingEventHandler IsDirtyChanged;
 
         public void SetResourceDirectory(string directory)
         {
@@ -539,6 +539,7 @@ namespace Idealde.Modules.CodeEditor.Views
         public void SetContent(string text)
         {
             ScintillaEditor.Text = text;
+            IsDirtyChanged?.Invoke(false);
         }
         public string GetContent()
         {
