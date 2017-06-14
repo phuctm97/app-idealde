@@ -190,4 +190,61 @@
   <data name="FileCloseCommandTooltip" xml:space="preserve">
     <value>Close {0}</value>
   </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Idealde</value>
+  </data>
+  <data name="AskForSaveFileBeforeExit" xml:space="preserve">
+    <value>Save {0} before exit?</value>
+  </data>
+  <data name="EditCopyCommandText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="EditCopyCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditCutCommandText" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="EditCutCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditMenuText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditRedoCommandText" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="EditRedoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUndoCommandText" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="EditUndoCommandTootlip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditPasteCommandText" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="EditPasteCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditSelectAllCommandText" xml:space="preserve">
+    <value>SelectAll</value>
+  </data>
+  <data name="EditSelectAllCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditFindAndReplaceCommandText" xml:space="preserve">
+    <value>Find And Replace</value>
+  </data>
+  <data name="EditFindAndReplaceCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditGotoCommadText" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="EditGotoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
 </root>

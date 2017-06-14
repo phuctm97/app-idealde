@@ -1,8 +1,10 @@
 ﻿#region Using Namespace
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
@@ -90,6 +92,27 @@ namespace Idealde.Framework.Panes
         }
 
         protected abstract Task DoSave();
+
+        public override async void CanClose(Action<bool> callback)
+        {
+            if (IsDirty)
+            {
+                var result = MessageBox.Show(string.Format(Resources.AskForSaveFileBeforeExit, FileName),
+                    Resources.AppName,
+                    MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Yes)
+                {
+                    if (IsNew) await DoSaveAs();
+                    else await Save(FilePath);
+                }
+
+                callback(result != MessageBoxResult.Cancel);
+            }
+            else
+            {
+                callback(true);
+            }
+        }
 
         private void UpdateDisplayName()
         {

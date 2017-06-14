@@ -43,8 +43,6 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IStatusBar StatusBar { get; }
 
-        public ISolutionExplorer SolutionExplorer { get; }
-
         public ILayoutItem ActiveLayoutItem
         {
             get { return _activeLayoutItem; }
@@ -74,7 +72,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar, ISolutionExplorer solutionExplorer)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar)
         {
             _themeManager = themeManager;
 
@@ -84,11 +82,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
             ToolBar = toolBar;
 
-            SolutionExplorer = solutionExplorer;
-
             Tools = new BindableCollection<ITool>();
-
-            ShowTool(SolutionExplorer);
 
             _closing = false;
         }
@@ -118,7 +112,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         private void BuildMenu()
         {
-            // File menu
+            //< File menu
             var fileMenu = new Menu("File", Resources.FileMenuText);
             MainMenu.AddMenu(fileMenu);
 
@@ -137,12 +131,43 @@ namespace Idealde.Modules.Shell.ViewModels
                 new MenuItemSeparator("File.S3"),
                 fileExitMenu);
 
-            // File.New menu
+            //< File.New menu
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
             MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+            //> File.New menu
 
-            // View menu
+            //> File menu
+
+            //< Edit menu
+            var editMenu = new Menu("Edit", Resources.EditMenuText);
+            MainMenu.AddMenu(editMenu);
+
+            var editUndoMenu = new DisplayMenuItem("Edit.Undo", Resources.EditUndoCommandText);
+            var editRedoMenu = new DisplayMenuItem("Edit.Redo", Resources.EditRedoCommandText);
+            var editCutMenu = new DisplayMenuItem("Edit.Cut", Resources.EditCutCommandText);
+            var editCopyMenu = new DisplayMenuItem("Edit.Copy", Resources.EditCopyCommandText);
+            var editPasteMenu = new DisplayMenuItem("Edit.Paste", Resources.EditPasteCommandText);
+            var editSelectAllMenu = new DisplayMenuItem("Edit.SelectAll", Resources.EditSelectAllCommandText);
+            var editGotoMenu = new DisplayMenuItem("Edit.Goto", Resources.EditGotoCommadText);
+            var editFindAndReplaceMenu = new DisplayMenuItem("Edit.FindAndReplace",
+                Resources.EditFindAndReplaceCommandText);
+
+            MainMenu.AddMenuItem(editMenu,
+                editUndoMenu,
+                editRedoMenu,
+                new MenuItemSeparator("Edit.S1"),
+                editCutMenu,
+                editCopyMenu,
+                editPasteMenu,
+                new MenuItemSeparator("Edit.S2"),
+                editSelectAllMenu,
+                new MenuItemSeparator("Edit.S3"),
+                editGotoMenu,
+                editFindAndReplaceMenu);
+            //> Edit menu
+
+            //< View menu
             var viewMenu = new Menu("View", Resources.ViewMenuText);
             MainMenu.AddMenu(viewMenu);
 
@@ -150,6 +175,7 @@ namespace Idealde.Modules.Shell.ViewModels
             var viewErrorListMenu =
                 new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
             MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
+            //> View menu
         }
 
         private void BuildStatusBar()

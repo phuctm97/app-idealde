@@ -124,6 +124,8 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(
                 ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+
+            //solution explorer
             _container.RegisterType<ISolutionExplorer, SolutionExplorerViewModel>(
                 new ContainerControlledLifetimeManager());
         }
