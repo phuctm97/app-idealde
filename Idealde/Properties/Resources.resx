@@ -220,7 +220,7 @@
   <data name="EditUndoCommandText" xml:space="preserve">
     <value>Undo</value>
   </data>
-  <data name="EditUndoCommandTootlip" xml:space="preserve">
+  <data name="EditUndoCommandTooltip" xml:space="preserve">
     <value />
   </data>
   <data name="EditPasteCommandText" xml:space="preserve">

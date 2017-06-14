@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Idealde.Modules.Output.Views"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <TextBox x:Name="TextBox"
+    <TextBox x:Name="TextBox" Background="#ffe6e6e6"
              IsReadOnly="True"
              VerticalAlignment="Stretch"
              HorizontalAlignment="Stretch"

@@ -234,9 +234,9 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        internal static string EditUndoCommandTootlip {
+        internal static string EditUndoCommandTooltip {
             get {
-                return ResourceManager.GetString("EditUndoCommandTootlip", resourceCulture);
+                return ResourceManager.GetString("EditUndoCommandTooltip", resourceCulture);
             }
         }
         

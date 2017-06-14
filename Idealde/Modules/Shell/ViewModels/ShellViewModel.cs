@@ -13,6 +13,7 @@ using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBar;
+using Idealde.Modules.UndoRedo.Commands;
 using Idealde.Properties;
 
 #endregion
@@ -143,8 +144,8 @@ namespace Idealde.Modules.Shell.ViewModels
             var editMenu = new Menu("Edit", Resources.EditMenuText);
             MainMenu.AddMenu(editMenu);
 
-            var editUndoMenu = new DisplayMenuItem("Edit.Undo", Resources.EditUndoCommandText);
-            var editRedoMenu = new DisplayMenuItem("Edit.Redo", Resources.EditRedoCommandText);
+            var editUndoMenu = new CommandMenuItem<UndoCommandDefinition>("Edit.Undo");
+            var editRedoMenu = new CommandMenuItem<RedoCommandDefinition>("Edit.Redo");
             var editCutMenu = new DisplayMenuItem("Edit.Cut", Resources.EditCutCommandText);
             var editCopyMenu = new DisplayMenuItem("Edit.Copy", Resources.EditCopyCommandText);
             var editPasteMenu = new DisplayMenuItem("Edit.Paste", Resources.EditPasteCommandText);

@@ -301,6 +301,11 @@
     <Compile Include="Modules\ToolBar\Views\ToolBarView.xaml.cs">
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\UndoRedo\Commands\RedoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\Commands\UndoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoableAction.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoRedoManager.cs" />
+    <Compile Include="Modules\UndoRedo\UndoRedoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -355,6 +360,12 @@
   <ItemGroup>
     <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />
     <Resource Include="Modules\SolutionExplorer\IconSource\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Redo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
