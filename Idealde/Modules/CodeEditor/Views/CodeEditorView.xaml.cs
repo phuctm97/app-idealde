@@ -2,8 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Idealde.Modules.CodeEditor.Autocomplete;
-using Idealde.Modules.CodeEditor.Config;
+using Idealde.Modules.CodeEditor.Models;
 using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor.Views
@@ -78,6 +77,8 @@ namespace Idealde.Modules.CodeEditor.Views
                 !File.Exists($"{resourcesDirectory}\\{ConfigFileName}"))
             {
                 // roll back assignment
+                if (e.OldValue != null && e.OldValue == "") return;
+                editor?.SetValue(e.Property, e.OldValue);
                 return;
             }
 
@@ -115,7 +116,7 @@ namespace Idealde.Modules.CodeEditor.Views
         private void ReloadConfig()
         {
             var config =
-                Newtonsoft.Json.JsonConvert.DeserializeObject<Config.Config>(
+                Newtonsoft.Json.JsonConvert.DeserializeObject<Config>(
                     File.ReadAllText($"{ResourcesDirectory}\\{ConfigFileName}"));
 
             // update FontSize and FontFamily
@@ -141,6 +142,7 @@ namespace Idealde.Modules.CodeEditor.Views
 
             // Autocomplete suggestions for new language
             ReloadAutocompleteMenu();
+            ScintillaFolding();
         }
 
         // code Folding ( after Lexer changed )
@@ -497,7 +499,6 @@ namespace Idealde.Modules.CodeEditor.Views
             }
         }
 
-
         #region Scintilla event handler ( Display line number )
 
         // OnTextChanged to display line number
@@ -511,7 +512,6 @@ namespace Idealde.Modules.CodeEditor.Views
         }
 
         #endregion
-
 
         #region CodeEditorView behaviors
         public void SetResourceDirectory(string directory)
@@ -539,9 +539,6 @@ namespace Idealde.Modules.CodeEditor.Views
             return ScintillaEditor.Text;
         }
         #endregion //behaviors
-
         
     }
-
-
 }

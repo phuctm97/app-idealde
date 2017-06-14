@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using AutocompleteMenuNS;
 
-namespace Idealde.Modules.CodeEditor.Autocomplete
+namespace Idealde.Modules.CodeEditor.Models
 {
 
     public enum AutocompleteItemCategory

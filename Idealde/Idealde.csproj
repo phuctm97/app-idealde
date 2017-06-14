@@ -211,11 +211,11 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
-    <Compile Include="Modules\CodeEditor\Autocomplete\AutocompleteMenu.cs">
+    <Compile Include="Modules\CodeEditor\Models\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Modules\CodeEditor\Config\ColorScheme.cs" />
-    <Compile Include="Modules\CodeEditor\Config\Config.cs" />
+    <Compile Include="Modules\CodeEditor\Models\ColorScheme.cs" />
+    <Compile Include="Modules\CodeEditor\Models\Config.cs" />
     <Compile Include="Modules\CodeEditor\ICodeEditor.cs" />
     <Compile Include="Modules\CodeEditor\ICodeEditorView.cs" />
     <Compile Include="Modules\CodeEditor\ViewModels\CodeEditorViewModel.cs" />
