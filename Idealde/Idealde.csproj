@@ -239,6 +239,7 @@
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\MainMenu\Controls\MenuItemStyleSelector.cs" />
     <Compile Include="Modules\MainMenu\Converters\EmptyStringToUnsetConverter.cs" />
     <Compile Include="Modules\MainMenu\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
@@ -246,6 +247,7 @@
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
     <Compile Include="Modules\MainMenu\Models\DisplayMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemSeparator.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -262,6 +264,7 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Commands\CloseFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />

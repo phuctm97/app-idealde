@@ -61,11 +61,29 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new file.
+        ///   Looks up a localized string similar to Create New File.
         /// </summary>
         internal static string CreateNewFileText {
             get {
                 return ResourceManager.GetString("CreateNewFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string FileCloseCommandText {
+            get {
+                return ResourceManager.GetString("FileCloseCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close {0}.
+        /// </summary>
+        internal static string FileCloseCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileCloseCommandTooltip", resourceCulture);
             }
         }
         
@@ -88,7 +106,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new C++ .h header file.
+        ///   Looks up a localized string similar to Create New C++ .h Header File.
         /// </summary>
         internal static string FileNewCppHeaderCommandTooltip {
             get {
@@ -106,7 +124,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new C++ .cpp source file.
+        ///   Looks up a localized string similar to Create New C++ .cpp Source File.
         /// </summary>
         internal static string FileNewCppSourceCommandTooltip {
             get {
@@ -142,7 +160,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open an existing file.
+        ///   Looks up a localized string similar to Open An Existing File.
         /// </summary>
         internal static string FileOpenCommandTooltip {
             get {
@@ -151,7 +169,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save as.
+        ///   Looks up a localized string similar to Save Selected Item As.
         /// </summary>
         internal static string FileSaveAsCommandText {
             get {
@@ -160,7 +178,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save current item as ....
+        ///   Looks up a localized string similar to Save {0} As New File.
         /// </summary>
         internal static string FileSaveAsCommandTooltip {
             get {
@@ -169,7 +187,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Save Selected Item.
         /// </summary>
         internal static string FileSaveCommandText {
             get {
@@ -178,11 +196,21 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save current item.
+        ///   Looks up a localized string similar to Save {0}.
         /// </summary>
         internal static string FileSaveCommandTooltip {
             get {
                 return ResourceManager.GetString("FileSaveCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -214,7 +242,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Error List tool window.
+        ///   Looks up a localized string similar to Open Error List Tool Window.
         /// </summary>
         internal static string ViewErrorListCommandTooltip {
             get {
@@ -241,21 +269,11 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open Output tool window.
+        ///   Looks up a localized string similar to Open Output Tool Window.
         /// </summary>
         internal static string ViewOutputCommandTooltip {
             get {
                 return ResourceManager.GetString("ViewOutputCommandTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap folder {
-            get {
-                object obj = ResourceManager.GetObject("folder", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

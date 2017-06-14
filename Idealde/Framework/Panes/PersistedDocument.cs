@@ -7,6 +7,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Modules.Shell.Commands;
+using Idealde.Properties;
 using Microsoft.Win32;
 
 #endregion
@@ -98,6 +99,7 @@ namespace Idealde.Framework.Panes
         void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
         {
             command.IsEnabled = IsNew || IsDirty;
+            command.Tooltip = string.Format(Resources.FileSaveCommandTooltip, FileName);
         }
 
         async Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
@@ -115,6 +117,7 @@ namespace Idealde.Framework.Panes
         void ICommandHandler<SaveFileAsCommandDefinition>.Update(Command command)
         {
             command.IsEnabled = !IsNew;
+            command.Tooltip = string.Format(Resources.FileSaveAsCommandTooltip, FileName);
         }
 
         async Task ICommandHandler<SaveFileAsCommandDefinition>.Run(Command command)

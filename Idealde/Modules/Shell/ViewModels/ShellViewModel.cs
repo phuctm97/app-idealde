@@ -11,7 +11,6 @@ using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
-using Idealde.Modules.SolutionExplorer;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBar;
 using Idealde.Properties;
@@ -119,10 +118,18 @@ namespace Idealde.Modules.Shell.ViewModels
 
             var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
             var fileOpenMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open");
+            var fileCloseMenu = new CommandMenuItem<CloseFileCommandDefinition>("File.Close");
             var fileSaveMenu = new CommandMenuItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsMenu = new CommandMenuItem<SaveFileAsCommandDefinition>("File.SaveAs");
             var fileExitMenu = new CommandMenuItem<ExitCommandDefinition>("File.Exit");
-            MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
+            MainMenu.AddMenuItem(fileMenu,
+                fileNewMenu, fileOpenMenu,
+                new MenuItemSeparator("File.S1"),
+                fileCloseMenu,
+                new MenuItemSeparator("File.S2"),
+                fileSaveMenu, fileSaveAsMenu,
+                new MenuItemSeparator("File.S3"),
+                fileExitMenu);
 
             // File.New menu
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
