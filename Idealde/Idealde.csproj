@@ -151,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\StatusBar\Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,6 +278,12 @@
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\SolutionExplorer\ISolutionExplorer.cs" />
+    <Compile Include="Modules\SolutionExplorer\Models\TreeViewItemModel.cs" />
+    <Compile Include="Modules\SolutionExplorer\ViewModels\SolutionExplorerViewModel.cs" />
+    <Compile Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml.cs">
+      <DependentUpon>SolutionExplorerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarItem.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
@@ -304,6 +314,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -337,6 +348,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />
+    <Resource Include="Modules\SolutionExplorer\IconSource\folder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

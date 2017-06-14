@@ -1,9 +1,12 @@
-﻿using ScintillaNET;
+﻿using System;
+using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor
 {
     public interface ICodeEditorView
     {
+        event EventHandler IsDirtyChanged;
+
         // CodeEditor view behaviors
         void SetResourceDirectory(string directory);
         void SetLexer(Lexer lexer);

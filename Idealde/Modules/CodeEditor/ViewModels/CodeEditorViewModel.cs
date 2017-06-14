@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Idealde.Framework.Panes;
 using ScintillaNET;
@@ -24,11 +25,16 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         {
             _view = (ICodeEditorView)view;
             if (_view == null) throw new InvalidCastException();
-
+            _view.IsDirtyChanged += OnDirtyChanged;
             _view.SetResourceDirectory("Resources");
             _view.SetContent(_fileContent);
             _view.SetLexer(_fileLexer);
             base.OnViewLoaded(view);
+        }
+
+        private void OnDirtyChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
         }
 
         protected override Task DoNew()
@@ -49,11 +55,25 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             return Task.FromResult(true);
         }
 
-        protected override Task DoSave()
+        protected override async Task DoSave()
         {
             string viewContent = _view.GetContent();
-            File.WriteAllText(viewContent, FilePath);
-            return Task.FromResult(true);
+            if (!File.Exists(FilePath))
+            {
+                using (StreamWriter sw = File.CreateText(FilePath))
+                {
+                    await sw.WriteLineAsync(viewContent);
+                }
+            }
+            else
+            {
+                FileStream stream = new FileStream(FilePath, FileMode.Truncate, FileAccess.Write);
+                using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+                {
+                    await writer.WriteLineAsync(viewContent);
+                }
+                stream.Close();
+            }
         }
 
         /// <summary>
