@@ -14,6 +14,7 @@ using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 using Idealde.Modules.ToolBar;
+using Idealde.Properties;
 
 #endregion
 
@@ -80,6 +81,7 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu = mainMenu;
 
             StatusBar = statusBar;
+
             ToolBar = toolBar;
 
             Tools = new BindableCollection<ITool>();
@@ -91,30 +93,13 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             base.OnInitialize();
 
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
-            OpenDocument(new CodeEditorViewModel());
+            BuildMenu();
 
-            ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
-            ShowTool(IoC.Get<IOutput>());
-            ShowTool(IoC.Get<IErrorList>());
-            IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
+            BuildStatusBar();
 
-            StatusBar.AddItem("Status 1", new GridLength(100));
-            StatusBar.AddItem("Status 2", new GridLength(100));
-            StatusBar.AddItem("Status 3", new GridLength(100));
+            LoadDefaultDocuments();
 
-            var fileMenu = new Menu("File");
-
-            MainMenu.AddMenu(fileMenu);
-
-            var newFile = new MenuItem("New") {Text = "New"};
-            var open = new MenuItem("Open") {Text = "Open"};
-            var save = new MenuItem("Save") {Text = "Save"};
-            var saveAs = new MenuItem("SaveAs") {Text = "Save As ..."};
-            var exit = new CommandMenuItem<ExitCommandDefinition>("Exit") {Text = "Exit"};
-
-            MainMenu.AddMenuItem(fileMenu, newFile, open, save, saveAs, exit);
+            LoadDefaultTools();
         }
 
         protected override void OnViewLoaded(object view)
@@ -125,6 +110,49 @@ namespace Idealde.Modules.Shell.ViewModels
             }
 
             base.OnViewLoaded(view);
+        }
+
+        private void BuildMenu()
+        {
+            // File menu
+            var fileMenu = new Menu("File", Resources.FileMenuText);
+            MainMenu.AddMenu(fileMenu);
+
+            var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
+            var fileOpenMenu = new DisplayMenuItem("File.Open", Resources.FileOpenMenuText);
+            var fileSaveMenu = new DisplayMenuItem("File.Save", Resources.FileSaveMenuText);
+            var fileSaveAsMenu = new DisplayMenuItem("File.SaveAs", Resources.FileSaveAsMenuText);
+            var fileExitMenu = new CommandMenuItem<ExitCommandDefinition>("File.Exit");
+            MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
+
+            // File.New menu
+            var fileNewCppHeaderMenu = new DisplayMenuItem("File.New.CppHeader", Resources.FileNewCppHeaderMenuText);
+            var fileNewCppSourceMenu = new DisplayMenuItem("File.New.CppSource", Resources.FileNewCppSourceMenuText);
+            MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+
+            // View menu
+            var viewMenu = new Menu("View", Resources.ViewMenuText);
+            MainMenu.AddMenu(viewMenu);
+
+            var viewOutputMenu = new DisplayMenuItem("View.Output", Resources.ViewOutputMenuText);
+            var viewErrorListMenu = new DisplayMenuItem("View.ErrorList", Resources.ViewErrorListMenuText);
+            MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
+        }
+
+        private void BuildStatusBar()
+        {
+            StatusBar.AddItem("Ready", new GridLength(1, GridUnitType.Auto));
+        }
+
+        private void LoadDefaultDocuments()
+        {
+            OpenDocument(new CodeEditorViewModel());
+        }
+
+        private void LoadDefaultTools()
+        {
+            ShowTool(IoC.Get<IOutput>());
+            ShowTool(IoC.Get<IErrorList>());
         }
 
         #endregion

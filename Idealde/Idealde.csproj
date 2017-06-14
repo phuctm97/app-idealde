@@ -239,7 +239,8 @@
     <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainMenu\Models\CommandMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
-    <Compile Include="Modules\MainMenu\Models\MenuItem.cs" />
+    <Compile Include="Modules\MainMenu\Models\DisplayMenuItem.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -264,7 +265,7 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
-    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemBase.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItem.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>

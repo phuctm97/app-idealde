@@ -5,7 +5,7 @@ namespace Idealde.Modules.StatusBar.ViewModels
 {
     public class StatusBarViewModel :PropertyChangedBase, IStatusBar
     {
-        public IObservableCollection<StatusBarItemBase> Items { get; }
+        public IObservableCollection<StatusBarItem> Items { get; }
 
         public StatusBarViewModel()
         {
@@ -14,18 +14,18 @@ namespace Idealde.Modules.StatusBar.ViewModels
 
         public void AddItem(string message, GridLength width)
         {
-            Items.Add(new StatusBarItemBase(message, width));
+            Items.Add(new StatusBarItem(message, width));
         }
 
-        private class StatusBarItemCollection : BindableCollection<StatusBarItemBase>
+        private class StatusBarItemCollection : BindableCollection<StatusBarItem>
         {
-            protected override void InsertItemBase(int index, StatusBarItemBase item)
+            protected override void InsertItemBase(int index, StatusBarItem item)
             {
                 item.Index = index;
                 base.InsertItemBase(index, item);
             }
 
-            protected override void SetItemBase(int index, StatusBarItemBase item)
+            protected override void SetItemBase(int index, StatusBarItem item)
             {
                 item.Index = index;
                 base.SetItemBase(index, item);

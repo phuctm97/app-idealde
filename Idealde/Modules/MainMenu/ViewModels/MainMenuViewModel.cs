@@ -27,9 +27,9 @@ namespace Idealde.Modules.MainMenu.ViewModels
             }
         }
 
-        public void AddMenuItem(Menu parent, params MenuItem[] menuItem)
+        public void AddMenuItem(Menu parent, params MenuItemBase[] displayMenuItem)
         {
-            foreach (var menuItemDefinition in menuItem)
+            foreach (var menuItemDefinition in displayMenuItem)
             {
                 if (MenuItemNameList.Contains(menuItemDefinition.Name))
                     throw new Exception("Menu item name duplicated");
@@ -39,9 +39,9 @@ namespace Idealde.Modules.MainMenu.ViewModels
             }
         }
 
-        public void AddMenuItem(MenuItem parent, params MenuItem[] menuItem)
+        public void AddMenuItem(MenuItemBase parent, params MenuItemBase[] displayMenuItem)
         {
-            foreach (var menuItemDefinition in menuItem)
+            foreach (var menuItemDefinition in displayMenuItem)
             {
                 if (MenuItemNameList.Contains(menuItemDefinition.Name))
                     throw new Exception("Menu item name duplicated");
@@ -50,7 +50,17 @@ namespace Idealde.Modules.MainMenu.ViewModels
             }
         }
 
-        public MenuItem FindMenu(Menu menu, string name)
+        private MenuItemBase FindRecursive(MenuItemBase displayMenuItem, string name)
+        {
+            foreach (var child in displayMenuItem.Children)
+            {
+                if (displayMenuItem.Name == name) return displayMenuItem;
+                return FindRecursive(child, name);
+            }
+            return null;
+        }
+
+        public MenuItemBase FindMenuItem(Menu menu, string name)
         {
             if (!MenuItemNameList.Contains(name)) return null;
             foreach (var child in menu.Children)
@@ -61,22 +71,7 @@ namespace Idealde.Modules.MainMenu.ViewModels
             return null;
         }
 
-        private MenuItem FindRecursive(MenuItem menuItem, string name)
-        {
-            foreach (var child in menuItem.Children)
-            {
-                if (menuItem.Name == name) return menuItem;
-                return FindRecursive(child, name);
-            }
-            return null;
-        }
-
-        public MenuItem FindMenuItem(Menu menu, string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public MenuItem FindMenu(string name)
+        public Menu FindMenu(string name)
         {
             throw new NotImplementedException();
         }

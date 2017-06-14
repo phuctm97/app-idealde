@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Idealde.Properties {
+    using System;
     
     
     /// <summary>
@@ -37,7 +38,7 @@ namespace Idealde.Properties {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if ((resourceMan == null)) {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Idealde.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
@@ -56,6 +57,96 @@ namespace Idealde.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string FileMenuText {
+            get {
+                return ResourceManager.GetString("FileMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C++ Header (.h).
+        /// </summary>
+        internal static string FileNewCppHeaderMenuText {
+            get {
+                return ResourceManager.GetString("FileNewCppHeaderMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to C++ Source (.cpp).
+        /// </summary>
+        internal static string FileNewCppSourceMenuText {
+            get {
+                return ResourceManager.GetString("FileNewCppSourceMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New.
+        /// </summary>
+        internal static string FileNewMenuText {
+            get {
+                return ResourceManager.GetString("FileNewMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string FileOpenMenuText {
+            get {
+                return ResourceManager.GetString("FileOpenMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as.
+        /// </summary>
+        internal static string FileSaveAsMenuText {
+            get {
+                return ResourceManager.GetString("FileSaveAsMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string FileSaveMenuText {
+            get {
+                return ResourceManager.GetString("FileSaveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ErrorList.
+        /// </summary>
+        internal static string ViewErrorListMenuText {
+            get {
+                return ResourceManager.GetString("ViewErrorListMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View.
+        /// </summary>
+        internal static string ViewMenuText {
+            get {
+                return ResourceManager.GetString("ViewMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output.
+        /// </summary>
+        internal static string ViewOutputMenuText {
+            get {
+                return ResourceManager.GetString("ViewOutputMenuText", resourceCulture);
             }
         }
     }

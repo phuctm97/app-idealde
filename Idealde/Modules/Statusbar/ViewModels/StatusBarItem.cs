@@ -1,21 +1,34 @@
-﻿using System.Windows;
+﻿#region Using Namespace
+
+using System.Windows;
 using Caliburn.Micro;
+
+#endregion
 
 namespace Idealde.Modules.StatusBar.ViewModels
 {
-    public class StatusBarItemBase : PropertyChangedBase
+    public class StatusBarItem : PropertyChangedBase
     {
+        // Backing fields
+
+        #region Backing fields
+
         private int _index;
 
         private string _message;
 
-        private readonly GridLength _width;
+        #endregion
+
+        // Bind properties
+
+        #region Bind properties
 
         public int Index
         {
             get { return _index; }
             set
             {
+                if (Equals(value, _index)) return;
                 _index = value;
                 NotifyOfPropertyChange(() => Index);
             }
@@ -26,17 +39,26 @@ namespace Idealde.Modules.StatusBar.ViewModels
             get { return _message; }
             set
             {
+                if (Equals(value, _message)) return;
                 _message = value;
                 NotifyOfPropertyChange(() => Index);
             }
         }
 
-        public GridLength Width => _width;
+        public GridLength Width { get; }
 
-        public StatusBarItemBase(string message, GridLength width)
+        #endregion
+
+        // Initializations
+
+        #region Initializations
+
+        public StatusBarItem(string message, GridLength width)
         {
             _message = message;
-            _width = width;
+            Width = width;
         }
+
+        #endregion
     }
 }

@@ -12,10 +12,10 @@ namespace Idealde.Modules.MainMenu
         IObservableCollection<Menu> Items { get; }
 
         void AddMenu(params Menu[] menu);
-        void AddMenuItem(Menu parent, params MenuItem[] menuItem);
-        void AddMenuItem(MenuItem parent, params MenuItem[] menuItem);
+        void AddMenuItem(Menu parent, params MenuItemBase[] displayMenuItem);
+        void AddMenuItem(MenuItemBase parent, params MenuItemBase[] displayMenuItem);
 
-        MenuItem FindMenuItem(Menu menu, string name);
-        MenuItem FindMenu(string name);
+        MenuItemBase FindMenuItem(Menu menu, string name);
+        Menu FindMenu(string name);
     }
 }
