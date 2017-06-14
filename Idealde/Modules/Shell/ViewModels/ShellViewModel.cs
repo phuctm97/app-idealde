@@ -12,7 +12,6 @@ using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.Tests.ViewModels;
 using Idealde.Modules.ToolBar;
 using Idealde.Properties;
 
