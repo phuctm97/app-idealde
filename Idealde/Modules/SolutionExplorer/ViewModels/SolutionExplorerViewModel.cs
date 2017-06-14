@@ -36,7 +36,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             {
                 var item = new TreeViewItemModel(direct, direct);
                 item.ObjectType = 0;
-                item.ImageSource = new Uri("pack://application:,,,;Idealde;component/Modules/SolutionExplorer/IconSource/folder.png", UriKind.Absolute);
+                item.ImageSource = new Uri("pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder.png", UriKind.Absolute);
                 InitFromRootDirectory(item, direct);
                 tItem.SubItems.Add(item);
             }

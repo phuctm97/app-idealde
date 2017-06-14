@@ -9,7 +9,7 @@
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding SubItems}">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Stretch="Fill" x:Name="img" Source="{Binding ImageSource}"/>
+                    <Image Width="20" Height="20" Stretch="Fill" Source="{Binding ImageSource}"/>
                     <TextBlock Text="{Binding Name}" />
                 </StackPanel>
             </HierarchicalDataTemplate>
