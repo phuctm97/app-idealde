@@ -23,9 +23,7 @@ namespace Idealde.Modules.ToolBar
 
         #region Methods
 
-        void AddToolBarItem (ToolBarGroupItemDefinition parent,params ToolBarItemDefinition[] toolBarItems);
-
-        void AddToolBarGroupItem ( ToolBarDefiniton parent, params ToolBarGroupItemDefinition [ ] toolBarGroupItems );
+        void AddToolBarItem (ToolBarDefiniton parent,params ToolBarItemDefinition[] toolBarItems);
 
         void AddToolBar (params ToolBarDefiniton[] toolBars);
 

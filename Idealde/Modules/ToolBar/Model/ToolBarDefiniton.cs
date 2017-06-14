@@ -8,7 +8,7 @@ namespace Idealde.Modules.ToolBar.Model
 
         private int _sortOrder;
         private string _name;
-        private IObservableCollection < ToolBarGroupItemDefinition > _children;
+        private IObservableCollection < ToolBarItemDefinition > _toolBarItems;
 
         #endregion
 
@@ -38,15 +38,15 @@ namespace Idealde.Modules.ToolBar.Model
             }
         }
 
-        public IObservableCollection < ToolBarGroupItemDefinition > Children
+        public IObservableCollection < ToolBarItemDefinition > ToolBarItems
         {
             get
             {
-                return _children;
+                return _toolBarItems;
             }
             set
             {
-                _children = value;
+                _toolBarItems = value;
             }
         }
 
@@ -56,7 +56,7 @@ namespace Idealde.Modules.ToolBar.Model
 
         public ToolBarDefiniton ( string name )
         {
-            _children=new BindableCollection < ToolBarGroupItemDefinition > ();
+            _toolBarItems=new BindableCollection < ToolBarItemDefinition > ();
             //_sortOrder = sortOrder;
             _name = name;
         }

@@ -28,7 +28,7 @@
         <ContentControl Grid.Row="0" cal:View.Model="{Binding MainMenu}" />
         
         <!--Tool bar-->
-        <!--<ContentControl Grid.Row="1" cal:View.Model="{Binding ToolBar}" />-->
+        <ContentControl Grid.Row="1" cal:View.Model="{Binding ToolBar}" />
 
         <!--Status bar-->
         <ContentControl Grid.Row="3" cal:View.Model="{Binding StatusBar}" />
