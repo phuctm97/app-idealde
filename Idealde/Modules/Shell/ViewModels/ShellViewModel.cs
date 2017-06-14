@@ -44,6 +44,8 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IStatusBar StatusBar { get; }
 
+        public ISolutionExplorer SolutionExplorer { get; }
+
         public ILayoutItem ActiveLayoutItem
         {
             get { return _activeLayoutItem; }
@@ -73,7 +75,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar, ISolutionExplorer solutionExplorer)
         {
             _themeManager = themeManager;
 
@@ -83,7 +85,11 @@ namespace Idealde.Modules.Shell.ViewModels
 
             ToolBar = toolBar;
 
+            SolutionExplorer = solutionExplorer;
+
             Tools = new BindableCollection<ITool>();
+
+            ShowTool(SolutionExplorer);
 
             _closing = false;
         }
