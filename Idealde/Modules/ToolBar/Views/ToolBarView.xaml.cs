@@ -1,5 +1,8 @@
 ﻿using System.Windows.Controls;
 
+using Idealde.Modules.ToolBar.Model;
+using Idealde.Modules.ToolBar.ViewModels;
+
 namespace Idealde.Modules.ToolBar.Views
 {
     /// <summary>
@@ -19,5 +22,6 @@ namespace Idealde.Modules.ToolBar.Views
         {
             InitializeComponent();
         }
+
     }
 }

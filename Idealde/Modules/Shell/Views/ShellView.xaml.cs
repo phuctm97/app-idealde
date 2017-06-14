@@ -13,6 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Caliburn.Micro;
+
+using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBar.Model;
+using Idealde.Modules.ToolBar.ViewModels;
+
 namespace Idealde.Modules.Shell.Views
 {
     /// <summary>

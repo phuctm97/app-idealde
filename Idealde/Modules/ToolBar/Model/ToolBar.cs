@@ -2,7 +2,7 @@
 
 namespace Idealde.Modules.ToolBar.Model
 {
-    public class ToolBarDefiniton
+    public class ToolBar
     {
         #region Fields
 
@@ -54,7 +54,7 @@ namespace Idealde.Modules.ToolBar.Model
 
         #region Initializations
 
-        public ToolBarDefiniton ( string name )
+        public ToolBar ( string name )
         {
             _toolBarItems=new BindableCollection < ToolBarItemBase > ();
             //_sortOrder = sortOrder;

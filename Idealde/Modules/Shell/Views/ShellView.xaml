@@ -23,7 +23,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
+        
         <!--Menu bar-->
         <ContentControl Grid.Row="0" cal:View.Model="{Binding MainMenu}" />
         

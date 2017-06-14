@@ -296,9 +296,9 @@
     </Compile>
     <Compile Include="Modules\ToolBar\Controls\ToolBarBase.cs" />
     <Compile Include="Modules\ToolBar\IToolBar.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarDefiniton.cs" />
+    <Compile Include="Modules\ToolBar\Model\ToolBar.cs" />
     <Compile Include="Modules\ToolBar\Model\ToolBarItemBase.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarItemDefinition.cs" />
+    <Compile Include="Modules\ToolBar\Model\ToolBarItem.cs" />
     <Compile Include="Modules\ToolBar\Model\ToolBarItemSeparator.cs" />
     <Compile Include="Modules\ToolBar\ViewModels\ToolBarViewModel.cs" />
     <Compile Include="Modules\ToolBar\Views\IToolBarView.cs" />
