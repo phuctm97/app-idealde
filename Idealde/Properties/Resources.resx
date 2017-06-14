@@ -247,4 +247,25 @@
   <data name="EditGotoCommandTooltip" xml:space="preserve">
     <value />
   </data>
+  <data name="RunBuildCommandText" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="RunBuildCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunCommandText" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunMenuText" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunRebuildCommandText" xml:space="preserve">
+    <value>Rebuild</value>
+  </data>
+  <data name="RunRebuildCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
 </root>

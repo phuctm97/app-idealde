@@ -5,6 +5,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
+using Idealde.Modules.CodeCompiler.Commands;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
@@ -177,6 +178,20 @@ namespace Idealde.Modules.Shell.ViewModels
                 new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
             MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
             //> View menu
+
+            //< Run menu
+            var runMenu = new Menu("Run", Resources.RunMenuText);
+            MainMenu.AddMenu(runMenu);
+
+            var runRunMenu = new DisplayMenuItem("Run.Run", Resources.RunCommandText);
+            var runBuildMenu = new CommandMenuItem<CompileCommandDefinition>("Run.Build");
+            var runRebuildMenu = new DisplayMenuItem("Run.Rebuild", Resources.RunRebuildCommandText);
+            MainMenu.AddMenuItem(runMenu,
+                runRunMenu,
+                new MenuItemSeparator("Run.S1"),
+                runBuildMenu,
+                runRebuildMenu);
+            //> Run menu
         }
 
         private void BuildStatusBar()

@@ -2,8 +2,16 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
+using Idealde.Modules.CodeCompiler;
+using Idealde.Modules.CodeCompiler.Commands;
+using Idealde.Modules.Output;
+using Idealde.Modules.Shell.Commands;
+using Idealde.Modules.UndoRedo.Commands;
 using ScintillaNET;
+using Command = Idealde.Framework.Commands.Command;
 
 namespace Idealde.Modules.CodeEditor.ViewModels
 {
@@ -95,6 +103,37 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         public void Goto(int row, int column)
         {
             _view.Goto(row, column);
+        }
+
+        void ICommandHandler<CompileCommandDefinition>.Update(Command command)
+        {
+            var codeCompiler = IoC.Get<ICodeCompiler>();
+            command.IsEnabled = !codeCompiler.IsBusy;
+        }
+
+        Task ICommandHandler<CompileCommandDefinition>.Run(Command command)
+        {
+            var codeCompiler = IoC.Get<ICodeCompiler>();
+            var output = IoC.Get<IOutput>();
+
+            output.Clear();
+            output.Append("----- Compile start");
+            output.BreakLine();
+
+            codeCompiler.OutputDataReceived += (s, data) =>
+            {
+                output.Append(data);
+                output.BreakLine();
+            };
+            codeCompiler.ErrorDataReceived += (s, data) =>
+            {
+                output.Append(data);
+                output.BreakLine();
+            };
+
+            codeCompiler.CompileSingleFile(FilePath);
+
+            return Task.FromResult(true);
         }
     }
 }

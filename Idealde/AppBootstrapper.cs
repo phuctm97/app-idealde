@@ -29,6 +29,7 @@ using Idealde.Modules.ToolBar;
 using Idealde.Modules.ToolBar.ViewModels;
 using Idealde.Modules.UndoRedo;
 using Microsoft.Practices.Unity;
+using Idealde.Modules.CodeCompiler;
 
 #endregion
 
@@ -133,6 +134,10 @@ namespace Idealde
             //undo redo
             _container.RegisterType<IUndoRedoManager, UndoRedoManager>(
                 new TransientLifetimeManager());
+
+            //code compiler
+            _container.RegisterType<ICodeCompiler, CodeCompiler>(
+                new ContainerControlledLifetimeManager());
         }
 
         protected override object GetInstance(Type service, string key)

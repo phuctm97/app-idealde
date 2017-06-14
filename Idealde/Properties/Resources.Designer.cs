@@ -395,6 +395,69 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Build.
+        /// </summary>
+        internal static string RunBuildCommandText {
+            get {
+                return ResourceManager.GetString("RunBuildCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string RunBuildCommandTooltip {
+            get {
+                return ResourceManager.GetString("RunBuildCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        internal static string RunCommandText {
+            get {
+                return ResourceManager.GetString("RunCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string RunCommandTooltip {
+            get {
+                return ResourceManager.GetString("RunCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run.
+        /// </summary>
+        internal static string RunMenuText {
+            get {
+                return ResourceManager.GetString("RunMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rebuild.
+        /// </summary>
+        internal static string RunRebuildCommandText {
+            get {
+                return ResourceManager.GetString("RunRebuildCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string RunRebuildCommandTooltip {
+            get {
+                return ResourceManager.GetString("RunRebuildCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Untitled.
         /// </summary>
         internal static string UntitledFileName {
