@@ -1,9 +1,12 @@
 ﻿#region Using Namespace
 
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
+using Idealde.Modules.Shell.Commands;
+using Idealde.Properties;
 
 #endregion
 
@@ -82,5 +85,17 @@ namespace Idealde.Framework.Panes
         }
 
         #endregion
+
+        void ICommandHandler<CloseFileCommandDefinition>.Update(Command command)
+        {
+            command.IsEnabled = IsVisible;
+            command.Tooltip = string.Format(Resources.FileCloseCommandTooltip, DisplayName);
+        }
+
+        Task ICommandHandler<CloseFileCommandDefinition>.Run(Command command)
+        {
+            IsVisible = false;
+            return Task.FromResult(true);
+        }
     }
 }

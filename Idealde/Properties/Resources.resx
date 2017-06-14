@@ -117,6 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Modules\SolutionExplorer\IconSource\folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="FileMenuText" xml:space="preserve">
     <value>File</value>
   </data>
@@ -133,51 +137,114 @@
     <value>Open</value>
   </data>
   <data name="FileSaveAsCommandText" xml:space="preserve">
-    <value>Save as</value>
+    <value>Save Selected Item As</value>
   </data>
   <data name="FileSaveCommandText" xml:space="preserve">
-    <value>Save</value>
+    <value>Save Selected Item</value>
   </data>
   <data name="ViewErrorListCommandText" xml:space="preserve">
     <value>Error List</value>
   </data>
   <data name="ViewErrorListCommandTooltip" xml:space="preserve">
-    <value>Open Error List tool window</value>
+    <value>Open Error List Tool Window</value>
   </data>
   <data name="ViewMenuText" xml:space="preserve">
     <value>View</value>
   </data>
   <data name="ViewOutputCommandTooltip" xml:space="preserve">
-    <value>Open Output tool window</value>
+    <value>Open Output Tool Window</value>
   </data>
   <data name="ViewOutputCommandText" xml:space="preserve">
     <value>Output</value>
   </data>
   <data name="FileNewCppHeaderCommandTooltip" xml:space="preserve">
-    <value>Create new C++ .h header file</value>
+    <value>Create New C++ .h Header File</value>
   </data>
   <data name="UntitledFileName" xml:space="preserve">
     <value>Untitled</value>
   </data>
   <data name="CreateNewFileText" xml:space="preserve">
-    <value>Create new file</value>
+    <value>Create New File</value>
   </data>
   <data name="FileNewCppSourceCommandText" xml:space="preserve">
     <value>C++ Source (.cpp)</value>
   </data>
   <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
-    <value>Create new C++ .cpp source file</value>
+    <value>Create New C++ .cpp Source File</value>
   </data>
   <data name="FileOpenCommandTooltip" xml:space="preserve">
-    <value>Open an existing file</value>
+    <value>Open An Existing File</value>
   </data>
   <data name="OpenFileDialogTitle" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="FileSaveCommandTooltip" xml:space="preserve">
-    <value>Save current item</value>
+    <value>Save {0}</value>
   </data>
   <data name="FileSaveAsCommandTooltip" xml:space="preserve">
-    <value>Save current item as ...</value>
+    <value>Save {0} As New File</value>
+  </data>
+  <data name="FileCloseCommandText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="FileCloseCommandTooltip" xml:space="preserve">
+    <value>Close {0}</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Idealde</value>
+  </data>
+  <data name="AskForSaveFileBeforeExit" xml:space="preserve">
+    <value>Save {0} before exit?</value>
+  </data>
+  <data name="EditCopyCommandText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="EditCopyCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditCutCommandText" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="EditCutCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditMenuText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditRedoCommandText" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="EditRedoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUndoCommandText" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="EditUndoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditPasteCommandText" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="EditPasteCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditSelectAllCommandText" xml:space="preserve">
+    <value>SelectAll</value>
+  </data>
+  <data name="EditSelectAllCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditFindAndReplaceCommandText" xml:space="preserve">
+    <value>Find And Replace</value>
+  </data>
+  <data name="EditFindAndReplaceCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditGotoCommadText" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="EditGotoCommandTooltip" xml:space="preserve">
+    <value />
   </data>
 </root>

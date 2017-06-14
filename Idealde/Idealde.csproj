@@ -151,6 +151,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\StatusBar\Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +193,7 @@
     <Compile Include="Framework\Behaviors\KeyboardFocusBehavior.cs" />
     <Compile Include="Framework\Commands\Command.cs" />
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
+    <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
     <Compile Include="Framework\Commands\CommandRouter.cs" />
     <Compile Include="Framework\Commands\CommandService.cs" />
     <Compile Include="Framework\Controls\DynamicStyle.cs" />
@@ -235,6 +240,7 @@
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\MainMenu\Controls\MenuItemStyleSelector.cs" />
     <Compile Include="Modules\MainMenu\Converters\EmptyStringToUnsetConverter.cs" />
     <Compile Include="Modules\MainMenu\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
@@ -242,6 +248,7 @@
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
     <Compile Include="Modules\MainMenu\Models\DisplayMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemSeparator.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -258,6 +265,7 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Commands\CloseFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
@@ -273,6 +281,12 @@
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\SolutionExplorer\ISolutionExplorer.cs" />
+    <Compile Include="Modules\SolutionExplorer\Models\TreeViewItemModel.cs" />
+    <Compile Include="Modules\SolutionExplorer\ViewModels\SolutionExplorerViewModel.cs" />
+    <Compile Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml.cs">
+      <DependentUpon>SolutionExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarItem.cs" />
@@ -291,6 +305,11 @@
     <Compile Include="Modules\ToolBar\Views\ToolBarView.xaml.cs">
       <DependentUpon>ToolBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\UndoRedo\Commands\RedoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\Commands\UndoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoableAction.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoRedoManager.cs" />
+    <Compile Include="Modules\UndoRedo\UndoRedoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -307,6 +326,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -339,6 +359,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />
+    <Resource Include="Modules\SolutionExplorer\IconSource\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Redo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

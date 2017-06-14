@@ -21,10 +21,13 @@ using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
+using Idealde.Modules.SolutionExplorer;
+using Idealde.Modules.SolutionExplorer.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBar;
 using Idealde.Modules.ToolBar.ViewModels;
+using Idealde.Modules.UndoRedo;
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -122,6 +125,14 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(
                 ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+
+            //solution explorer
+            _container.RegisterType<ISolutionExplorer, SolutionExplorerViewModel>(
+                new ContainerControlledLifetimeManager());
+
+            //undo redo
+            _container.RegisterType<IUndoRedoManager, UndoRedoManager>(
+                new TransientLifetimeManager());
         }
 
         protected override object GetInstance(Type service, string key)

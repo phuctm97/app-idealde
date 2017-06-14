@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,7 +27,7 @@ namespace Idealde.Modules.CodeEditor.Views
         public static readonly DependencyProperty LexerProperty =
             DependencyProperty.Register("Lexer", typeof(Lexer), typeof(CodeEditorView),
                 new PropertyMetadata(Lexer.Null, OnLexerChanged));
-
+        public bool IsDirty { get; private set; }
 
         // Define autocomplete menu and key word
         private readonly AutocompleteMenu _autocompleteMenu;
@@ -90,7 +91,7 @@ namespace Idealde.Modules.CodeEditor.Views
         public CodeEditorView()
         {
             InitializeComponent();
-
+            IsDirty = false;
             // Scintilla keyword storages
             _keyWord1 = new Dictionary<Lexer, string>();
 
@@ -505,6 +506,8 @@ namespace Idealde.Modules.CodeEditor.Views
         private int _maxRowCharLength;
         private void OnTextChanged(object sender, System.EventArgs e)
         {
+            IsDirty = true;
+            IsDirtyChanged?.Invoke(true);
             int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
             if (_maxRowCharLength == newMaxRowCharLength) return;
             ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1)) + 2;
@@ -514,6 +517,9 @@ namespace Idealde.Modules.CodeEditor.Views
         #endregion
 
         #region CodeEditorView behaviors
+
+        public event DirtyChangingEventHandler IsDirtyChanged;
+
         public void SetResourceDirectory(string directory)
         {
             ResourcesDirectory = directory;
@@ -533,6 +539,7 @@ namespace Idealde.Modules.CodeEditor.Views
         public void SetContent(string text)
         {
             ScintillaEditor.Text = text;
+            IsDirtyChanged?.Invoke(false);
         }
         public string GetContent()
         {

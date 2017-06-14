@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mahappsControls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:converters="clr-namespace:Idealde.Modules.MainMenu.Converters"
+             xmlns:controls="clr-namespace:Idealde.Modules.MainMenu.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Idealde.Modules.MainMenu.Views"
@@ -60,13 +61,29 @@
     </UserControl.Resources>
     
     <Menu ItemsSource="{Binding Items}">
-        <Menu.ItemContainerStyle>
-            <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
-                <Setter Property="Command" Value="{Binding Command}" />
-                <Setter Property="ToolTip" Value="{Binding Tooltip, Converter={StaticResource EmptyStringToUnsetConverter}}" />
-                <Setter Property="Icon" Value="{StaticResource MenuItemIcon}"/>
-            </Style>
-        </Menu.ItemContainerStyle>
+        <Menu.ItemContainerStyleSelector>
+            <controls:MenuItemStyleSelector>
+                <controls:MenuItemStyleSelector.SeparatorStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Separator />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </controls:MenuItemStyleSelector.SeparatorStyle>
+                <controls:MenuItemStyleSelector.MenuItemStyle>
+                    <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+                        <Setter Property="Command" Value="{Binding Command}" />
+                        <Setter Property="ToolTip" Value="{Binding Tooltip, Converter={StaticResource EmptyStringToUnsetConverter}}" />
+                        <Setter Property="Icon" Value="{StaticResource MenuItemIcon}"/>
+                    </Style>
+                </controls:MenuItemStyleSelector.MenuItemStyle>
+            </controls:MenuItemStyleSelector>
+        </Menu.ItemContainerStyleSelector>
+        
         <Menu.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                 <TextBlock Text="{Binding Text}"></TextBlock>
