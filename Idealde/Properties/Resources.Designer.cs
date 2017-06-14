@@ -124,11 +124,20 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ErrorList.
+        ///   Looks up a localized string similar to Error List.
         /// </summary>
-        internal static string ViewErrorListMenuText {
+        internal static string ViewErrorListCommandText {
             get {
-                return ResourceManager.GetString("ViewErrorListMenuText", resourceCulture);
+                return ResourceManager.GetString("ViewErrorListCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Error List tool window.
+        /// </summary>
+        internal static string ViewErrorListCommandTooltip {
+            get {
+                return ResourceManager.GetString("ViewErrorListCommandTooltip", resourceCulture);
             }
         }
         

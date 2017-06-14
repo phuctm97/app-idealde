@@ -222,6 +222,8 @@
     <Compile Include="Modules\CodeEditor\Views\CodeEditorView.xaml.cs">
       <DependentUpon>CodeEditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandDefinition.cs" />
+    <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandHandler.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
@@ -252,6 +254,7 @@
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
+    <Compile Include="Modules\Shell\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -297,6 +300,10 @@
   <ItemGroup>
     <Folder Include="Framework\Controls\" />
     <Folder Include="Framework\Menus\" />
+    <Folder Include="Modules\MainMenu\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Actions\BuildErrorList.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

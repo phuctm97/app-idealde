@@ -58,6 +58,12 @@
         <Menu.ItemContainerStyle>
             <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
                 <Setter Property="Command" Value="{Binding Command}" />
+                <Setter Property="ToolTip" Value="{Binding Tooltip}" />
+                <Setter Property="Icon">
+                    <Setter.Value>
+                        <Image Source="{Binding IconSource}"/>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </Menu.ItemContainerStyle>
         <Menu.ItemTemplate>

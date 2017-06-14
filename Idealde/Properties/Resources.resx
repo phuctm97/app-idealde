@@ -138,8 +138,11 @@
   <data name="FileSaveMenuText" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="ViewErrorListMenuText" xml:space="preserve">
-    <value>ErrorList</value>
+  <data name="ViewErrorListCommandText" xml:space="preserve">
+    <value>Error List</value>
+  </data>
+  <data name="ViewErrorListCommandTooltip" xml:space="preserve">
+    <value>Open Error List tool window</value>
   </data>
   <data name="ViewMenuText" xml:space="preserve">
     <value>View</value>

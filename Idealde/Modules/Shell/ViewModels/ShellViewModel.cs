@@ -7,6 +7,7 @@ using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.ErrorList;
+using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output;
@@ -134,7 +135,8 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenu(viewMenu);
 
             var viewOutputMenu = new DisplayMenuItem("View.Output", Resources.ViewOutputMenuText);
-            var viewErrorListMenu = new DisplayMenuItem("View.ErrorList", Resources.ViewErrorListMenuText);
+            var viewErrorListMenu =
+                new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
             MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
         }
 
@@ -151,6 +153,7 @@ namespace Idealde.Modules.Shell.ViewModels
         private void LoadDefaultTools()
         {
             ShowTool(IoC.Get<IOutput>());
+
             ShowTool(IoC.Get<IErrorList>());
         }
 
@@ -198,6 +201,11 @@ namespace Idealde.Modules.Shell.ViewModels
             }
             tool.IsVisible = true;
             tool.IsSelected = true;
+            NotifyOfPropertyChange(() => Tools);
+
+            if (Equals(tool, _activeLayoutItem)) return;
+            _activeLayoutItem = tool;
+            NotifyOfPropertyChange(() => ActiveLayoutItem);
         }
 
         public void ShowTool<TTool>() where TTool : ITool

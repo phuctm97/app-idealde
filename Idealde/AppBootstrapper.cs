@@ -8,6 +8,7 @@ using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.ErrorList;
+using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.ErrorList.ViewModels;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
@@ -91,7 +92,11 @@ namespace Idealde
             //tools
             _container.RegisterType<IOutput, OutputViewModel>(
                 new ContainerControlledLifetimeManager());
+
+            //error list
             _container.RegisterType<IErrorList, ErrorListViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
         }
 
