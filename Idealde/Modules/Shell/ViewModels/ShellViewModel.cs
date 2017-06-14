@@ -5,16 +5,16 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
-using Idealde.Modules.CodeEditor.ViewModels;
-using Idealde.Modules.ErrorList;
+using Idealde.Modules.CodeEditor.Commands;
+using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
-using Idealde.Modules.Output;
+using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.SolutionExplorer;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.Tests.ViewModels;
 using Idealde.Modules.ToolBar;
+using Idealde.Properties;
 
 #endregion
 
@@ -60,7 +60,6 @@ namespace Idealde.Modules.Shell.ViewModels
                 {
                     ShowTool((ITool) _activeLayoutItem);
                 }
-                NotifyOfPropertyChange(() => ActiveLayoutItem);
             }
         }
 
@@ -81,6 +80,7 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu = mainMenu;
 
             StatusBar = statusBar;
+
             ToolBar = toolBar;
 
             Tools = new BindableCollection<ITool>();
@@ -92,31 +92,13 @@ namespace Idealde.Modules.Shell.ViewModels
         {
             base.OnInitialize();
 
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 1"});
-            OpenDocument(new DocumentTestViewModel {DisplayName = "Document 2"});
-            OpenDocument(new CodeEditorViewModel());
+            BuildMenu();
 
-            ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
-            ShowTool(IoC.Get<IOutput>());
-            ShowTool(IoC.Get<IErrorList>());
-            ShowTool(IoC.Get<ISolutionExplorer>());
-            IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
+            BuildStatusBar();
 
-            StatusBar.AddItem("Status 1", new GridLength(100));
-            StatusBar.AddItem("Status 2", new GridLength(100));
-            StatusBar.AddItem("Status 3", new GridLength(100));
+            LoadDefaultDocuments();
 
-            var fileMenu = new Menu("File");
-
-            MainMenu.AddMenu(fileMenu);
-
-            var newFile = new MenuItem("New") {Text = "New"};
-            var open = new MenuItem("Open") {Text = "Open"};
-            var save = new MenuItem("Save") {Text = "Save"};
-            var saveAs = new MenuItem("SaveAs") {Text = "Save As ..."};
-            var exit = new CommandMenuItem<ExitCommandDefinition>("Exit") {Text = "Exit"};
-
-            MainMenu.AddMenuItem(fileMenu, newFile, open, save, saveAs, exit);
+            LoadDefaultTools();
         }
 
         protected override void OnViewLoaded(object view)
@@ -127,6 +109,47 @@ namespace Idealde.Modules.Shell.ViewModels
             }
 
             base.OnViewLoaded(view);
+        }
+
+        private void BuildMenu()
+        {
+            // File menu
+            var fileMenu = new Menu("File", Resources.FileMenuText);
+            MainMenu.AddMenu(fileMenu);
+
+            var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
+            var fileOpenMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open");
+            var fileSaveMenu = new CommandMenuItem<SaveFileCommandDefinition>("File.Save");
+            var fileSaveAsMenu = new CommandMenuItem<SaveFileAsCommandDefinition>("File.SaveAs");
+            var fileExitMenu = new CommandMenuItem<ExitCommandDefinition>("File.Exit");
+            MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
+
+            // File.New menu
+            var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
+            var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
+            MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+
+            // View menu
+            var viewMenu = new Menu("View", Resources.ViewMenuText);
+            MainMenu.AddMenu(viewMenu);
+
+            var viewOutputMenu = new CommandMenuItem<ViewOutputCommandDefinition>("View.Output");
+            var viewErrorListMenu =
+                new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
+            MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
+        }
+
+        private void BuildStatusBar()
+        {
+            StatusBar.AddItem("Ready", new GridLength(1, GridUnitType.Auto));
+        }
+
+        private void LoadDefaultDocuments()
+        {
+        }
+
+        private void LoadDefaultTools()
+        {
         }
 
         #endregion
@@ -148,8 +171,6 @@ namespace Idealde.Modules.Shell.ViewModels
             base.OnActivationProcessed(item, success);
 
             if (!success) return;
-
-            if (Equals(item, _activeLayoutItem)) return;
 
             _activeLayoutItem = item;
             NotifyOfPropertyChange(() => ActiveLayoutItem);
@@ -173,6 +194,9 @@ namespace Idealde.Modules.Shell.ViewModels
             }
             tool.IsVisible = true;
             tool.IsSelected = true;
+
+            _activeLayoutItem = tool;
+            NotifyOfPropertyChange(() => ActiveLayoutItem);
         }
 
         public void ShowTool<TTool>() where TTool : ITool

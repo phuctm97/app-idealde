@@ -159,14 +159,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\Tests\Views\DocumentTestView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Modules\Tests\Views\ToolTestView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Modules\ToolBar\Views\ToolBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +207,7 @@
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\PersistedDocument.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
+    <Compile Include="Framework\Services\IEditorProvider.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IResourceManager.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
@@ -223,6 +216,9 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
+    <Compile Include="Modules\CodeEditor\EditorProvider.cs" />
+    <Compile Include="Modules\CodeEditor\ILanguageDefinitionManager.cs" />
+    <Compile Include="Modules\CodeEditor\LanguageDefinitionManager.cs" />
     <Compile Include="Modules\CodeEditor\Models\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -234,16 +230,21 @@
     <Compile Include="Modules\CodeEditor\Views\CodeEditorView.xaml.cs">
       <DependentUpon>CodeEditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandDefinition.cs" />
+    <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandHandler.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\MainMenu\Converters\EmptyStringToUnsetConverter.cs" />
+    <Compile Include="Modules\MainMenu\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainMenu\Models\CommandMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
-    <Compile Include="Modules\MainMenu\Models\MenuItem.cs" />
+    <Compile Include="Modules\MainMenu\Models\DisplayMenuItem.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -252,6 +253,8 @@
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Output\Commands\ViewOutputCommandDefinition.cs" />
+    <Compile Include="Modules\Output\Commands\ViewOutputCommandHandler.cs" />
     <Compile Include="Modules\Output\IOutput.cs" />
     <Compile Include="Modules\Output\ViewModels\OutputViewModel.cs" />
     <Compile Include="Modules\Output\IOutputView.cs" />
@@ -260,9 +263,16 @@
     </Compile>
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\SaveFileAsCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\SaveFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
+    <Compile Include="Modules\Shell\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Modules\Shell\ViewModels\ShellViewModel.cs" />
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
@@ -274,18 +284,10 @@
       <DependentUpon>SolutionExplorerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\StatusBar\IStatusBar.cs" />
-    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItemBase.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItem.cs" />
     <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Tests\ViewModels\DocumentTestViewModel.cs" />
-    <Compile Include="Modules\Tests\ViewModels\ToolTestViewModel.cs" />
-    <Compile Include="Modules\Tests\Views\DocumentTestView.xaml.cs">
-      <DependentUpon>DocumentTestView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Tests\Views\ToolTestView.xaml.cs">
-      <DependentUpon>ToolTestView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\ToolBar\IToolBar.cs" />
     <Compile Include="Modules\ToolBar\Model\ToolBarDefiniton.cs" />
@@ -323,6 +325,28 @@
   <ItemGroup>
     <Folder Include="Framework\Controls\" />
     <Folder Include="Framework\Menus\" />
+    <Folder Include="Modules\MainMenu\Commands\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ErrorList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Output.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CppFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NewFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Close.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />

@@ -23,13 +23,13 @@ namespace Idealde.Modules.MainMenu.Models
             }
         }
 
-        public IObservableCollection<MenuItem> Children { get; }
+        public IObservableCollection<MenuItemBase> Children { get; }
 
-        public Menu(string text, string name = "")
+        public Menu(string name, string text)
         {
-            Children = new BindableCollection<MenuItem>();
+            Children = new BindableCollection<MenuItemBase>();
+            Name = name;
             Text = text;
-            Name = name == "" ? text : name;
         }
     }
 }

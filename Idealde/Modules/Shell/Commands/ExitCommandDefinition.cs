@@ -1,4 +1,5 @@
-﻿using Idealde.Framework.Commands;
+﻿using System;
+using Idealde.Framework.Commands;
 
 namespace Idealde.Modules.Shell.Commands
 {
@@ -11,5 +12,7 @@ namespace Idealde.Modules.Shell.Commands
         public override string Text => "Exit";
 
         public override string Tooltip => "Exit application";
+
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Close.png");
     }
 }

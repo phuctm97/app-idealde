@@ -7,12 +7,17 @@ using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
+using Idealde.Modules.CodeEditor;
+using Idealde.Modules.CodeEditor.Commands;
+using Idealde.Modules.CodeEditor.ViewModels;
 using Idealde.Modules.ErrorList;
+using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.ErrorList.ViewModels;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Output;
+using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
@@ -67,6 +72,8 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, OpenFileCommandHandler>(OpenFileCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
 
             //services
             _container.RegisterType<IThemeManager, ThemeManager>(
@@ -90,10 +97,32 @@ namespace Idealde
             _container.RegisterType<IToolBar, ToolBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
-            //tools
+            //output
             _container.RegisterType<IOutput, OutputViewModel>(
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ViewOutputCommandHandler>(ViewOutputCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+
+            //code editor
+            _container.RegisterType<ICodeEditor, CodeEditorViewModel>(
+                new TransientLifetimeManager());
+            _container.RegisterType<ILanguageDefinitionManager, LanguageDefinitionManager>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IEditorProvider, EditorProvider>(
+                EditorProvider.ProviderName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppHeaderCommandHandler>(
+                NewCppHeaderCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppSourceCommandHandler>(
+                NewCppSourceCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+
+            //error list
             _container.RegisterType<IErrorList, ErrorListViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ViewErrorListCommandHandler>(
+                ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ISolutionExplorer, SolutionExplorerViewModel>(
                 new ContainerControlledLifetimeManager());

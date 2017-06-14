@@ -121,4 +121,67 @@
   <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Modules\SolutionExplorer\IconSource\folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FileMenuText" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FileNewCppHeaderCommandText" xml:space="preserve">
+    <value>C++ Header (.h)</value>
+  </data>
+  <data name="FileNewCppSourceMenuText" xml:space="preserve">
+    <value>C++ Source (.cpp)</value>
+  </data>
+  <data name="FileNewMenuText" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="FileOpenCommandText" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="FileSaveAsCommandText" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="FileSaveCommandText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ViewErrorListCommandText" xml:space="preserve">
+    <value>Error List</value>
+  </data>
+  <data name="ViewErrorListCommandTooltip" xml:space="preserve">
+    <value>Open Error List tool window</value>
+  </data>
+  <data name="ViewMenuText" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="ViewOutputCommandTooltip" xml:space="preserve">
+    <value>Open Output tool window</value>
+  </data>
+  <data name="ViewOutputCommandText" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="FileNewCppHeaderCommandTooltip" xml:space="preserve">
+    <value>Create new C++ .h header file</value>
+  </data>
+  <data name="UntitledFileName" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="CreateNewFileText" xml:space="preserve">
+    <value>Create new file</value>
+  </data>
+  <data name="FileNewCppSourceCommandText" xml:space="preserve">
+    <value>C++ Source (.cpp)</value>
+  </data>
+  <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
+    <value>Create new C++ .cpp source file</value>
+  </data>
+  <data name="FileOpenCommandTooltip" xml:space="preserve">
+    <value>Open an existing file</value>
+  </data>
+  <data name="OpenFileDialogTitle" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="FileSaveCommandTooltip" xml:space="preserve">
+    <value>Save current item</value>
+  </data>
+  <data name="FileSaveAsCommandTooltip" xml:space="preserve">
+    <value>Save current item as ...</value>
+  </data>
 </root>

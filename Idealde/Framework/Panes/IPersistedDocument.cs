@@ -1,8 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿#region Using Namespace
+
+using System.Threading.Tasks;
+using Idealde.Framework.Commands;
+using Idealde.Modules.Shell.Commands;
+
+#endregion
 
 namespace Idealde.Framework.Panes
 {
-    public interface IPersistedDocument : IDocument
+    public interface IPersistedDocument : IDocument,
+        ICommandHandler<SaveFileCommandDefinition>
+
     {
         bool IsNew { get; }
 

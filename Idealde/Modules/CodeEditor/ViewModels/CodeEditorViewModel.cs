@@ -8,12 +8,16 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 {
     public class CodeEditorViewModel : PersistedDocument, ICodeEditor
     {
-
         private ICodeEditorView _view;
+        private string _fileContent;
+        private Lexer _fileLexer;
 
-        public CodeEditorViewModel()
+        private readonly ILanguageDefinitionManager _languageDefinitionManager;
+
+        public CodeEditorViewModel(ILanguageDefinitionManager languageDefinitionManager)
         {
-     
+            _languageDefinitionManager = languageDefinitionManager;
+            _fileContent = string.Empty;
         }
 
         protected override void OnViewLoaded(object view)
@@ -22,19 +26,26 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             if (_view == null) throw new InvalidCastException();
 
             _view.SetResourceDirectory("Resources");
-            _view.SetLexer(Lexer.Cpp);
+            _view.SetContent(_fileContent);
+            _view.SetLexer(_fileLexer);
             base.OnViewLoaded(view);
         }
 
         protected override Task DoNew()
         {
-            _view.SetContent(string.Empty);
+            _fileContent = string.Empty;
+            _view?.SetContent(_fileContent);
+
+            SetLanguage(_languageDefinitionManager.GetLanguage(Path.GetExtension(FileName)).Lexer);
             return Task.FromResult(true);
         }
 
         protected override Task DoLoad()
         {
-            string fileContent = File.ReadAllText(FilePath);
+            _fileContent = File.ReadAllText(FilePath);
+            _view?.SetContent(_fileContent);
+
+            SetLanguage(_languageDefinitionManager.GetLanguage(Path.GetExtension(FilePath)).Lexer);
             return Task.FromResult(true);
         }
 
@@ -51,7 +62,8 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         /// <param name="lexer">language (Cpp, c#, vb, ... )</param>
         public void SetLanguage(Lexer lexer)
         {
-            _view.SetLexer(lexer);
+            _fileLexer = lexer;
+            _view?.SetLexer(_fileLexer);
         }
 
         public string GetContent()

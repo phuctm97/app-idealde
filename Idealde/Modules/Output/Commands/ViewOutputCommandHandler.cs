@@ -3,20 +3,17 @@ using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Services;
 
-namespace Idealde.Modules.Shell.Commands
+namespace Idealde.Modules.Output.Commands
 {
-    public class ExitCommandHandler : ICommandHandler<ExitCommandDefinition>
+    public class ViewOutputCommandHandler : ICommandHandler<ViewOutputCommandDefinition>
     {
-        public ExitCommandHandler()
+        public void Update(Command command)
         {
         }
 
-        public void Update(Command command)
-        {}
-
         public Task Run(Command command)
         {
-            IoC.Get<IShell>().Close();
+            IoC.Get<IShell>().ShowTool<IOutput>();
             return Task.FromResult(true);
         }
     }
