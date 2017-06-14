@@ -132,10 +132,10 @@
   <data name="FileOpenCommandText" xml:space="preserve">
     <value>Open</value>
   </data>
-  <data name="FileSaveAsMenuText" xml:space="preserve">
+  <data name="FileSaveAsCommandText" xml:space="preserve">
     <value>Save as</value>
   </data>
-  <data name="FileSaveMenuText" xml:space="preserve">
+  <data name="FileSaveCommandText" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="ViewErrorListCommandText" xml:space="preserve">
@@ -173,5 +173,11 @@
   </data>
   <data name="OpenFileDialogTitle" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="FileSaveCommandTooltip" xml:space="preserve">
+    <value>Save current item</value>
+  </data>
+  <data name="FileSaveAsCommandTooltip" xml:space="preserve">
+    <value>Save current item as ...</value>
   </data>
 </root>

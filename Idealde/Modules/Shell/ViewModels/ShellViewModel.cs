@@ -118,8 +118,8 @@ namespace Idealde.Modules.Shell.ViewModels
 
             var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
             var fileOpenMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open");
-            var fileSaveMenu = new DisplayMenuItem("File.Save", Resources.FileSaveMenuText);
-            var fileSaveAsMenu = new DisplayMenuItem("File.SaveAs", Resources.FileSaveAsMenuText);
+            var fileSaveMenu = new CommandMenuItem<SaveFileCommandDefinition>("File.Save");
+            var fileSaveAsMenu = new CommandMenuItem<SaveFileAsCommandDefinition>("File.SaveAs");
             var fileExitMenu = new CommandMenuItem<ExitCommandDefinition>("File.Exit");
             MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
 

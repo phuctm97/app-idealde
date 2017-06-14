@@ -263,6 +263,8 @@
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\SaveFileAsCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\SaveFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
@@ -328,6 +330,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

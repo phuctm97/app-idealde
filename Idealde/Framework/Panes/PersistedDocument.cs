@@ -1,5 +1,15 @@
-﻿using System.IO;
+﻿#region Using Namespace
+
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using Caliburn.Micro;
+using Idealde.Framework.Commands;
+using Idealde.Framework.Services;
+using Idealde.Modules.Shell.Commands;
+using Microsoft.Win32;
+
+#endregion
 
 namespace Idealde.Framework.Panes
 {
@@ -84,5 +94,44 @@ namespace Idealde.Framework.Panes
         {
             DisplayName = IsDirty ? FileName + "*" : FileName;
         }
+
+        void ICommandHandler.Update(Command command)
+        {
+            command.IsEnabled = IsNew || IsDirty;
+        }
+
+        async Task ICommandHandler.Run(Command command)
+        {
+            if (IsNew)
+            {
+                await DoSaveAs();
+            }
+            else
+            {
+                await Save(FilePath);
+            }
+        }
+
+        private async Task DoSaveAs()
+        {
+            var dialog = new SaveFileDialog {FileName = FileName};
+            var filter = string.Empty;
+
+            var fileExtension = Path.GetExtension(FileName);
+            var fileType = IoC.GetAll<IEditorProvider>()
+                .SelectMany(x => x.FileTypes)
+                .SingleOrDefault(x => x.Extension == fileExtension);
+            if (fileType != null)
+                filter = fileType.Name + "|*" + fileType.Extension + "|";
+            filter += "All Files|*.*";
+            dialog.Filter = filter;
+
+            if (dialog.ShowDialog() != true)
+                return;
+
+            // Save file.
+            await Save(dialog.FileName);
+        }
+
     }
 }

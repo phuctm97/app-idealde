@@ -153,18 +153,36 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Save as.
         /// </summary>
-        internal static string FileSaveAsMenuText {
+        internal static string FileSaveAsCommandText {
             get {
-                return ResourceManager.GetString("FileSaveAsMenuText", resourceCulture);
+                return ResourceManager.GetString("FileSaveAsCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save current item as ....
+        /// </summary>
+        internal static string FileSaveAsCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileSaveAsCommandTooltip", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string FileSaveMenuText {
+        internal static string FileSaveCommandText {
             get {
-                return ResourceManager.GetString("FileSaveMenuText", resourceCulture);
+                return ResourceManager.GetString("FileSaveCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save current item.
+        /// </summary>
+        internal static string FileSaveCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileSaveCommandTooltip", resourceCulture);
             }
         }
         
