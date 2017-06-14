@@ -135,9 +135,18 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
-        internal static string FileOpenMenuText {
+        internal static string FileOpenCommandText {
             get {
-                return ResourceManager.GetString("FileOpenMenuText", resourceCulture);
+                return ResourceManager.GetString("FileOpenCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open an existing file.
+        /// </summary>
+        internal static string FileOpenCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileOpenCommandTooltip", resourceCulture);
             }
         }
         
@@ -156,6 +165,15 @@ namespace Idealde.Properties {
         internal static string FileSaveMenuText {
             get {
                 return ResourceManager.GetString("FileSaveMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string OpenFileDialogTitle {
+            get {
+                return ResourceManager.GetString("OpenFileDialogTitle", resourceCulture);
             }
         }
         

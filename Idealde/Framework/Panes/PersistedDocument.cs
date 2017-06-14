@@ -39,8 +39,6 @@ namespace Idealde.Framework.Panes
         protected override void OnInitialize()
         {
             base.OnInitialize();
-
-            DisplayName = "New";
         }
 
         // Behaviors

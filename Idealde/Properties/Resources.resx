@@ -129,7 +129,7 @@
   <data name="FileNewMenuText" xml:space="preserve">
     <value>New</value>
   </data>
-  <data name="FileOpenMenuText" xml:space="preserve">
+  <data name="FileOpenCommandText" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="FileSaveAsMenuText" xml:space="preserve">
@@ -167,5 +167,11 @@
   </data>
   <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
     <value>Create new C++ .cpp source file</value>
+  </data>
+  <data name="FileOpenCommandTooltip" xml:space="preserve">
+    <value>Open an existing file</value>
+  </data>
+  <data name="OpenFileDialogTitle" xml:space="preserve">
+    <value>Open</value>
   </data>
 </root>

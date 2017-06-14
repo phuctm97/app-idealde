@@ -70,6 +70,8 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, OpenFileCommandHandler>(OpenFileCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
 
             //services
             _container.RegisterType<IThemeManager, ThemeManager>(
@@ -102,7 +104,10 @@ namespace Idealde
             //code editor
             _container.RegisterType<ICodeEditor, CodeEditorViewModel>(
                 new TransientLifetimeManager());
-            _container.RegisterType<ILanguageDefinition, LanguageDefinition>(
+            _container.RegisterType<ILanguageDefinitionManager, LanguageDefinitionManager>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IEditorProvider, EditorProvider>(
+                EditorProvider.ProviderName,
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, NewCppHeaderCommandHandler>(
                 NewCppHeaderCommandDefinition.CommandName,

@@ -203,6 +203,7 @@
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\PersistedDocument.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
+    <Compile Include="Framework\Services\IEditorProvider.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IResourceManager.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
@@ -211,8 +212,9 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
-    <Compile Include="Modules\CodeEditor\ILanguageDefinition.cs" />
-    <Compile Include="Modules\CodeEditor\LanguageDefinition.cs" />
+    <Compile Include="Modules\CodeEditor\EditorProvider.cs" />
+    <Compile Include="Modules\CodeEditor\ILanguageDefinitionManager.cs" />
+    <Compile Include="Modules\CodeEditor\LanguageDefinitionManager.cs" />
     <Compile Include="Modules\CodeEditor\Models\AutocompleteMenu.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -257,8 +259,10 @@
     </Compile>
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
-    <Compile Include="Modules\CodeEditor\Commands\NewFileCommandDefinition.cs" />
-    <Compile Include="Modules\CodeEditor\Commands\NewFileCommandHandler.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
@@ -318,6 +322,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\CppFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NewFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Open.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

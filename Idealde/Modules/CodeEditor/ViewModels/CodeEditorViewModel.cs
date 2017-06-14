@@ -12,8 +12,11 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         private string _fileContent;
         private Lexer _fileLexer;
 
-        public CodeEditorViewModel()
+        private readonly ILanguageDefinitionManager _languageDefinitionManager;
+
+        public CodeEditorViewModel(ILanguageDefinitionManager languageDefinitionManager)
         {
+            _languageDefinitionManager = languageDefinitionManager;
             _fileContent = string.Empty;
         }
 
@@ -32,6 +35,8 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         {
             _fileContent = string.Empty;
             _view?.SetContent(_fileContent);
+
+            SetLanguage(_languageDefinitionManager.GetLanguage(Path.GetExtension(FileName)).Lexer);
             return Task.FromResult(true);
         }
 
@@ -39,6 +44,8 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         {
             _fileContent = File.ReadAllText(FilePath);
             _view?.SetContent(_fileContent);
+
+            SetLanguage(_languageDefinitionManager.GetLanguage(Path.GetExtension(FilePath)).Lexer);
             return Task.FromResult(true);
         }
 
