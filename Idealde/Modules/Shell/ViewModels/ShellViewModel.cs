@@ -11,6 +11,7 @@ using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output;
 using Idealde.Modules.Shell.Commands;
+using Idealde.Modules.SolutionExplorer;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.Tests.ViewModels;
 using Idealde.Modules.ToolBar;
@@ -98,6 +99,7 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool(new ToolTestViewModel(PaneLocation.Left) {DisplayName = "Tool 1"});
             ShowTool(IoC.Get<IOutput>());
             ShowTool(IoC.Get<IErrorList>());
+            ShowTool(IoC.Get<ISolutionExplorer>());
             IoC.Get<IErrorList>().AddItem(ErrorListItemType.Error, 1, "Description test", "C:\\testfile.cs", 1, 1);
 
             StatusBar.AddItem("Status 1", new GridLength(100));

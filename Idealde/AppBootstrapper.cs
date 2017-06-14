@@ -16,6 +16,8 @@ using Idealde.Modules.Output;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
+using Idealde.Modules.SolutionExplorer;
+using Idealde.Modules.SolutionExplorer.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBar;
@@ -92,6 +94,8 @@ namespace Idealde
             _container.RegisterType<IOutput, OutputViewModel>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IErrorList, ErrorListViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ISolutionExplorer, SolutionExplorerViewModel>(
                 new ContainerControlledLifetimeManager());
         }
 
