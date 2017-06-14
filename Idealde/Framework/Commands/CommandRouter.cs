@@ -17,6 +17,7 @@ namespace Idealde.Framework.Commands
     public class CommandRouter : ICommandRouter
     {
         // Dependencies
+
         #region Dependencies
 
         private readonly IShell _shell;
@@ -24,6 +25,7 @@ namespace Idealde.Framework.Commands
         #endregion
 
         // Backing fields
+
         #region Backing fields
 
         private readonly Dictionary<Type, HashSet<Type>> _commandHandlerTypeToCommandDefinitionTypesLookup;
@@ -32,7 +34,9 @@ namespace Idealde.Framework.Commands
         #endregion
 
         // Initializations
+
         #region Initializations
+
         public CommandRouter(IShell shell)
         {
             _shell = shell;
@@ -47,7 +51,7 @@ namespace Idealde.Framework.Commands
         private void BuildCommandDefinitionTypeToCommandHandlerLookup()
         {
             // get registered handler in container
-            var commandHandlersList = IoC.GetAll<ICommandHandler>();
+            var commandHandlersList = IoC.GetAll<ICommandHandler>().ToList();
 
             foreach (var commandHandler in commandHandlersList)
             {
@@ -62,10 +66,11 @@ namespace Idealde.Framework.Commands
                     _commandDefinitionTypeToCommandHandlerLookup.Add(commandDefinitionType, commandHandler);
                 }
             }
-        } 
+        }
+
         #endregion
 
-        public ICommandHandler GetHandler(CommandDefinition commandDefinition)
+        public CommandHandlerWrapper GetHandler(CommandDefinition commandDefinition)
         {
             ICommandHandler handler = null;
 
@@ -73,19 +78,19 @@ namespace Idealde.Framework.Commands
             if (_shell.ActiveLayoutItem != null)
             {
                 handler = GetCommandHandlerForLayoutItem(commandDefinition, _shell.ActiveLayoutItem);
-                if (handler != null) return handler;
+                if (handler != null) return CreateHandlerWrapper(commandDefinition.GetType(), handler);
             }
 
             // trav handler in visual tree start from shell active document
             if (_shell.ActiveItem != null)
             {
                 handler = GetCommandHandlerForLayoutItem(commandDefinition, _shell.ActiveItem);
-                if (handler != null) return handler;
+                if (handler != null) return CreateHandlerWrapper(commandDefinition.GetType(), handler);
             }
 
             // last case, find in global hash table
             _commandDefinitionTypeToCommandHandlerLookup.TryGetValue(commandDefinition.GetType(), out handler);
-            return handler;
+            return handler == null ? null : CreateHandlerWrapper(commandDefinition.GetType(), handler);
         }
 
         private ICommandHandler GetCommandHandlerForLayoutItem(CommandDefinition commandDefinition,
@@ -155,7 +160,7 @@ namespace Idealde.Framework.Commands
                 commandDefinitionTypes.Add(handledCommandDefinitionType);
         }
 
-        private static IEnumerable<Type> GetAllHandledCommandedDefinitionTypes(
+        private IEnumerable<Type> GetAllHandledCommandedDefinitionTypes(
             Type type)
         {
             var result = new List<Type>();
@@ -174,5 +179,11 @@ namespace Idealde.Framework.Commands
             return result;
         }
 
+        private CommandHandlerWrapper CreateHandlerWrapper(Type commandDefinitionType, ICommandHandler handler)
+        {
+            return
+                CommandHandlerWrapper.FromCommandHandler(
+                    typeof(ICommandHandler<>).MakeGenericType(commandDefinitionType), handler);
+        }
     }
 }

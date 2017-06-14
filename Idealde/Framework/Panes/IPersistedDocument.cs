@@ -9,8 +9,8 @@ using Idealde.Modules.Shell.Commands;
 namespace Idealde.Framework.Panes
 {
     public interface IPersistedDocument : IDocument,
-        ICommandHandler<SaveFileCommandDefinition>
-
+        ICommandHandler<SaveFileCommandDefinition>,
+        ICommandHandler<SaveFileAsCommandDefinition>
     {
         bool IsNew { get; }
 

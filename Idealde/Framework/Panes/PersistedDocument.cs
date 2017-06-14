@@ -95,12 +95,12 @@ namespace Idealde.Framework.Panes
             DisplayName = IsDirty ? FileName + "*" : FileName;
         }
 
-        void ICommandHandler.Update(Command command)
+        void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
         {
             command.IsEnabled = IsNew || IsDirty;
         }
 
-        async Task ICommandHandler.Run(Command command)
+        async Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
         {
             if (IsNew)
             {
@@ -110,6 +110,16 @@ namespace Idealde.Framework.Panes
             {
                 await Save(FilePath);
             }
+        }
+
+        void ICommandHandler<SaveFileAsCommandDefinition>.Update(Command command)
+        {
+            command.IsEnabled = !IsNew;
+        }
+
+        async Task ICommandHandler<SaveFileAsCommandDefinition>.Run(Command command)
+        {
+            await DoSaveAs();
         }
 
         private async Task DoSaveAs()
@@ -132,6 +142,5 @@ namespace Idealde.Framework.Panes
             // Save file.
             await Save(dialog.FileName);
         }
-
     }
 }
