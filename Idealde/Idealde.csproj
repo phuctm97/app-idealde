@@ -155,10 +155,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\ToolBar\Rescources\Styles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Modules\ToolBar\Views\ToolBarView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -287,7 +283,9 @@
     <Compile Include="Modules\ToolBar\Controls\ToolBarBase.cs" />
     <Compile Include="Modules\ToolBar\IToolBar.cs" />
     <Compile Include="Modules\ToolBar\Model\ToolBarDefiniton.cs" />
+    <Compile Include="Modules\ToolBar\Model\ToolBarItemBase.cs" />
     <Compile Include="Modules\ToolBar\Model\ToolBarItemDefinition.cs" />
+    <Compile Include="Modules\ToolBar\Model\ToolBarItemSeparator.cs" />
     <Compile Include="Modules\ToolBar\ViewModels\ToolBarViewModel.cs" />
     <Compile Include="Modules\ToolBar\Views\IToolBarView.cs" />
     <Compile Include="Modules\ToolBar\Views\ToolBarView.xaml.cs">

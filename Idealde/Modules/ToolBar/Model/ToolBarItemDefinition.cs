@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Idealde.Modules.ToolBar.Model
 {
-    public class ToolBarItemDefinition
+    public class ToolBarItemDefinition:ToolBarItemBase
     {
         #region Fields
         private int _sortOrder;

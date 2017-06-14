@@ -14,15 +14,15 @@
                TargetType="{x:Type Button}"
                BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Setter Property="Content"
-                    Value="{Binding Path=Text}"></Setter>
+                    Value="{Binding Path=Text}"/>
         </Style>
     </UserControl.Resources>
+    
     <ToolBarTray x:Name="ToolBarTray"
                  Visibility="{Binding Visible, Converter={StaticResource BoolToVisibilityConverter}}">
       <ToolBarTray.Resources>
           <DataTemplate DataType="{x:Type ToolBar}">
-              <Button
-                  Style="{StaticResource ToolBarButton}"></Button>
+              <Button Style="{StaticResource ToolBarButton}"/>
           </DataTemplate>
       </ToolBarTray.Resources>
     </ToolBarTray>

@@ -24,6 +24,9 @@ namespace Idealde.Modules.ToolBar.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
+            if ( _currentItem is ToolBarItemSeparator )
+                return new Separator ( );
+
             if (_currentItem is ToolBarItemDefinition)
                 return CreateButton<Button>(ButtonStyleKey, "ToolBarButton");
 
