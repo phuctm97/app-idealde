@@ -60,7 +60,6 @@ namespace Idealde.Modules.Shell.ViewModels
                 {
                     ShowTool((ITool) _activeLayoutItem);
                 }
-                NotifyOfPropertyChange(() => ActiveLayoutItem);
             }
         }
 
@@ -152,9 +151,6 @@ namespace Idealde.Modules.Shell.ViewModels
 
         private void LoadDefaultTools()
         {
-            ShowTool(IoC.Get<IOutput>());
-
-            ShowTool(IoC.Get<IErrorList>());
         }
 
         #endregion
@@ -176,8 +172,6 @@ namespace Idealde.Modules.Shell.ViewModels
             base.OnActivationProcessed(item, success);
 
             if (!success) return;
-
-            if (Equals(item, _activeLayoutItem)) return;
 
             _activeLayoutItem = item;
             NotifyOfPropertyChange(() => ActiveLayoutItem);
@@ -202,7 +196,6 @@ namespace Idealde.Modules.Shell.ViewModels
             tool.IsVisible = true;
             tool.IsSelected = true;
 
-            if (Equals(tool, _activeLayoutItem)) return;
             _activeLayoutItem = tool;
             NotifyOfPropertyChange(() => ActiveLayoutItem);
         }
