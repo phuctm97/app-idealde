@@ -14,6 +14,7 @@ using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.ViewModels;
 using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Output;
+using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
@@ -89,8 +90,10 @@ namespace Idealde
             _container.RegisterType<IToolBar, ToolBarViewModel>(
                 new ContainerControlledLifetimeManager());
 
-            //tools
+            //output
             _container.RegisterType<IOutput, OutputViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ViewOutputCommandHandler>(ViewOutputCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //error list

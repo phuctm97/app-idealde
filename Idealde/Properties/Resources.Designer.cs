@@ -72,9 +72,18 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to C++ Header (.h).
         /// </summary>
-        internal static string FileNewCppHeaderMenuText {
+        internal static string FileNewCppHeaderCommandText {
             get {
-                return ResourceManager.GetString("FileNewCppHeaderMenuText", resourceCulture);
+                return ResourceManager.GetString("FileNewCppHeaderCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new C++ .h header file.
+        /// </summary>
+        internal static string FileNewCppHeaderCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileNewCppHeaderCommandTooltip", resourceCulture);
             }
         }
         
@@ -153,9 +162,18 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Output.
         /// </summary>
-        internal static string ViewOutputMenuText {
+        internal static string ViewOutputCommandText {
             get {
-                return ResourceManager.GetString("ViewOutputMenuText", resourceCulture);
+                return ResourceManager.GetString("ViewOutputCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Output tool window.
+        /// </summary>
+        internal static string ViewOutputCommandTooltip {
+            get {
+                return ResourceManager.GetString("ViewOutputCommandTooltip", resourceCulture);
             }
         }
     }

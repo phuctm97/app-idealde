@@ -120,7 +120,7 @@
   <data name="FileMenuText" xml:space="preserve">
     <value>File</value>
   </data>
-  <data name="FileNewCppHeaderMenuText" xml:space="preserve">
+  <data name="FileNewCppHeaderCommandText" xml:space="preserve">
     <value>C++ Header (.h)</value>
   </data>
   <data name="FileNewCppSourceMenuText" xml:space="preserve">
@@ -147,7 +147,13 @@
   <data name="ViewMenuText" xml:space="preserve">
     <value>View</value>
   </data>
-  <data name="ViewOutputMenuText" xml:space="preserve">
+  <data name="ViewOutputCommandTooltip" xml:space="preserve">
+    <value>Open Output tool window</value>
+  </data>
+  <data name="ViewOutputCommandText" xml:space="preserve">
     <value>Output</value>
+  </data>
+  <data name="FileNewCppHeaderCommandTooltip" xml:space="preserve">
+    <value>Create new C++ .h header file</value>
   </data>
 </root>

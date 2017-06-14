@@ -18,6 +18,6 @@ namespace Idealde.Modules.ErrorList.Commands
 
         public override string Tooltip => Resources.ViewErrorListCommandTooltip;
 
-        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Actions/BuildErrorList.png");
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/ErrorList.png");
     }
 }

@@ -230,6 +230,8 @@
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\MainMenu\Converters\EmptyStringToUnsetConverter.cs" />
+    <Compile Include="Modules\MainMenu\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
     <Compile Include="Modules\MainMenu\Models\CommandMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
@@ -243,6 +245,8 @@
     <Compile Include="Modules\MainWindow\Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Output\Commands\ViewOutputCommandDefinition.cs" />
+    <Compile Include="Modules\Output\Commands\ViewOutputCommandHandler.cs" />
     <Compile Include="Modules\Output\IOutput.cs" />
     <Compile Include="Modules\Output\ViewModels\OutputViewModel.cs" />
     <Compile Include="Modules\Output\IOutputView.cs" />
@@ -251,6 +255,8 @@
     </Compile>
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\NewCppHeaderCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\NewCppHeaderCommandHandler.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />
     <Compile Include="Modules\Shell\Controls\PaneStyleSelector.cs" />
     <Compile Include="Modules\Shell\Controls\PaneTemplateSelector.cs" />
@@ -303,7 +309,13 @@
     <Folder Include="Modules\MainMenu\Commands\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Actions\BuildErrorList.png" />
+    <Resource Include="Resources\Images\ErrorList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Output.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CppFile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

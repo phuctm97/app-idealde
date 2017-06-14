@@ -6,11 +6,10 @@ using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.CodeEditor.ViewModels;
-using Idealde.Modules.ErrorList;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
-using Idealde.Modules.Output;
+using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBar;
@@ -125,7 +124,7 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
 
             // File.New menu
-            var fileNewCppHeaderMenu = new DisplayMenuItem("File.New.CppHeader", Resources.FileNewCppHeaderMenuText);
+            var fileNewCppHeaderMenu = new DisplayMenuItem("File.New.CppHeader", Resources.FileNewCppHeaderCommandText);
             var fileNewCppSourceMenu = new DisplayMenuItem("File.New.CppSource", Resources.FileNewCppSourceMenuText);
             MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
 
@@ -133,7 +132,7 @@ namespace Idealde.Modules.Shell.ViewModels
             var viewMenu = new Menu("View", Resources.ViewMenuText);
             MainMenu.AddMenu(viewMenu);
 
-            var viewOutputMenu = new DisplayMenuItem("View.Output", Resources.ViewOutputMenuText);
+            var viewOutputMenu = new CommandMenuItem<ViewOutputCommandDefinition>("View.Output");
             var viewErrorListMenu =
                 new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
             MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
