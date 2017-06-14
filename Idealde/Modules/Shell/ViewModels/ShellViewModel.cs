@@ -201,7 +201,6 @@ namespace Idealde.Modules.Shell.ViewModels
             }
             tool.IsVisible = true;
             tool.IsSelected = true;
-            NotifyOfPropertyChange(() => Tools);
 
             if (Equals(tool, _activeLayoutItem)) return;
             _activeLayoutItem = tool;

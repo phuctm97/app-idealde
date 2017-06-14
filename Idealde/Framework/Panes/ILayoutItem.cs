@@ -3,7 +3,7 @@ using Caliburn.Micro;
 
 namespace Idealde.Framework.Panes
 {
-    public interface ILayoutItem : IHaveDisplayName
+    public interface ILayoutItem : IHaveDisplayName, INotifyPropertyChangedEx
     {
         // Bind properties
         string ContentId { get; }
