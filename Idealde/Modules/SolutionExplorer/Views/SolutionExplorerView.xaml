@@ -3,14 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <TreeView ItemsSource="{Binding RootFolder}">
+    <TreeView ItemsSource="{Binding RootFolder}" TreeViewItem.Expanded="OnItemExpanded">
         <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate ItemsSource="{Binding SubItems}">
+            <HierarchicalDataTemplate ItemsSource="{Binding SubItems}" x:Name="ddd">
                 <StackPanel Orientation="Horizontal">
-                    <Image Width="20" Height="20" Stretch="Fill" Source="{Binding ImageSource}"/>
-                    <TextBlock Text="{Binding Name}" />
+                    <Label Content="{Binding Path=Path}" Visibility="Collapsed" x:Name="LabelStorePath"/>
+                    <Image Width="20" Height="20" Stretch="None" Source="{Binding ImageSource}"/>
+                    <TextBlock Text="{Binding Name}" FontSize="{Binding FontSize}"/>
                 </StackPanel>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>

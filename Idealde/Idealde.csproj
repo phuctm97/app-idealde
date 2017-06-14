@@ -279,6 +279,7 @@
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\SolutionExplorer\ISolutionExplorer.cs" />
+    <Compile Include="Modules\SolutionExplorer\ISolutionExplorerView.cs" />
     <Compile Include="Modules\SolutionExplorer\Models\TreeViewItemModel.cs" />
     <Compile Include="Modules\SolutionExplorer\ViewModels\SolutionExplorerViewModel.cs" />
     <Compile Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml.cs">
@@ -352,6 +353,9 @@
   <ItemGroup>
     <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />
     <Resource Include="Modules\SolutionExplorer\IconSource\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Modules\SolutionExplorer\IconSource\solution-explorer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

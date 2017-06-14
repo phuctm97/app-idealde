@@ -9,6 +9,17 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
     public class SolutionExplorerViewModel : Tool, ISolutionExplorer
     {
         private string _rootPath;
+        public SolutionExplorerViewModel()
+        {
+            RootFolder = new BindableCollection<TreeViewItemModel>();
+            RootPath = @"D:\A.System";
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+        }
+
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
 
         public string RootPath
@@ -19,16 +30,23 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
                 if (Equals(_rootPath, value)) return;
                 _rootPath = value;
                 RootFolder.Clear();
-                RootFolder.Add(new TreeViewItemModel(_rootPath, _rootPath));
-                InitFromRootDirectory(RootFolder[0],_rootPath);
+                RootFolder.Add(new TreeViewItemModel(_rootPath, _rootPath)
+                {
+                    ImageSource =
+                        new Uri(
+                            "pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/solution-explorer.png",
+                            UriKind.Absolute)
+                });
+                InitFromRootDirectory(RootFolder[0], _rootPath);
             }
         }
 
-        public SolutionExplorerViewModel()
+        public override PaneLocation PreferredLocation => PaneLocation.Right;
+
+        public void OnExpanded()
         {
-            RootFolder = new BindableCollection<TreeViewItemModel>();
-            RootPath = @"D:\A.System";
         }
+
         public void InitFromRootDirectory(TreeViewItemModel tItem, string path)
         {
             var current = Directory.GetDirectories(path);
@@ -45,7 +63,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
                 InitFromRootDirectory(item, direct);
                 tItem.SubItems.Add(item);
             }
-            foreach (string file in Directory.GetFiles(path))
+            foreach (var file in Directory.GetFiles(path))
             {
                 var fItem = new TreeViewItemModel(file, file)
                 {
@@ -57,7 +75,5 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
                 tItem.SubItems.Add(fItem);
             }
         }
-
-        public override PaneLocation PreferredLocation => PaneLocation.Right;
     }
 }
