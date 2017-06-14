@@ -189,6 +189,7 @@
     <Compile Include="Framework\Behaviors\KeyboardFocusBehavior.cs" />
     <Compile Include="Framework\Commands\Command.cs" />
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
+    <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
     <Compile Include="Framework\Commands\CommandRouter.cs" />
     <Compile Include="Framework\Commands\CommandService.cs" />
     <Compile Include="Framework\Commands\ICommandHandler.cs" />

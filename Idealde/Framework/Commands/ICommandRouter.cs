@@ -2,6 +2,6 @@
 {
     public interface ICommandRouter
     {
-        ICommandHandler GetHandler(CommandDefinition commandDefinition);
+        CommandHandlerWrapper GetHandler(CommandDefinition commandDefinition);
     }
 }
