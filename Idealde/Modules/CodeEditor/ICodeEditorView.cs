@@ -3,9 +3,10 @@ using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor
 {
+    public delegate void DirtyChangingEventHandler(bool q);
     public interface ICodeEditorView
     {
-        event EventHandler IsDirtyChanged;
+        event DirtyChangingEventHandler IsDirtyChanged;
 
         // CodeEditor view behaviors
         void SetResourceDirectory(string directory);

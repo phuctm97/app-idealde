@@ -32,9 +32,9 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             base.OnViewLoaded(view);
         }
 
-        private void OnDirtyChanged(object sender, EventArgs e)
+        private void OnDirtyChanged(bool q)
         {
-            IsDirty = true;
+            IsDirty = q;
         }
 
         protected override Task DoNew()
@@ -52,6 +52,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             _view?.SetContent(_fileContent);
 
             SetLanguage(_languageDefinitionManager.GetLanguage(Path.GetExtension(FilePath)).Lexer);
+            IsDirty = false;
             return Task.FromResult(true);
         }
 
