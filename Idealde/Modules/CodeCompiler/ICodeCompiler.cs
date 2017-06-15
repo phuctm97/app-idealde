@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 #endregion
 
@@ -30,9 +31,9 @@ namespace Idealde.Modules.CodeCompiler
     {
         bool IsBusy { get; }
 
-        bool CanCompileSingleFile(string sourceFilePath);
+        bool CanCompileSingleFile(string extension);
 
-        void CompileSingleFile(string sourceFilePath);
+        void CompileSingleFile(string sourceFilePath, string fileContent);
 
         event EventHandler<string> OutputDataReceived;
 

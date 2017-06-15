@@ -86,6 +86,8 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandRouter, CommandRouter>(
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<IFileManager, FileManager>(
+                new ContainerControlledLifetimeManager());
 
             //status bar
             _container.RegisterType<IStatusBar, StatusBarViewModel>(
