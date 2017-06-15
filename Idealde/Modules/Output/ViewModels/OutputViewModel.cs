@@ -54,6 +54,12 @@ namespace Idealde.Modules.Output.ViewModels
             OnTextChanged();
         }
 
+        public void AppendLine(string text)
+        {
+            Append(text);
+            BreakLine();
+        }
+
         public void BreakLine()
         {
             Append(Environment.NewLine);

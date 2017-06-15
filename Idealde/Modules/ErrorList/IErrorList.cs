@@ -15,7 +15,7 @@ namespace Idealde.Modules.ErrorList
 
         bool IsWarningsVisible { get; set; }
 
-        bool IsMesagesVisible { get; set; }
+        bool IsMessagesVisible { get; set; }
 
         int NumberOfErrorItems { get; }
 
@@ -28,8 +28,10 @@ namespace Idealde.Modules.ErrorList
         IEnumerable<ErrorListItem> FilteredItems { get; }
 
         // Error list behaviors
-        void AddItem(ErrorListItemType type, int code, string description,
+        void AddItem(ErrorListItemType type, string code, string description,
             string path = null, int? line = null, int? column = null,
             System.Action onClick = null);
+
+        void Clear();
     }
 }

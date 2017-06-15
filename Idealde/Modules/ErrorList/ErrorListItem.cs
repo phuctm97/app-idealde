@@ -20,7 +20,7 @@ namespace Idealde.Modules.ErrorList
         #region Backing fields
 
         private ErrorListItemType _type;
-        private int _code;
+        private string _code;
         private string _description;
         private string _path;
         private int? _line;
@@ -43,7 +43,7 @@ namespace Idealde.Modules.ErrorList
             }
         }
 
-        public int Code
+        public string Code
         {
             get { return _code; }
             set
@@ -109,7 +109,7 @@ namespace Idealde.Modules.ErrorList
 
         #region Initializations
 
-        public ErrorListItem(ErrorListItemType type, int code, string description,
+        public ErrorListItem(ErrorListItemType type, string code, string description,
             string path = null, int? line = null, int? column = null)
         {
             _type = type;

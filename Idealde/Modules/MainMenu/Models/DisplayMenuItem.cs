@@ -2,7 +2,6 @@
 
 using System;
 using System.Windows.Input;
-using Caliburn.Micro;
 
 #endregion
 
@@ -10,6 +9,10 @@ namespace Idealde.Modules.MainMenu.Models
 {
     public class DisplayMenuItem : MenuItemBase
     {
+        // Bind properties 
+
+        #region Bind properties
+
         public override string Text { get; }
 
         public override string Tooltip { get; }
@@ -20,6 +23,12 @@ namespace Idealde.Modules.MainMenu.Models
 
         public override ICommand Command => null;
 
+        #endregion
+
+        // Initializations
+
+        #region Initializations
+
         public DisplayMenuItem(string name, string text, string tooltip = "", Uri iconSource = null)
             : base(name)
         {
@@ -27,5 +36,7 @@ namespace Idealde.Modules.MainMenu.Models
             Tooltip = tooltip;
             IconSource = iconSource;
         }
+
+        #endregion
     }
 }

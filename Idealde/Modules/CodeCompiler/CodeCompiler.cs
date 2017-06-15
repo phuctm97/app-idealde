@@ -1,0 +1,194 @@
+﻿#region Using Namespace
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Text.RegularExpressions;
+using Idealde.Properties;
+
+#endregion
+
+namespace Idealde.Modules.CodeCompiler
+{
+    public class CodeCompiler : ICodeCompiler
+    {
+        private readonly string[] _regexSpecialCharacters;
+        private readonly List<string> _canCompileFileTypes;
+        private readonly List<CompileError> _compileErrors;
+        private readonly List<CompileError> _compileWarnings;
+        private string _regexableSourceFilePath;
+
+        public bool CanCompileSingleFile(string sourceFilePath)
+        {
+            return _canCompileFileTypes.Contains(Path.GetExtension(sourceFilePath));
+        }
+
+        public void CompileSingleFile(string sourceFilePath)
+        {
+            var sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
+            _regexableSourceFilePath = GenerateRegexableString(sourceFilePath);
+
+            var cl = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "cmd",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    Arguments =
+                        $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {sourceFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\"
+                },
+                EnableRaisingEvents = true
+            };
+
+            cl.OutputDataReceived += OnCompilerOutputDataReceived;
+            cl.ErrorDataReceived += OnCompilerOutputDataReceived;
+            cl.Exited += OnCompilerExited;
+
+            IsBusy = true;
+            _compileErrors.Clear();
+            _compileWarnings.Clear();
+
+            cl.Start();
+            cl.BeginOutputReadLine();
+            cl.BeginErrorReadLine();
+        }
+
+        private void OnCompilerExited(object sender, EventArgs e)
+        {
+            // release process
+            var cl = (Process) sender;
+            if (cl.ExitCode == 0)
+            {
+                _compileErrors.Clear();
+            }
+
+            cl.OutputDataReceived -= OnCompilerOutputDataReceived;
+            cl.ErrorDataReceived -= OnCompilerOutputDataReceived;
+            cl.Exited -= OnCompilerExited;
+            cl.Dispose();
+
+            IsBusy = false;
+            OnExited?.Invoke(_compileErrors, _compileWarnings);
+        }
+
+        private void OnCompilerOutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(e?.Data)) return;
+
+            MatchErrors(e.Data);
+
+            MatchWarnings(e.Data);
+
+            OutputDataReceived?.Invoke(sender, e.Data);
+        }
+
+        private void MatchErrors(string output)
+        {
+            string errorPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\): error ([a-zA-Z0-9]+): (.+)";
+            var errorMatch = Regex.Match(output.ToLower(), errorPattern);
+
+            if (errorMatch.Success)
+            {
+                var line = 0;
+                var column = -1;
+                var code = "N/A";
+                var description = "N/A";
+
+                if (errorMatch.Groups.Count > 1)
+                {
+                    int.TryParse(errorMatch.Groups[1].Value, out line);
+                }
+                if (errorMatch.Groups.Count > 2)
+                {
+                    code = output.Substring(errorMatch.Groups[2].Index,
+                        errorMatch.Groups[2].Length);
+                }
+                if (errorMatch.Groups.Count > 3)
+                {
+                    description = output.Substring(errorMatch.Groups[3].Index,
+                        errorMatch.Groups[3].Length);
+                }
+                _compileErrors.Add(new CompileError(line, column, code, description));
+            }
+        }
+
+        private void MatchWarnings(string output)
+        {
+            string warningPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\) : warning ([a-zA-Z0-9]+): (.+)";
+            var warningMatch = Regex.Match(output.ToLower(), warningPattern);
+
+            if (warningMatch.Success)
+            {
+                var line = 0;
+                var column = -1;
+                var code = "N/A";
+                var description = "N/A";
+
+                if (warningMatch.Groups.Count > 1)
+                {
+                    int.TryParse(warningMatch.Groups[1].Value, out line);
+                }
+                if (warningMatch.Groups.Count > 2)
+                {
+                    code = output.Substring(warningMatch.Groups[2].Index,
+                        warningMatch.Groups[2].Length);
+                }
+                if (warningMatch.Groups.Count > 3)
+                {
+                    description = output.Substring(warningMatch.Groups[3].Index,
+                        warningMatch.Groups[3].Length);
+                }
+                _compileWarnings.Add(new CompileError(line, column, code, description));
+            }
+        }
+
+        public event EventHandler<string> OutputDataReceived;
+
+        public event CompilerExitedEventHandler OnExited;
+
+        public bool IsBusy { get; private set; }
+
+        public CodeCompiler()
+        {
+            IsBusy = false;
+
+            _canCompileFileTypes = new List<string>();
+
+            _compileErrors = new List<CompileError>();
+
+            _compileWarnings = new List<CompileError>();
+
+            _regexSpecialCharacters = new[]
+            {
+                "\\",
+                ".", "$", "^", "{", "[", "(", "|", ")", "]", "}", "*", "+", "?"
+            };
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            _canCompileFileTypes.AddRange(new[]
+            {
+                ".cpp"
+            });
+
+            _regexableSourceFilePath = string.Empty;
+        }
+
+        private string GenerateRegexableString(string source)
+        {
+            var regexableString = source.ToLower();
+            foreach (var s in _regexSpecialCharacters)
+            {
+                regexableString = regexableString.Replace(s, $"\\{s}");
+            }
+            return regexableString;
+        }
+    }
+}

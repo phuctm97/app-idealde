@@ -5,15 +5,17 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
+using Idealde.Modules.CodeCompiler.Commands;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
-using Idealde.Modules.SolutionExplorer;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBarTray;
+using Idealde.Modules.ToolBarTray.Models;
+using Idealde.Modules.UndoRedo.Commands;
 using Idealde.Properties;
 
 #endregion
@@ -40,11 +42,9 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IMenu MainMenu { get; }
 
-        public IToolBar ToolBar { get; }
+        public IToolBarTray ToolBarTray { get; }
 
         public IStatusBar StatusBar { get; }
-
-        public ISolutionExplorer SolutionExplorer { get; }
 
         public ILayoutItem ActiveLayoutItem
         {
@@ -75,7 +75,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar, ISolutionExplorer solutionExplorer)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBarTray toolBarTray, IStatusBar statusBar)
         {
             _themeManager = themeManager;
 
@@ -83,13 +83,9 @@ namespace Idealde.Modules.Shell.ViewModels
 
             StatusBar = statusBar;
 
-            ToolBar = toolBar;
-
-            SolutionExplorer = solutionExplorer;
+            ToolBarTray = toolBarTray;
 
             Tools = new BindableCollection<ITool>();
-
-            ShowTool(SolutionExplorer);
 
             _closing = false;
         }
@@ -99,6 +95,8 @@ namespace Idealde.Modules.Shell.ViewModels
             base.OnInitialize();
 
             BuildMenu();
+
+            BuildToolBarTray();
 
             BuildStatusBar();
 
@@ -119,23 +117,62 @@ namespace Idealde.Modules.Shell.ViewModels
 
         private void BuildMenu()
         {
-            // File menu
+            //< File menu
             var fileMenu = new Menu("File", Resources.FileMenuText);
             MainMenu.AddMenu(fileMenu);
 
             var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
             var fileOpenMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open");
+            var fileCloseMenu = new CommandMenuItem<CloseFileCommandDefinition>("File.Close");
             var fileSaveMenu = new CommandMenuItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsMenu = new CommandMenuItem<SaveFileAsCommandDefinition>("File.SaveAs");
             var fileExitMenu = new CommandMenuItem<ExitCommandDefinition>("File.Exit");
-            MainMenu.AddMenuItem(fileMenu, fileNewMenu, fileOpenMenu, fileSaveMenu, fileSaveAsMenu, fileExitMenu);
+            MainMenu.AddMenuItem(fileMenu,
+                fileNewMenu, fileOpenMenu,
+                new MenuItemSeparator("File.S1"),
+                fileCloseMenu,
+                new MenuItemSeparator("File.S2"),
+                fileSaveMenu, fileSaveAsMenu,
+                new MenuItemSeparator("File.S3"),
+                fileExitMenu);
 
-            // File.New menu
+            //< File.New menu
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
             MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+            //> File.New menu
 
-            // View menu
+            //> File menu
+
+            //< Edit menu
+            var editMenu = new Menu("Edit", Resources.EditMenuText);
+            MainMenu.AddMenu(editMenu);
+
+            var editUndoMenu = new CommandMenuItem<UndoCommandDefinition>("Edit.Undo");
+            var editRedoMenu = new CommandMenuItem<RedoCommandDefinition>("Edit.Redo");
+            var editCutMenu = new DisplayMenuItem("Edit.Cut", Resources.EditCutCommandText);
+            var editCopyMenu = new DisplayMenuItem("Edit.Copy", Resources.EditCopyCommandText);
+            var editPasteMenu = new DisplayMenuItem("Edit.Paste", Resources.EditPasteCommandText);
+            var editSelectAllMenu = new DisplayMenuItem("Edit.SelectAll", Resources.EditSelectAllCommandText);
+            var editGotoMenu = new DisplayMenuItem("Edit.Goto", Resources.EditGotoCommadText);
+            var editFindAndReplaceMenu = new DisplayMenuItem("Edit.FindAndReplace",
+                Resources.EditFindAndReplaceCommandText);
+
+            MainMenu.AddMenuItem(editMenu,
+                editUndoMenu,
+                editRedoMenu,
+                new MenuItemSeparator("Edit.S1"),
+                editCutMenu,
+                editCopyMenu,
+                editPasteMenu,
+                new MenuItemSeparator("Edit.S2"),
+                editSelectAllMenu,
+                new MenuItemSeparator("Edit.S3"),
+                editGotoMenu,
+                editFindAndReplaceMenu);
+            //> Edit menu
+
+            //< View menu
             var viewMenu = new Menu("View", Resources.ViewMenuText);
             MainMenu.AddMenu(viewMenu);
 
@@ -143,6 +180,58 @@ namespace Idealde.Modules.Shell.ViewModels
             var viewErrorListMenu =
                 new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
             MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
+            //> View menu
+
+            //< Run menu
+            var runMenu = new Menu("Run", Resources.RunMenuText);
+            MainMenu.AddMenu(runMenu);
+
+            var runCompileSingleFileMenu =
+                new CommandMenuItem<CompileSingleFileCommandDefinition>("Run.CompileSingleFile");
+            var runRunSingleFileMenu =
+                new CommandMenuItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
+            var runCompileAndRunSingleFileMenu =
+                new CommandMenuItem<CompileAndRunSingleFileCommandDefinition>("Run.CompileAndRunSingleFile");
+            MainMenu.AddMenuItem(runMenu,
+                runCompileSingleFileMenu,
+                runRunSingleFileMenu,
+                runCompileAndRunSingleFileMenu);
+            //> Run menu
+        }
+
+        private void BuildToolBarTray()
+        {
+            //< File tool bar
+            var fileToolBar = new ToolBar("File");
+            ToolBarTray.AddToolBar(fileToolBar);
+
+            var fileNewCppHeaderToolBarItem
+                = new CommandToolBarItem<NewCppHeaderCommandDefinition>("File.NewCppHeader", true);
+            var fileNewCppSourceToolBarItem
+                = new CommandToolBarItem<NewCppSourceCommandDefinition>("File.NewCppSource", true);
+            var fileOpenToolBarItem = new CommandToolBarItem<OpenFileCommandDefinition>("File.Open");
+            var fileSaveToolBarItem = new CommandToolBarItem<SaveFileCommandDefinition>("File.Save");
+            var fileSaveAsToolBarItem = new CommandToolBarItem<SaveFileAsCommandDefinition>("File.SaveAs");
+            ToolBarTray.AddToolBarItem(fileToolBar,
+                fileNewCppHeaderToolBarItem,
+                fileNewCppSourceToolBarItem,
+                new ToolBarItemSeparator("File.S1"),
+                fileOpenToolBarItem,
+                fileSaveToolBarItem, fileSaveAsToolBarItem);
+            //> File tool bar
+
+            //< Run menu
+            var runToolBar = new ToolBar("Run");
+            ToolBarTray.AddToolBar(runToolBar);
+
+            var runCompileSingleFileToolBarItem =
+                new CommandToolBarItem<CompileSingleFileCommandDefinition>("Run.CompileSingleFile");
+            var runRunSingleFileToolBar =
+                new CommandToolBarItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
+            ToolBarTray.AddToolBarItem(runToolBar,
+                runCompileSingleFileToolBarItem,
+                runRunSingleFileToolBar);
+            //> Run menu
         }
 
         private void BuildStatusBar()

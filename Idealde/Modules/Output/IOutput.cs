@@ -11,6 +11,8 @@ namespace Idealde.Modules.Output
         // Output behaviors
         void Append(string text);
 
+        void AppendLine(string text);
+
         void BreakLine();
 
         void Clear();

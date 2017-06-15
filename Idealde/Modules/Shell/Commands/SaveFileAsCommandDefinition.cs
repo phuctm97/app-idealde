@@ -14,6 +14,6 @@ namespace Idealde.Modules.Shell.Commands
 
         public override string Text => Resources.FileSaveAsCommandText;
 
-        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Save.png");
+        public override Uri IconSource => null;
     }
 }

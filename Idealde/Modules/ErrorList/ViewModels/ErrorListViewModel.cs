@@ -19,7 +19,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
 
         private bool _isErrorsVisible;
         private bool _isWarningsVisible;
-        private bool _isMesagesVisible;
+        private bool _isMessagesVisible;
 
         #endregion
 
@@ -53,14 +53,14 @@ namespace Idealde.Modules.ErrorList.ViewModels
             }
         }
 
-        public bool IsMesagesVisible
+        public bool IsMessagesVisible
         {
-            get { return _isMesagesVisible; }
+            get { return _isMessagesVisible; }
             set
             {
-                if (value == _isMesagesVisible) return;
-                _isMesagesVisible = value;
-                NotifyOfPropertyChange(() => IsMesagesVisible);
+                if (value == _isMessagesVisible) return;
+                _isMessagesVisible = value;
+                NotifyOfPropertyChange(() => IsMessagesVisible);
                 NotifyOfPropertyChange(() => FilteredItems);
             }
         }
@@ -100,7 +100,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
                 {
                     items = items.Where(i => i.Type != ErrorListItemType.Warning);
                 }
-                if (!IsMesagesVisible)
+                if (!IsMessagesVisible)
                 {
                     items = items.Where(i => i.Type != ErrorListItemType.Message);
                 }
@@ -118,7 +118,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
             DisplayName = "Error List";
             IsErrorsVisible = true;
             IsWarningsVisible = true;
-            IsMesagesVisible = true;
+            IsMessagesVisible = true;
 
             Items = new BindableCollection<ErrorListItem>();
             Items.CollectionChanged += OnItemsCollectionChanged; ;
@@ -128,13 +128,18 @@ namespace Idealde.Modules.ErrorList.ViewModels
 
         #region Error list behaviors
 
-        public void AddItem(ErrorListItemType type, int code, string description, string path = null, int? line = null,
+        public void AddItem(ErrorListItemType type, string code, string description, string path = null, int? line = null,
             int? column = null, Action onClick = null)
         {
             Items.Add(new ErrorListItem(type, code, description, path, line, column)
             {
                 OnClick = onClick
             });
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
         }
 
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

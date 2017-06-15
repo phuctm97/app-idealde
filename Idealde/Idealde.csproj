@@ -159,9 +159,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\ToolBar\Views\ToolBarView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Modules\ToolBarTray\Views\ToolBarTrayView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\VS2013\Controls\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\ToolBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +200,7 @@
     <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
     <Compile Include="Framework\Commands\CommandRouter.cs" />
     <Compile Include="Framework\Commands\CommandService.cs" />
+    <Compile Include="Framework\Controls\DynamicStyle.cs" />
     <Compile Include="Framework\Commands\ICommandHandler.cs" />
     <Compile Include="Framework\Commands\ICommandRouter.cs" />
     <Compile Include="Framework\Commands\ICommandService.cs" />
@@ -217,6 +222,11 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
+    <Compile Include="Modules\CodeCompiler\CodeCompiler.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileAndRunSingleFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileSingleFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\RunSingleFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\ICodeCompiler.cs" />
     <Compile Include="Modules\CodeEditor\EditorProvider.cs" />
     <Compile Include="Modules\CodeEditor\ILanguageDefinitionManager.cs" />
     <Compile Include="Modules\CodeEditor\LanguageDefinitionManager.cs" />
@@ -233,12 +243,15 @@
     </Compile>
     <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandDefinition.cs" />
     <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandHandler.cs" />
+    <Compile Include="Modules\ErrorList\Converters\ErrorItemTypeToUriConverter.cs" />
+    <Compile Include="Modules\ErrorList\Converters\NegativeIntegerToUnknownTextConverter.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\MainMenu\Controls\MenuItemStyleSelector.cs" />
     <Compile Include="Modules\MainMenu\Converters\EmptyStringToUnsetConverter.cs" />
     <Compile Include="Modules\MainMenu\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\MainMenu\IMenu.cs" />
@@ -246,6 +259,7 @@
     <Compile Include="Modules\MainMenu\Models\Menu.cs" />
     <Compile Include="Modules\MainMenu\Models\DisplayMenuItem.cs" />
     <Compile Include="Modules\MainMenu\Models\MenuItemBase.cs" />
+    <Compile Include="Modules\MainMenu\Models\MenuItemSeparator.cs" />
     <Compile Include="Modules\MainMenu\ViewModels\MainMenuViewModel.cs" />
     <Compile Include="Modules\MainMenu\Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
@@ -262,6 +276,7 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\Shell\Commands\CloseFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
@@ -292,14 +307,23 @@
     <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ToolBar\IToolBar.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarDefiniton.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarItemDefinition.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarGroupItemDefinition.cs" />
-    <Compile Include="Modules\ToolBar\ViewModels\ToolBarViewModel.cs" />
-    <Compile Include="Modules\ToolBar\Views\ToolBarView.xaml.cs">
-      <DependentUpon>ToolBarView.xaml</DependentUpon>
+    <Compile Include="Modules\ToolBarTray\Controls\ToolBarBase.cs" />
+    <Compile Include="Modules\ToolBarTray\IToolBarTray.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\CommandToolBarItem.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\DisplayToolBarItem.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBar.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBarItemBase.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBarItemSeparator.cs" />
+    <Compile Include="Modules\ToolBarTray\ViewModels\ToolBarTrayViewModel.cs" />
+    <Compile Include="Modules\ToolBarTray\Views\IToolBarView.cs" />
+    <Compile Include="Modules\ToolBarTray\Views\ToolBarTrayView.xaml.cs">
+      <DependentUpon>ToolBarTrayView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\UndoRedo\Commands\RedoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\Commands\UndoCommandDefinition.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoableAction.cs" />
+    <Compile Include="Modules\UndoRedo\IUndoRedoManager.cs" />
+    <Compile Include="Modules\UndoRedo\UndoRedoManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -314,10 +338,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -326,12 +351,8 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Framework\Controls\" />
     <Folder Include="Framework\Menus\" />
     <Folder Include="Modules\MainMenu\Commands\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\ErrorList.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Output.png" />
@@ -360,6 +381,36 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Modules\SolutionExplorer\IconSource\folder-opened.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Run.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Running.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationCritical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationInformation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationWarning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Hammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ErrorList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BuildSelection.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

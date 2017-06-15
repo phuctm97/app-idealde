@@ -137,51 +137,174 @@
     <value>Open</value>
   </data>
   <data name="FileSaveAsCommandText" xml:space="preserve">
-    <value>Save as</value>
+    <value>Save Selected Item As</value>
   </data>
   <data name="FileSaveCommandText" xml:space="preserve">
-    <value>Save</value>
+    <value>Save Selected Item</value>
   </data>
   <data name="ViewErrorListCommandText" xml:space="preserve">
     <value>Error List</value>
   </data>
   <data name="ViewErrorListCommandTooltip" xml:space="preserve">
-    <value>Open Error List tool window</value>
+    <value>Open Error List Tool Window</value>
   </data>
   <data name="ViewMenuText" xml:space="preserve">
     <value>View</value>
   </data>
   <data name="ViewOutputCommandTooltip" xml:space="preserve">
-    <value>Open Output tool window</value>
+    <value>Open Output Tool Window</value>
   </data>
   <data name="ViewOutputCommandText" xml:space="preserve">
     <value>Output</value>
   </data>
   <data name="FileNewCppHeaderCommandTooltip" xml:space="preserve">
-    <value>Create new C++ .h header file</value>
+    <value>Create New C++ .h Header File</value>
   </data>
   <data name="UntitledFileName" xml:space="preserve">
     <value>Untitled</value>
   </data>
   <data name="CreateNewFileText" xml:space="preserve">
-    <value>Create new file</value>
+    <value>Create New File</value>
   </data>
   <data name="FileNewCppSourceCommandText" xml:space="preserve">
     <value>C++ Source (.cpp)</value>
   </data>
   <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
-    <value>Create new C++ .cpp source file</value>
+    <value>Create New C++ .cpp Source File</value>
   </data>
   <data name="FileOpenCommandTooltip" xml:space="preserve">
-    <value>Open an existing file</value>
+    <value>Open An Existing File</value>
   </data>
   <data name="OpenFileDialogTitle" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="FileSaveCommandTooltip" xml:space="preserve">
-    <value>Save current item</value>
+    <value>Save {0}</value>
   </data>
   <data name="FileSaveAsCommandTooltip" xml:space="preserve">
-    <value>Save current item as ...</value>
+    <value>Save {0} As New File</value>
+  </data>
+  <data name="FileCloseCommandText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="FileCloseCommandTooltip" xml:space="preserve">
+    <value>Close {0}</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Idealde</value>
+  </data>
+  <data name="AskForSaveFileBeforeExit" xml:space="preserve">
+    <value>Save {0} before exit?</value>
+  </data>
+  <data name="EditCopyCommandText" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="EditCopyCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditCutCommandText" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="EditCutCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditMenuText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditRedoCommandText" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="EditRedoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditUndoCommandText" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="EditUndoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditPasteCommandText" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="EditPasteCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditSelectAllCommandText" xml:space="preserve">
+    <value>SelectAll</value>
+  </data>
+  <data name="EditSelectAllCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditFindAndReplaceCommandText" xml:space="preserve">
+    <value>Find And Replace</value>
+  </data>
+  <data name="EditFindAndReplaceCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EditGotoCommadText" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="EditGotoCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunBuildCommandText" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="RunBuildCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunCommandText" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunMenuText" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="RunRebuildCommandText" xml:space="preserve">
+    <value>Rebuild</value>
+  </data>
+  <data name="RunRebuildCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CompileAndRunSingleFileCommandText" xml:space="preserve">
+    <value>Compile And Run</value>
+  </data>
+  <data name="CompileAndRunSingleFileCommandTooltip" xml:space="preserve">
+    <value>Re-compile selected file, run it right after compilation complete</value>
+  </data>
+  <data name="CompileSingleFileCommandText" xml:space="preserve">
+    <value>Compile Single Selected Item</value>
+  </data>
+  <data name="CompileSingleFileCommandTooltip" xml:space="preserve">
+    <value>Compile only selected file, not work if it depends on other file(s)</value>
+  </data>
+  <data name="RunSingleFileCommandText" xml:space="preserve">
+    <value>Run Single Selected Item</value>
+  </data>
+  <data name="RunSingleFileCommandTooltip" xml:space="preserve">
+    <value>Run built output file of current selected item, auto compile if it wasn't built yet</value>
+  </data>
+  <data name="UnknownDisplayText" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ErrorsDisplayText" xml:space="preserve">
+    <value>Errors</value>
+  </data>
+  <data name="MessagesDisplayText" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="WarningsDisplayText" xml:space="preserve">
+    <value>Warnings</value>
+  </data>
+  <data name="CompileSingleFileFailedOutput" xml:space="preserve">
+    <value>Compile failed</value>
+  </data>
+  <data name="CompileSingleFileFinishSuccessfullyOutput" xml:space="preserve">
+    <value>Compile successfully</value>
+  </data>
+  <data name="CompileSingleFileStartOutput" xml:space="preserve">
+    <value>Compile single file start</value>
   </data>
 </root>
