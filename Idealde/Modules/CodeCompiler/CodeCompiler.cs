@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Idealde.Framework.Services;
 using Idealde.Properties;
 
@@ -23,7 +22,6 @@ namespace Idealde.Modules.CodeCompiler
         private readonly List<string> _canCompileFileTypes;
         private readonly List<CompileError> _compileErrors;
         private readonly List<CompileError> _compileWarnings;
-        private string _regexableSourceFilePath;
 
         public bool CanCompileSingleFile(string extension)
         {
@@ -36,9 +34,6 @@ namespace Idealde.Modules.CodeCompiler
             var tempFilePath = _fileManager.GetTempFilePath(sourceFilePath);
             await _fileManager.Write(tempFilePath, fileContent);
 
-            //generate regexable source file path for error/warning detect
-            _regexableSourceFilePath = GenerateRegexableString(tempFilePath);
-            
             //generate output directory
             var sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
 
@@ -103,11 +98,12 @@ namespace Idealde.Modules.CodeCompiler
 
         private void MatchErrors(string output)
         {
-            string errorPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\): error ([a-zA-Z0-9]+): (.+)";
-            var errorMatch = Regex.Match(output.ToLower(), errorPattern);
+            string errorPattern = $"(.*?)\\(([0-9]+)\\) *: *error ([a-zA-Z0-9]+): (.+)";
+            var errorMatch = Regex.Match(output, errorPattern);
 
             if (errorMatch.Success)
             {
+                var path = string.Empty;
                 var line = 0;
                 var column = -1;
                 var code = "N/A";
@@ -115,29 +111,32 @@ namespace Idealde.Modules.CodeCompiler
 
                 if (errorMatch.Groups.Count > 1)
                 {
-                    int.TryParse(errorMatch.Groups[1].Value, out line);
+                    path = errorMatch.Groups[1].Value;
                 }
                 if (errorMatch.Groups.Count > 2)
                 {
-                    code = output.Substring(errorMatch.Groups[2].Index,
-                        errorMatch.Groups[2].Length);
+                    int.TryParse(errorMatch.Groups[2].Value, out line);
                 }
                 if (errorMatch.Groups.Count > 3)
                 {
-                    description = output.Substring(errorMatch.Groups[3].Index,
-                        errorMatch.Groups[3].Length);
+                    code = errorMatch.Groups[3].Value;
                 }
-                _compileErrors.Add(new CompileError(line, column, code, description));
+                if (errorMatch.Groups.Count > 4)
+                {
+                    description = errorMatch.Groups[4].Value;
+                }
+                _compileErrors.Add(new CompileError(line, column, code, description, path));
             }
         }
 
         private void MatchWarnings(string output)
         {
-            string warningPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\) : warning ([a-zA-Z0-9]+): (.+)";
-            var warningMatch = Regex.Match(output.ToLower(), warningPattern);
+            string warningPattern = $"(.*?)\\(([0-9]+)\\) *: *warning ([a-zA-Z0-9]+): (.+)";
+            var warningMatch = Regex.Match(output, warningPattern);
 
             if (warningMatch.Success)
             {
+                var path = string.Empty;
                 var line = 0;
                 var column = -1;
                 var code = "N/A";
@@ -145,19 +144,21 @@ namespace Idealde.Modules.CodeCompiler
 
                 if (warningMatch.Groups.Count > 1)
                 {
-                    int.TryParse(warningMatch.Groups[1].Value, out line);
+                    path = warningMatch.Groups[1].Value;
                 }
                 if (warningMatch.Groups.Count > 2)
                 {
-                    code = output.Substring(warningMatch.Groups[2].Index,
-                        warningMatch.Groups[2].Length);
+                    int.TryParse(warningMatch.Groups[2].Value, out line);
                 }
                 if (warningMatch.Groups.Count > 3)
                 {
-                    description = output.Substring(warningMatch.Groups[3].Index,
-                        warningMatch.Groups[3].Length);
+                    code = warningMatch.Groups[3].Value;
                 }
-                _compileWarnings.Add(new CompileError(line, column, code, description));
+                if (warningMatch.Groups.Count > 4)
+                {
+                    description = warningMatch.Groups[4].Value;
+                }
+                _compileWarnings.Add(new CompileError(line, column, code, description, path));
             }
         }
 
@@ -194,18 +195,6 @@ namespace Idealde.Modules.CodeCompiler
             {
                 ".cpp"
             });
-
-            _regexableSourceFilePath = string.Empty;
-        }
-
-        private string GenerateRegexableString(string source)
-        {
-            var regexableString = source.ToLower();
-            foreach (var s in _regexSpecialCharacters)
-            {
-                regexableString = regexableString.Replace(s, $"\\{s}");
-            }
-            return regexableString;
         }
     }
 }
