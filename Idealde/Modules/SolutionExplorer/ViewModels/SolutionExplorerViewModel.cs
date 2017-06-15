@@ -13,6 +13,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
 
         public SolutionExplorerViewModel()
         {
+            DisplayName = "Solution Explorer";
             RootFolder = new BindableCollection<TreeViewItemModel>();
             RootPath = @"D:\A.System";
         }
