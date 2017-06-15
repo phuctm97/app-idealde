@@ -298,4 +298,13 @@
   <data name="WarningsDisplayText" xml:space="preserve">
     <value>Warnings</value>
   </data>
+  <data name="CompileSingleFileFailedOutput" xml:space="preserve">
+    <value>Compile failed</value>
+  </data>
+  <data name="CompileSingleFileFinishSuccessfullyOutput" xml:space="preserve">
+    <value>Compile successfully</value>
+  </data>
+  <data name="CompileSingleFileStartOutput" xml:space="preserve">
+    <value>Compile single file start</value>
+  </data>
 </root>

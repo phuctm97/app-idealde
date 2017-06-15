@@ -41,7 +41,7 @@ namespace Idealde.Modules.StatusBar.ViewModels
             {
                 if (Equals(value, _message)) return;
                 _message = value;
-                NotifyOfPropertyChange(() => Index);
+                NotifyOfPropertyChange(() => Message);
             }
         }
 

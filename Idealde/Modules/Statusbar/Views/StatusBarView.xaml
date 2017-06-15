@@ -15,8 +15,8 @@
 
         <StatusBar.ItemContainerStyle>
             <Style TargetType="StatusBarItem" BasedOn="{StaticResource {x:Type StatusBarItem}}">
-                <Setter Property="Grid.Column" Value="{Binding Index}"/>
-                <Setter Property="Content" Value="{Binding Message}"/>
+                <Setter Property="Grid.Column" Value="{Binding Index, Mode=OneWay}"/>
+                <Setter Property="Content" Value="{Binding Message, Mode=OneWay}"/>
             </Style>
         </StatusBar.ItemContainerStyle>
     </StatusBar>

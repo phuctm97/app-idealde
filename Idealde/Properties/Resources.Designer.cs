@@ -115,6 +115,33 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compile failed.
+        /// </summary>
+        public static string CompileSingleFileFailedOutput {
+            get {
+                return ResourceManager.GetString("CompileSingleFileFailedOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile successfully.
+        /// </summary>
+        public static string CompileSingleFileFinishSuccessfullyOutput {
+            get {
+                return ResourceManager.GetString("CompileSingleFileFinishSuccessfullyOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile single file start.
+        /// </summary>
+        public static string CompileSingleFileStartOutput {
+            get {
+                return ResourceManager.GetString("CompileSingleFileStartOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New File.
         /// </summary>
         public static string CreateNewFileText {

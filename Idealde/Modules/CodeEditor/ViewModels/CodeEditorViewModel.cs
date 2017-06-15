@@ -15,6 +15,8 @@ using Idealde.Modules.CodeCompiler;
 using Idealde.Modules.CodeCompiler.Commands;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.Output;
+using Idealde.Modules.StatusBar;
+using Idealde.Properties;
 using ScintillaNET;
 using Command = Idealde.Framework.Commands.Command;
 
@@ -172,19 +174,27 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
         private bool CanCompileSingleFile(string filePath)
         {
+            if (string.IsNullOrWhiteSpace(filePath)) return false;
+
             var codeCompiler = IoC.Get<ICodeCompiler>();
-            return !codeCompiler.IsBusy && codeCompiler.CanCompileSingleFile(FilePath);
+            return !codeCompiler.IsBusy && codeCompiler.CanCompileSingleFile(filePath);
         }
 
         private bool CanRunSingleFile(string filePath, out string outputFilePath)
         {
-            outputFilePath = FilePath.Replace(Path.GetExtension(FilePath), ".exe");
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                outputFilePath = string.Empty;
+                return false;
+            }
+
+            outputFilePath = FilePath.Replace(Path.GetExtension(filePath), ".exe");
             if (File.Exists(_outputFilePath))
             {
                 return true;
             }
 
-            outputFilePath = FilePath.Replace(Path.GetExtension(FilePath), ".bat");
+            outputFilePath = FilePath.Replace(Path.GetExtension(filePath), ".bat");
             if (File.Exists(_outputFilePath))
             {
                 return true;
@@ -200,6 +210,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             var shell = IoC.Get<IShell>();
             var output = IoC.Get<IOutput>();
             var errorList = IoC.Get<IErrorList>();
+            var statusBar = IoC.Get<IStatusBar>();
 
             //semaphore and mutex for multi-processing
             var semaphore = 1;
@@ -213,11 +224,21 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
             //reset output
             output.Clear();
-            output.AppendLine($"----- Compile single file starts");
-            output.AppendLine($"----- File: {FilePath}");
+            output.AppendLine($"----- {Resources.CompileSingleFileStartOutput}");
 
             // reset error list
             errorList.Clear();
+
+            // reset status bar first item
+            if (statusBar.Items.Count == 0)
+            {
+                statusBar.AddItem(Resources.CompileSingleFileStartOutput,
+                    new System.Windows.GridLength(1, System.Windows.GridUnitType.Auto));
+            }
+            else
+            {
+                statusBar.Items[0].Message = Resources.CompileSingleFileStartOutput;
+            }
 
             //handle compile events
             EventHandler<string> outputReceivedHandler = delegate(object s, string data)
@@ -264,13 +285,15 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 {
                     //no error
                     result = true;
-                    output.AppendLine("----- Compile single file successfully");
+                    output.AppendLine($"----- {Resources.CompileSingleFileFinishSuccessfullyOutput}");
+                    statusBar.Items[0].Message = Resources.CompileSingleFileFinishSuccessfullyOutput;
                 }
                 else
                 {
                     //has error(s)
                     result = false;
-                    output.AppendLine("----- Compile single file failed");
+                    output.AppendLine($"----- {Resources.CompileSingleFileFailedOutput}");
+                    statusBar.Items[0].Message = Resources.CompileSingleFileFailedOutput;
                 }
 
                 // release subcribed delegate
