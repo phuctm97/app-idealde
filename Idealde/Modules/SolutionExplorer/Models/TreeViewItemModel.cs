@@ -14,12 +14,15 @@ namespace Idealde.Modules.SolutionExplorer.Models
 
     public class TreeViewItemModel : PropertyChangedBase
     {
+        #region Definition
         private Uri _imageSource;
         private int _fontSize;
         private DirType _objectType;
         private string _name;
         private bool _expanded;
 
+
+        // Image source for each file type
         private const string RootImage =
             @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/solution-explorer.png";
         private const string FolderClosedImage =
@@ -29,7 +32,10 @@ namespace Idealde.Modules.SolutionExplorer.Models
         private const string FileImage =
             @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/file.png";
 
+        #endregion
 
+        #region Initializtion
+        // Initialization of each item
         public TreeViewItemModel(string name, string path)
         {
             SubItems = new BindableCollection<TreeViewItemModel>();
@@ -37,9 +43,9 @@ namespace Idealde.Modules.SolutionExplorer.Models
             Path = path;
             FontSize = 12;
         }
+        #endregion
 
-        
-
+        #region Properties
         public string Path { get; }
 
         public string Name
@@ -76,6 +82,8 @@ namespace Idealde.Modules.SolutionExplorer.Models
             }
         }
 
+        // private set whenever ObjectType changed
+        #region Automatic image source
         public Uri ImageSource
         {
             get { return _imageSource; }
@@ -86,9 +94,6 @@ namespace Idealde.Modules.SolutionExplorer.Models
                 NotifyOfPropertyChange(() => ImageSource);
             }
         }
-
-        public IObservableCollection<TreeViewItemModel> SubItems { get; set; }
-
         private void ChangeImageSource()
         {
             switch (ObjectType)
@@ -109,7 +114,16 @@ namespace Idealde.Modules.SolutionExplorer.Models
                     break;
             }
         }
+        #endregion // automatic image source
 
+        #endregion
+
+        #region Item contains
+        public IObservableCollection<TreeViewItemModel> SubItems { get; set; }
+        #endregion
+
+        #region On item expanded ( Change image source )
+        // On item expanded
         public bool Expanded
         {
             get { return _expanded; }
@@ -136,5 +150,7 @@ namespace Idealde.Modules.SolutionExplorer.Models
                     break;
             }
         }
+
+        #endregion // On item expanded
     }
 }

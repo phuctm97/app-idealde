@@ -26,6 +26,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             get { return _rootPath; }
             set
             {
+                if ((_rootPath == string.Empty && _rootPath == null) || !Directory.Exists(_rootPath)) return;
                 if (Equals(_rootPath, value)) return;
                 _rootPath = value;
                 RootFolder.Clear();
