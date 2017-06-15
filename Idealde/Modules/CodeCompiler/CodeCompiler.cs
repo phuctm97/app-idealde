@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Idealde.Framework.Services;
 using Idealde.Properties;
 
 #endregion
@@ -13,22 +15,34 @@ namespace Idealde.Modules.CodeCompiler
 {
     public class CodeCompiler : ICodeCompiler
     {
+        // Dependencies
+        private readonly IFileManager _fileManager;
+
+        // Backing fields
         private readonly string[] _regexSpecialCharacters;
         private readonly List<string> _canCompileFileTypes;
         private readonly List<CompileError> _compileErrors;
         private readonly List<CompileError> _compileWarnings;
         private string _regexableSourceFilePath;
 
-        public bool CanCompileSingleFile(string sourceFilePath)
+        public bool CanCompileSingleFile(string extension)
         {
-            return _canCompileFileTypes.Contains(Path.GetExtension(sourceFilePath));
+            return _canCompileFileTypes.Contains(extension);
         }
 
-        public void CompileSingleFile(string sourceFilePath)
+        public async void CompileSingleFile(string sourceFilePath, string fileContent)
         {
-            var sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
-            _regexableSourceFilePath = GenerateRegexableString(sourceFilePath);
+            //write new content to temp file
+            var tempFilePath = _fileManager.GetTempFilePath(sourceFilePath);
+            await _fileManager.Write(tempFilePath, fileContent);
 
+            //generate regexable source file path for error/warning detect
+            _regexableSourceFilePath = GenerateRegexableString(tempFilePath);
+            
+            //generate output directory
+            var sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
+
+            //config cl
             var cl = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -39,19 +53,20 @@ namespace Idealde.Modules.CodeCompiler
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     Arguments =
-                        $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {sourceFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\"
+                        $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {tempFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\"
                 },
                 EnableRaisingEvents = true
             };
-
             cl.OutputDataReceived += OnCompilerOutputDataReceived;
             cl.ErrorDataReceived += OnCompilerOutputDataReceived;
             cl.Exited += OnCompilerExited;
 
+            //reset data
             IsBusy = true;
             _compileErrors.Clear();
             _compileWarnings.Clear();
 
+            // start cl
             cl.Start();
             cl.BeginOutputReadLine();
             cl.BeginErrorReadLine();
@@ -152,8 +167,10 @@ namespace Idealde.Modules.CodeCompiler
 
         public bool IsBusy { get; private set; }
 
-        public CodeCompiler()
+        public CodeCompiler(IFileManager fileManager)
         {
+            _fileManager = fileManager;
+
             IsBusy = false;
 
             _canCompileFileTypes = new List<string>();

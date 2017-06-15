@@ -26,6 +26,14 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 {
     public class CodeEditorViewModel : PersistedDocument, ICodeEditor
     {
+        // Dependencies
+
+        #region Dependencies
+
+        private readonly ILanguageDefinitionManager _languageDefinitionManager;
+
+        #endregion
+
         // Backing fields
 
         #region Backing fields
@@ -33,7 +41,6 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         private ICodeEditorView _view;
         private string _fileContent;
         private Lexer _fileLexer;
-        private readonly ILanguageDefinitionManager _languageDefinitionManager;
         private string _outputFilePath;
 
         #endregion
@@ -177,7 +184,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             if (string.IsNullOrWhiteSpace(filePath)) return false;
 
             var codeCompiler = IoC.Get<ICodeCompiler>();
-            return !codeCompiler.IsBusy && codeCompiler.CanCompileSingleFile(filePath);
+            return !codeCompiler.IsBusy && codeCompiler.CanCompileSingleFile(Path.GetExtension(filePath));
         }
 
         private bool CanRunSingleFile(string filePath, out string outputFilePath)
@@ -305,7 +312,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             codeCompiler.OnExited += compileExitedHandler;
 
             // compile
-            codeCompiler.CompileSingleFile(FilePath);
+            codeCompiler.CompileSingleFile(FilePath, GetContent());
 
             // wait for compilation finish
             while (!completed) await Task.Delay(25);

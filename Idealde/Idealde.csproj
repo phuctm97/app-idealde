@@ -221,7 +221,9 @@
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IResourceManager.cs" />
     <Compile Include="Framework\Services\IShell.cs" />
+    <Compile Include="Framework\Services\IFileManager.cs" />
     <Compile Include="Framework\Services\ResourceManager.cs" />
+    <Compile Include="Framework\Services\FileManager.cs" />
     <Compile Include="Framework\Themes\BlueTheme.cs" />
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Modules\ErrorList\Converters\NegativeIntegerToUnknownTextConverter.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
+    <Compile Include="Modules\ErrorList\IErrorListView.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>
