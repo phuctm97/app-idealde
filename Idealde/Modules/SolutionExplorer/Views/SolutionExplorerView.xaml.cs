@@ -18,11 +18,18 @@ namespace Idealde.Modules.SolutionExplorer.Views
     /// <summary>
     /// Interaction logic for SolutionExplorerView.xaml
     /// </summary>
-    public partial class SolutionExplorerView : UserControl
+    public partial class SolutionExplorerView : UserControl, ISolutionExplorerView
     {
         public SolutionExplorerView()
         {
             InitializeComponent();
+        }
+
+        public event TreeViewItemExpandedEventHandler TreeViewItemExpanded;
+
+        public void OnItemExpanded(object sender, EventArgs e)
+        {
+            var item = (TreeView)sender;
         }
     }
 }

@@ -295,7 +295,9 @@
     <Compile Include="Modules\Shell\Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\SolutionExplorer\Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Modules\SolutionExplorer\ISolutionExplorer.cs" />
+    <Compile Include="Modules\SolutionExplorer\ISolutionExplorerView.cs" />
     <Compile Include="Modules\SolutionExplorer\Models\TreeViewItemModel.cs" />
     <Compile Include="Modules\SolutionExplorer\ViewModels\SolutionExplorerViewModel.cs" />
     <Compile Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml.cs">
@@ -374,7 +376,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Modules\SolutionExplorer\IconSource\file.png" />
-    <Resource Include="Modules\SolutionExplorer\IconSource\folder.png" />
+    <Resource Include="Modules\SolutionExplorer\IconSource\folder-closed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Modules\SolutionExplorer\IconSource\solution-explorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Modules\SolutionExplorer\IconSource\folder-opened.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Undo.png" />
