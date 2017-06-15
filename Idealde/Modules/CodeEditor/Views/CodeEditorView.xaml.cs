@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -89,18 +90,19 @@ namespace Idealde.Modules.CodeEditor.Views
 
         #region CodeEditorView initialization
         public CodeEditorView()
-        {
+        {   
             InitializeComponent();
 
             // Display line numbers handlers
-            _zoom = ScintillaEditor.Zoom;
             ScintillaEditor.Margins[0].Type = MarginType.Number;
             ScintillaEditor.ZoomChanged += OnZoomChanged;
-
+            ScintillaEditor.CaretLineVisible = true;
+            ScintillaEditor.CaretLineBackColor = Color.Gray;
+            ScintillaEditor.CaretLineBackColorAlpha = 50;
             IsDirty = false;
+
             // Scintilla keyword storages
             _keyWord1 = new Dictionary<Lexer, string>();
-
             _keyWord2 = new Dictionary<Lexer, string>();
 
             // Wire autocomplete menu
@@ -110,12 +112,17 @@ namespace Idealde.Modules.CodeEditor.Views
                 AllowsTabKey = true,
                 AppearInterval = 1
             };
-            
+
+            // Scintilla event handlers
+
             ScintillaFolding();
         }
 
+       
+
         private void ScintillaInitialize(object sender, RoutedEventArgs e)
         {
+
         }
 
         #endregion // initialization
@@ -525,12 +532,25 @@ namespace Idealde.Modules.CodeEditor.Views
             _maxRowCharLength = newMaxRowCharLength;
         }
 
-        private int _zoom;
         private void OnZoomChanged(object sender, EventArgs e)
         {
             int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
             ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1));
             _maxRowCharLength = newMaxRowCharLength;
+        }
+
+        private bool _isGotoHappenned; // If Goto just happenned -> ignore the first event "CursorChanged(UpdateUI)"
+        private int _errorLine; // If Cursor still in error line -> keep caret line background as red
+        private void OnCursorChanged(object sender, UpdateUIEventArgs e)
+        {
+            if (_isGotoHappenned || ScintillaEditor.CurrentLine == _errorLine)
+            {
+                _isGotoHappenned = false;
+                return;
+            }
+            ScintillaEditor.CaretLineBackColor = Color.Gray;
+            ScintillaEditor.CaretLineBackColorAlpha = 50;
+            ScintillaEditor.UpdateUI -= OnCursorChanged;
         }
         #endregion
 
@@ -550,9 +570,14 @@ namespace Idealde.Modules.CodeEditor.Views
 
         public void Goto(int row, int column)
         {
-            ScintillaEditor.Lines[row].Goto();
+            ScintillaEditor.Lines[row-1].Goto();
             ScintillaEditor.GotoPosition(ScintillaEditor.CurrentPosition + column);
             EditorFocus();
+            ScintillaEditor.UpdateUI += OnCursorChanged;
+            _isGotoHappenned = true;
+            _errorLine = row - 1;
+            ScintillaEditor.CaretLineBackColor = Color.Red;
+            ScintillaEditor.CaretLineBackColorAlpha = 50;
         }
 
         public void SetContent(string text)
