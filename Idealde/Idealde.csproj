@@ -238,6 +238,8 @@
     </Compile>
     <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandDefinition.cs" />
     <Compile Include="Modules\ErrorList\Commands\ViewErrorListCommandHandler.cs" />
+    <Compile Include="Modules\ErrorList\Converters\ErrorItemTypeToUriConverter.cs" />
+    <Compile Include="Modules\ErrorList\Converters\NegativeIntegerToUnknownTextConverter.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
@@ -325,7 +327,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -372,6 +374,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ArrowRun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Running.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationCritical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationInformation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\StatusAnnotationWarning.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

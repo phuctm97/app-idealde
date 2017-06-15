@@ -19,7 +19,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
 
         private bool _isErrorsVisible;
         private bool _isWarningsVisible;
-        private bool _isMesagesVisible;
+        private bool _isMessagesVisible;
 
         #endregion
 
@@ -53,14 +53,14 @@ namespace Idealde.Modules.ErrorList.ViewModels
             }
         }
 
-        public bool IsMesagesVisible
+        public bool IsMessagesVisible
         {
-            get { return _isMesagesVisible; }
+            get { return _isMessagesVisible; }
             set
             {
-                if (value == _isMesagesVisible) return;
-                _isMesagesVisible = value;
-                NotifyOfPropertyChange(() => IsMesagesVisible);
+                if (value == _isMessagesVisible) return;
+                _isMessagesVisible = value;
+                NotifyOfPropertyChange(() => IsMessagesVisible);
                 NotifyOfPropertyChange(() => FilteredItems);
             }
         }
@@ -100,7 +100,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
                 {
                     items = items.Where(i => i.Type != ErrorListItemType.Warning);
                 }
-                if (!IsMesagesVisible)
+                if (!IsMessagesVisible)
                 {
                     items = items.Where(i => i.Type != ErrorListItemType.Message);
                 }
@@ -118,7 +118,7 @@ namespace Idealde.Modules.ErrorList.ViewModels
             DisplayName = "Error List";
             IsErrorsVisible = true;
             IsWarningsVisible = true;
-            IsMesagesVisible = true;
+            IsMessagesVisible = true;
 
             Items = new BindableCollection<ErrorListItem>();
             Items.CollectionChanged += OnItemsCollectionChanged; ;

@@ -15,7 +15,7 @@ namespace Idealde.Modules.ErrorList
 
         bool IsWarningsVisible { get; set; }
 
-        bool IsMesagesVisible { get; set; }
+        bool IsMessagesVisible { get; set; }
 
         int NumberOfErrorItems { get; }
 

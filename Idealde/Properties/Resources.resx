@@ -286,4 +286,16 @@
   <data name="RunSingleFileCommandTooltip" xml:space="preserve">
     <value>Run built output file of current selected item, auto compile if it wasn't built yet</value>
   </data>
+  <data name="UnknownDisplayText" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="ErrorsDisplayText" xml:space="preserve">
+    <value>Errors</value>
+  </data>
+  <data name="MessagesDisplayText" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="WarningsDisplayText" xml:space="preserve">
+    <value>Warnings</value>
+  </data>
 </root>

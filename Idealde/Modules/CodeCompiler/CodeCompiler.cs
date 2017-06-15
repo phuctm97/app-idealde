@@ -59,8 +59,10 @@ namespace Idealde.Modules.CodeCompiler
         {
             // release process
             var cl = (Process) sender;
-
-            var exitCode = cl.ExitCode;
+            if (cl.ExitCode == 0)
+            {
+                _compileErrors.Clear();
+            }
 
             cl.OutputDataReceived -= OnCompilerOutputDataReceived;
             cl.ErrorDataReceived -= OnCompilerOutputDataReceived;
@@ -81,7 +83,7 @@ namespace Idealde.Modules.CodeCompiler
             if (errorMatch.Success)
             {
                 var line = 0;
-                var column = 0;
+                var column = -1;
                 var code = "N/A";
                 var description = "N/A";
 
