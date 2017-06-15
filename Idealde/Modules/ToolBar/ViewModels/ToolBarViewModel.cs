@@ -46,13 +46,12 @@ namespace Idealde.Modules.ToolBar.ViewModels
 
         #region Methods
 
-        public void AddToolBarItem(Model.ToolBar parent, params ToolBarItemBase[] toolBarItems)
+        public void AddToolBarItem(Model.ToolBar parent, params ToolBarItem[] toolBarItems)
         {
             foreach (var toolBarItem in toolBarItems)
             {
                 parent.ToolBarItems.Add(toolBarItem);
             }
-            Items.Add(parent);
         }
 
         public void AddToolBar(params Model.ToolBar[] toolBars)

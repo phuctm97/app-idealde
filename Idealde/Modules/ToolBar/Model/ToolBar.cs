@@ -2,63 +2,33 @@
 
 namespace Idealde.Modules.ToolBar.Model
 {
-    public class ToolBar
+    public class ToolBar : PropertyChangedBase
     {
         #region Fields
 
-        private int _sortOrder;
-        private string _name;
-        private IObservableCollection < ToolBarItemBase > _toolBarItems;
-
-        #endregion
-
-        #region Properties
-
-        public int SortOrder
-        {
-            get
-            {
-                return _sortOrder;
-            }
-            set
-            {
-                _sortOrder = value;
-            }
-        }
-
+        //public int SortOrder
+        //{
+        //    get;
+        //    set;
+        //}
         public string Name
         {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
+            get;
         }
-
-        public IObservableCollection < ToolBarItemBase > ToolBarItems
+        public IObservableCollection < ToolBarItem > ToolBarItems
         {
-            get
-            {
-                return _toolBarItems;
-            }
-            set
-            {
-                _toolBarItems = value;
-            }
+            get;
         }
 
         #endregion
+
 
         #region Initializations
 
         public ToolBar ( string name )
         {
-            _toolBarItems=new BindableCollection < ToolBarItemBase > ();
-            //_sortOrder = sortOrder;
-            _name = name;
+            ToolBarItems = new BindableCollection < ToolBarItem > ( );
+            Name = name;
         }
 
         #endregion

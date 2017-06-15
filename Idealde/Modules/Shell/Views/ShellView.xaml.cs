@@ -30,5 +30,7 @@ namespace Idealde.Modules.Shell.Views
         {
             InitializeComponent();
         }
+
+        
     }
 }

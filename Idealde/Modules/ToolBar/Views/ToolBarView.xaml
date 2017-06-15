@@ -14,7 +14,7 @@
                TargetType="{x:Type Button}"
                BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
             <Setter Property="Content"
-                    Value="{Binding Path=Text}"/>
+                    Value="{Binding Path=Name}"/>
         </Style>
     </UserControl.Resources>
     

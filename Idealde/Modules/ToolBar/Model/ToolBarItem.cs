@@ -5,102 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
+using Caliburn.Micro;
+
 
 namespace Idealde.Modules.ToolBar.Model
 {
-    public class ToolBarItem:ToolBarItemBase
+    public abstract class ToolBarItem : PropertyChangedBase
     {
         #region Fields
-        private int _sortOrder;
-        private ToolBarItemDisplay _display;
-        private string _text;
-        private string _name;
-        private Uri _iconSource;
-        private KeyGesture _keyGesture;
-        #endregion
+        
+        public string Name { get; }
+        //public int SortOrder
+        //{
+        //    get;
+        //    set;
+        //}
+        //public ToolBarItemDisplay Display
+        //{
+        //    get;
+        //    set;
+        //}
 
-        #region Properties       
-
-        public int SortOrder
-        {
-            get
-            {
-                return _sortOrder;
-            }
-            set
-            {
-                _sortOrder = value;
-            }
-        }
-
-        public ToolBarItemDisplay Display
-        {
-            get
-            {
-                return _display;
-            }
-            set
-            {
-                _display = value;
-            }
-        }
-
-        public string Text
-        {
-            get
-            {
-                return _text;
-            }
-            set
-            {
-                _text = value;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                _name = value;
-            }
-        } 
-
-        public Uri IconSource
-        {
-            get
-            {
-                return _iconSource;
-            }
-            set
-            {
-                _iconSource = value;
-            }
-        }
-
-        public KeyGesture KeyGesture
-        {
-            get
-            {
-                return _keyGesture;
-            }
-            set
-            {
-                _keyGesture = value;
-            }
-        }
+        public abstract string Text { get; }
+        public abstract string Tooltip { get; }
+        public abstract Uri IconSource { get; }
+        public abstract KeyGesture KeyGesture { get; }
+        public abstract ICommand Command { get; }
         #endregion
 
         #region Initializations
 
-        public ToolBarItem ( string name, string text )
+        public ToolBarItem ( string name)
         {
-            _name = name;
-            //_sortOrder = sortOrder;
-            _text = text;
+            Name = name;
         }
 
         #endregion
@@ -111,7 +48,8 @@ namespace Idealde.Modules.ToolBar.Model
     public enum ToolBarItemDisplay
     {
         IconOnly,
-        IconAndText
+        IconAndText,
+        Empty
     }
     #endregion
 
