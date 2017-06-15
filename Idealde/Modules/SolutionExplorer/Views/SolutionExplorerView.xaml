@@ -6,6 +6,8 @@
              xmlns:converter="clr-namespace:Idealde.Modules.SolutionExplorer.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    
+    <!-- Mahapps resources -->
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:TreeViewMarginConverter x:Key="LengthConverter" Length="12"/>
@@ -19,8 +21,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
+    
+    <!-- Folder treeview -->
     <TreeView ItemsSource="{Binding RootFolder}" Style="{DynamicResource MetroTreeView}">
         <TreeView.Resources>
+            <!-- TreeViewItem styles -->
             <Style TargetType="{x:Type TreeViewItem}">
                 <Setter Property="IsExpanded" Value="{Binding Expanded, Mode=TwoWay}" />
                 <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
@@ -117,6 +122,7 @@
                 </Style.Triggers>
             </Style>
         </TreeView.Resources>
+        <!-- Item template -->
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding SubItems}" x:Name="ddd">
                 <StackPanel Orientation="Horizontal">
