@@ -147,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\Settings\Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Shell\Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -275,6 +279,11 @@
     <Compile Include="Modules\Output\IOutputView.cs" />
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Settings\ISettingsEditor.cs" />
+    <Compile Include="Modules\Settings\ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Modules\Settings\Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Shell\Commands\CloseFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\ExitCommandDefinition.cs" />
