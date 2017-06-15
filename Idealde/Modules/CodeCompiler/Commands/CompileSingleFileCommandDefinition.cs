@@ -18,6 +18,6 @@ namespace Idealde.Modules.CodeCompiler.Commands
 
         public override string Text => Resources.CompileSingleFileCommandText;
 
-        public override Uri IconSource => null;
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Hammer.png");
     }
 }

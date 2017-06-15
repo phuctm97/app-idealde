@@ -14,6 +14,6 @@ namespace Idealde.Modules.CodeCompiler.Commands
 
         public override string Text => Resources.RunSingleFileCommandText;
 
-        public override Uri IconSource => null;
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Run.png");
     }
 }

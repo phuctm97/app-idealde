@@ -345,9 +345,6 @@
     <Folder Include="Modules\MainMenu\Commands\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\ErrorList.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\Output.png" />
   </ItemGroup>
   <ItemGroup>
@@ -376,7 +373,7 @@
     <Resource Include="Resources\Images\Redo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\ArrowRun.png" />
+    <Resource Include="Resources\Images\Run.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Running.png" />
@@ -389,6 +386,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\StatusAnnotationWarning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Hammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ErrorList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BuildSelection.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
