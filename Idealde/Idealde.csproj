@@ -249,6 +249,7 @@
     <Compile Include="Modules\ErrorList\Converters\NegativeIntegerToUnknownTextConverter.cs" />
     <Compile Include="Modules\ErrorList\ErrorListItem.cs" />
     <Compile Include="Modules\ErrorList\IErrorList.cs" />
+    <Compile Include="Modules\ErrorList\IErrorListView.cs" />
     <Compile Include="Modules\ErrorList\ViewModels\ErrorListViewModel.cs" />
     <Compile Include="Modules\ErrorList\Views\ErrorListView.xaml.cs">
       <DependentUpon>ErrorListView.xaml</DependentUpon>

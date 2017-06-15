@@ -1,4 +1,5 @@
-﻿using Caliburn.Micro;
+﻿using System.Windows.Input;
+using Caliburn.Micro;
 
 namespace Idealde.Framework.Panes
 {
@@ -12,6 +13,8 @@ namespace Idealde.Framework.Panes
     public interface ITool : IViewAware, ILayoutItem
     {
         // Bind properties
+        ICommand HideCommand { get; set; }
+
         PaneLocation PreferredLocation { get; }
 
         double PreferredWidth { get; }

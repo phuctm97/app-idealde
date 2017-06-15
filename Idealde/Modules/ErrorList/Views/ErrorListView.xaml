@@ -97,6 +97,12 @@
                   VerticalGridLinesBrush="WhiteSmoke"
                   BorderThickness="0"
                   Background="Transparent">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="OnErrorRowMouseDoubleClick" />
+                </Style>
+            </DataGrid.Resources>
+            
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="SizeToCells">
                     <DataGridTemplateColumn.CellTemplate>

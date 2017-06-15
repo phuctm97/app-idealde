@@ -73,6 +73,7 @@
                             <Setter Property="Title" Value="{Binding Model.DisplayName, Mode=OneWay}" />
                             <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
                             <Setter Property="HideCommand" Value="{Binding Model.CloseCommand}" />
+                            <Setter Property="AutoHideCommand" Value="{Binding Model.HideCommand, Mode=OneWayToSource}" />
                             <Setter Property="Visibility"
                                     Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />

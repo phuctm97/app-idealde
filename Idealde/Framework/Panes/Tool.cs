@@ -42,6 +42,8 @@ namespace Idealde.Framework.Panes
             get { return _closeCommand ?? (_closeCommand = new RelayCommand(p => IsVisible = false)); }
         }
 
+        public ICommand HideCommand { get; set; }
+
         public abstract PaneLocation PreferredLocation { get; }
 
         public virtual double PreferredWidth => 200;
