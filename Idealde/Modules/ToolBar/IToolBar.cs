@@ -14,7 +14,7 @@ namespace Idealde.Modules.ToolBar
     {
         #region Fields
 
-        IObservableCollection < ToolBarDefiniton > Items
+        IObservableCollection <Model.ToolBar > Items
         {
             get;
         }
@@ -23,11 +23,9 @@ namespace Idealde.Modules.ToolBar
 
         #region Methods
 
-        void AddToolBarItem (ToolBarGroupItemDefinition parent,params ToolBarItemDefinition[] toolBarItems);
+        void AddToolBarItem (Model.ToolBar parent,params ToolBarItem[] toolBarItems);
 
-        void AddToolBarGroupItem ( ToolBarDefiniton parent, params ToolBarGroupItemDefinition [ ] toolBarGroupItems );
-
-        void AddToolBar (params ToolBarDefiniton[] toolBars);
+        void AddToolBar (params Model.ToolBar[] toolBars);
 
         #endregion
     }
