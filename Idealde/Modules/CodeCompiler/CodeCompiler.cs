@@ -16,6 +16,7 @@ namespace Idealde.Modules.CodeCompiler
         private readonly string[] _regexSpecialCharacters;
         private readonly List<string> _canCompileFileTypes;
         private readonly List<CompileError> _compileErrors;
+        private readonly List<CompileError> _compileWarnings;
         private string _regexableSourceFilePath;
 
         public bool CanCompileSingleFile(string sourceFilePath)
@@ -49,6 +50,7 @@ namespace Idealde.Modules.CodeCompiler
 
             IsBusy = true;
             _compileErrors.Clear();
+            _compileWarnings.Clear();
 
             cl.Start();
             cl.BeginOutputReadLine();
@@ -70,15 +72,24 @@ namespace Idealde.Modules.CodeCompiler
             cl.Dispose();
 
             IsBusy = false;
-            OnExited?.Invoke(sender, _compileErrors);
+            OnExited?.Invoke(_compileErrors, _compileWarnings);
         }
 
         private void OnCompilerOutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(e?.Data)) return;
 
-            string pattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\): error ([a-zA-Z0-9]+): (.+)";
-            var errorMatch = Regex.Match(e.Data, pattern);
+            MatchErrors(e.Data);
+
+            MatchWarnings(e.Data);
+
+            OutputDataReceived?.Invoke(sender, e.Data);
+        }
+
+        private void MatchErrors(string output)
+        {
+            string errorPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\): error ([a-zA-Z0-9]+): (.+)";
+            var errorMatch = Regex.Match(output.ToLower(), errorPattern);
 
             if (errorMatch.Success)
             {
@@ -93,21 +104,51 @@ namespace Idealde.Modules.CodeCompiler
                 }
                 if (errorMatch.Groups.Count > 2)
                 {
-                    code = errorMatch.Groups[2].Value;
+                    code = output.Substring(errorMatch.Groups[2].Index,
+                        errorMatch.Groups[2].Length);
                 }
                 if (errorMatch.Groups.Count > 3)
                 {
-                    description = errorMatch.Groups[3].Value;
+                    description = output.Substring(errorMatch.Groups[3].Index,
+                        errorMatch.Groups[3].Length);
                 }
                 _compileErrors.Add(new CompileError(line, column, code, description));
             }
+        }
 
-            OutputDataReceived?.Invoke(sender, e.Data);
+        private void MatchWarnings(string output)
+        {
+            string warningPattern = $"{_regexableSourceFilePath}\\(([0-9]+)\\) : warning ([a-zA-Z0-9]+): (.+)";
+            var warningMatch = Regex.Match(output.ToLower(), warningPattern);
+
+            if (warningMatch.Success)
+            {
+                var line = 0;
+                var column = -1;
+                var code = "N/A";
+                var description = "N/A";
+
+                if (warningMatch.Groups.Count > 1)
+                {
+                    int.TryParse(warningMatch.Groups[1].Value, out line);
+                }
+                if (warningMatch.Groups.Count > 2)
+                {
+                    code = output.Substring(warningMatch.Groups[2].Index,
+                        warningMatch.Groups[2].Length);
+                }
+                if (warningMatch.Groups.Count > 3)
+                {
+                    description = output.Substring(warningMatch.Groups[3].Index,
+                        warningMatch.Groups[3].Length);
+                }
+                _compileWarnings.Add(new CompileError(line, column, code, description));
+            }
         }
 
         public event EventHandler<string> OutputDataReceived;
 
-        public event EventHandler<IEnumerable<CompileError>> OnExited;
+        public event CompilerExitedEventHandler OnExited;
 
         public bool IsBusy { get; private set; }
 
@@ -118,6 +159,8 @@ namespace Idealde.Modules.CodeCompiler
             _canCompileFileTypes = new List<string>();
 
             _compileErrors = new List<CompileError>();
+
+            _compileWarnings = new List<CompileError>();
 
             _regexSpecialCharacters = new[]
             {
@@ -140,7 +183,7 @@ namespace Idealde.Modules.CodeCompiler
 
         private string GenerateRegexableString(string source)
         {
-            var regexableString = source;
+            var regexableString = source.ToLower();
             foreach (var s in _regexSpecialCharacters)
             {
                 regexableString = regexableString.Replace(s, $"\\{s}");

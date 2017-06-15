@@ -234,11 +234,32 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 semaphore++;
             };
 
-            EventHandler<IEnumerable<CompileError>> compileExitedHandler = null;
-            compileExitedHandler = delegate(object s, IEnumerable<CompileError> errors)
+            CompilerExitedEventHandler compileExitedHandler = null;
+            compileExitedHandler = delegate(IEnumerable<CompileError> errors, IEnumerable<CompileError> warnings)
             {
                 //check for erros
                 var compileErrors = errors as IList<CompileError> ?? errors.ToList();
+                var compileWarnings = warnings as IList<CompileError> ?? warnings.ToList();
+
+                //show error(s)
+                foreach (var error in compileErrors)
+                {
+                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, filePath, error.Line,
+                        error.Column);
+                }
+                //show warning(s)
+                foreach (var warning in compileWarnings)
+                {
+                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, filePath,
+                        warning.Line,
+                        warning.Column);
+                }
+                if (compileErrors.Any() || compileWarnings.Any())
+                {
+                    shell.ShowTool(errorList);
+                }
+
+                //result
                 if (!compileErrors.Any())
                 {
                     //no error
@@ -250,14 +271,6 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                     //has error(s)
                     result = false;
                     output.AppendLine("----- Compile single file failed");
-
-                    //show error(s)
-                    foreach (var error in compileErrors)
-                    {
-                        errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, filePath, error.Line,
-                            error.Column);
-                    }
-                    shell.ShowTool(errorList);
                 }
 
                 // release subcribed delegate

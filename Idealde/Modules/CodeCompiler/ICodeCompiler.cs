@@ -1,7 +1,9 @@
-﻿using System;
+﻿#region Using Namespace
+
+using System;
 using System.Collections.Generic;
-using Idealde.Framework.Commands;
-using Idealde.Modules.CodeCompiler.Commands;
+
+#endregion
 
 namespace Idealde.Modules.CodeCompiler
 {
@@ -21,6 +23,9 @@ namespace Idealde.Modules.CodeCompiler
         public string Description { get; }
     }
 
+    public delegate void CompilerExitedEventHandler(IEnumerable<CompileError> errors, IEnumerable<CompileError> warnings
+    );
+
     public interface ICodeCompiler
     {
         bool IsBusy { get; }
@@ -31,6 +36,6 @@ namespace Idealde.Modules.CodeCompiler
 
         event EventHandler<string> OutputDataReceived;
 
-        event EventHandler<IEnumerable<CompileError>> OnExited;
+        event CompilerExitedEventHandler OnExited;
     }
 }
