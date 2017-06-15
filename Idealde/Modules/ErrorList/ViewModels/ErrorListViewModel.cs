@@ -128,13 +128,18 @@ namespace Idealde.Modules.ErrorList.ViewModels
 
         #region Error list behaviors
 
-        public void AddItem(ErrorListItemType type, int code, string description, string path = null, int? line = null,
+        public void AddItem(ErrorListItemType type, string code, string description, string path = null, int? line = null,
             int? column = null, Action onClick = null)
         {
             Items.Add(new ErrorListItem(type, code, description, path, line, column)
             {
                 OnClick = onClick
             });
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
         }
 
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

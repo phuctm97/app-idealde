@@ -1,8 +1,10 @@
 ﻿#region Using Namespace
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -191,48 +193,87 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             return false;
         }
 
-        private Task<bool> CompileSingleFile(string filePath)
+        private async Task<bool> CompileSingleFile(string filePath)
         {
+            //dependencies
             var codeCompiler = IoC.Get<ICodeCompiler>();
             var shell = IoC.Get<IShell>();
             var output = IoC.Get<IOutput>();
             var errorList = IoC.Get<IErrorList>();
-            var hasError = false;
+
+            //semaphore and mutex for multi-processing
+            var semaphore = 1;
+            var completed = false;
+
+            //final result
+            var result = false;
 
             //show output
             shell.ShowTool(output);
 
-            //clear output
+            //reset output
             output.Clear();
-            output.AppendLine("----- Compile single file starts");
-            output.AppendLine($"*File: {FilePath}");
+            output.AppendLine($"----- Compile single file starts");
+            output.AppendLine($"----- File: {FilePath}");
 
-            // subcribe events
-            EventHandler<string> outputReceivedHandler =
-                delegate(object s, string data) { output.AppendLine($"> {data}"); };
-            EventHandler<string> errorReceivedHandler = delegate(object s, string data)
+            // reset error list
+            errorList.Clear();
+
+            //handle compile events
+            EventHandler<string> outputReceivedHandler = delegate(object s, string data)
             {
-                output.AppendLine($"?> {data}");
-                hasError = true;
+                while (semaphore <= 0)
+                {
+                }
+
+                semaphore--;
+                if (!string.IsNullOrWhiteSpace(data))
+                {
+                    output.AppendLine($"> {data}");
+                }
+                semaphore++;
             };
-            EventHandler compileExitedHandler = null;
-            compileExitedHandler = delegate
+
+            EventHandler<IEnumerable<CompileError>> compileExitedHandler = null;
+            compileExitedHandler = delegate(object s, IEnumerable<CompileError> errors)
             {
-                output.AppendLine("----- Compile single file finished");
+                //check for erros
+                var compileErrors = errors as IList<CompileError> ?? errors.ToList();
+                if (!compileErrors.Any())
+                {
+                    //no error
+                    result = true;
+                    output.AppendLine("----- Compile single file successfully");
+                }
+                else
+                {
+                    //has error(s)
+                    result = false;
+                    output.AppendLine("----- Compile single file failed");
+
+                    //show error(s)
+                    foreach (var error in compileErrors)
+                    {
+                        errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, filePath, error.Line,
+                            error.Column);
+                    }
+                    shell.ShowTool(errorList);
+                }
+
                 // release subcribed delegate
                 codeCompiler.OutputDataReceived -= outputReceivedHandler;
-                codeCompiler.ErrorDataReceived -= errorReceivedHandler;
                 codeCompiler.OnExited -= compileExitedHandler;
+                completed = true;
             };
-
             codeCompiler.OutputDataReceived += outputReceivedHandler;
-            codeCompiler.ErrorDataReceived += errorReceivedHandler;
             codeCompiler.OnExited += compileExitedHandler;
 
             // compile
             codeCompiler.CompileSingleFile(FilePath);
 
-            return Task.FromResult(hasError);
+            // wait for compilation finish
+            while (!completed) await Task.Delay(25);
+            return result;
         }
 
         private Task RunSingleFile(string outputFilePath)
