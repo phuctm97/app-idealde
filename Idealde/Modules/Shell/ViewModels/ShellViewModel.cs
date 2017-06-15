@@ -13,7 +13,8 @@ using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBarTray;
+using Idealde.Modules.ToolBarTray.Models;
 using Idealde.Modules.UndoRedo.Commands;
 using Idealde.Properties;
 
@@ -41,7 +42,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         public IMenu MainMenu { get; }
 
-        public IToolBar ToolBar { get; }
+        public IToolBarTray ToolBarTray { get; }
 
         public IStatusBar StatusBar { get; }
 
@@ -74,7 +75,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
         #region Initializations
 
-        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBar toolBar, IStatusBar statusBar)
+        public ShellViewModel(IThemeManager themeManager, IMenu mainMenu, IToolBarTray toolBarTray, IStatusBar statusBar)
         {
             _themeManager = themeManager;
 
@@ -82,7 +83,7 @@ namespace Idealde.Modules.Shell.ViewModels
 
             StatusBar = statusBar;
 
-            ToolBar = toolBar;
+            ToolBarTray = toolBarTray;
 
             Tools = new BindableCollection<ITool>();
 
@@ -94,6 +95,8 @@ namespace Idealde.Modules.Shell.ViewModels
             base.OnInitialize();
 
             BuildMenu();
+
+            BuildToolBarTray();
 
             BuildStatusBar();
 
@@ -193,6 +196,41 @@ namespace Idealde.Modules.Shell.ViewModels
                 runCompileSingleFileMenu,
                 runRunSingleFileMenu,
                 runCompileAndRunSingleFileMenu);
+            //> Run menu
+        }
+
+        private void BuildToolBarTray()
+        {
+            //< File tool bar
+            var fileToolBar = new ToolBar("File");
+            ToolBarTray.AddToolBar(fileToolBar);
+
+            var fileNewCppHeaderToolBarItem
+                = new CommandToolBarItem<NewCppHeaderCommandDefinition>("File.NewCppHeader", true);
+            var fileNewCppSourceToolBarItem
+                = new CommandToolBarItem<NewCppSourceCommandDefinition>("File.NewCppSource", true);
+            var fileOpenToolBarItem = new CommandToolBarItem<OpenFileCommandDefinition>("File.Open");
+            var fileSaveToolBarItem = new CommandToolBarItem<SaveFileCommandDefinition>("File.Save");
+            var fileSaveAsToolBarItem = new CommandToolBarItem<SaveFileAsCommandDefinition>("File.SaveAs");
+            ToolBarTray.AddToolBarItem(fileToolBar,
+                fileNewCppHeaderToolBarItem,
+                fileNewCppSourceToolBarItem,
+                new ToolBarItemSeparator("File.S1"),
+                fileOpenToolBarItem,
+                fileSaveToolBarItem, fileSaveAsToolBarItem);
+            //> File tool bar
+
+            //< Run menu
+            var runToolBar = new ToolBar("Run");
+            ToolBarTray.AddToolBar(runToolBar);
+
+            var runCompileSingleFileToolBarItem =
+                new CommandToolBarItem<CompileSingleFileCommandDefinition>("Run.CompileSingleFile");
+            var runRunSingleFileToolBar =
+                new CommandToolBarItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
+            ToolBarTray.AddToolBarItem(runToolBar,
+                runCompileSingleFileToolBarItem,
+                runRunSingleFileToolBar);
             //> Run menu
         }
 

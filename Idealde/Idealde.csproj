@@ -155,11 +155,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\ToolBar\StatusBar\Views\StatusBarView.xaml">
+    <Page Include="Modules\StatusBar\Views\StatusBarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\ToolBar\Views\ToolBarView.xaml">
+    <Page Include="Modules\ToolBarTray\Views\ToolBarTrayView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -172,6 +172,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\VS2013\Controls\Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\VS2013\Controls\ToolBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,22 +299,23 @@
     <Compile Include="Modules\SolutionExplorer\Views\SolutionExplorerView.xaml.cs">
       <DependentUpon>SolutionExplorerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ToolBar\StatusBar\IStatusBar.cs" />
-    <Compile Include="Modules\ToolBar\StatusBar\ViewModels\StatusBarItem.cs" />
-    <Compile Include="Modules\ToolBar\StatusBar\ViewModels\StatusBarViewModel.cs" />
-    <Compile Include="Modules\ToolBar\StatusBar\Views\StatusBarView.xaml.cs">
+    <Compile Include="Modules\StatusBar\IStatusBar.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarItem.cs" />
+    <Compile Include="Modules\StatusBar\ViewModels\StatusBarViewModel.cs" />
+    <Compile Include="Modules\StatusBar\Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ToolBar\Controls\ToolBarBase.cs" />
-    <Compile Include="Modules\ToolBar\IToolBar.cs" />
-    <Compile Include="Modules\ToolBar\Model\CommandToolBarItem.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBar.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarItem.cs" />
-    <Compile Include="Modules\ToolBar\Model\ToolBarItemSeparator.cs" />
-    <Compile Include="Modules\ToolBar\ViewModels\ToolBarViewModel.cs" />
-    <Compile Include="Modules\ToolBar\Views\IToolBarView.cs" />
-    <Compile Include="Modules\ToolBar\Views\ToolBarView.xaml.cs">
-      <DependentUpon>ToolBarView.xaml</DependentUpon>
+    <Compile Include="Modules\ToolBarTray\Controls\ToolBarBase.cs" />
+    <Compile Include="Modules\ToolBarTray\IToolBarTray.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\CommandToolBarItem.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\DisplayToolBarItem.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBar.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBarItemBase.cs" />
+    <Compile Include="Modules\ToolBarTray\Models\ToolBarItemSeparator.cs" />
+    <Compile Include="Modules\ToolBarTray\ViewModels\ToolBarTrayViewModel.cs" />
+    <Compile Include="Modules\ToolBarTray\Views\IToolBarView.cs" />
+    <Compile Include="Modules\ToolBarTray\Views\ToolBarTrayView.xaml.cs">
+      <DependentUpon>ToolBarTrayView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\UndoRedo\Commands\RedoCommandDefinition.cs" />
     <Compile Include="Modules\UndoRedo\Commands\UndoCommandDefinition.cs" />

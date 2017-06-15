@@ -25,8 +25,8 @@ using Idealde.Modules.SolutionExplorer;
 using Idealde.Modules.SolutionExplorer.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
-using Idealde.Modules.ToolBar;
-using Idealde.Modules.ToolBar.ViewModels;
+using Idealde.Modules.ToolBarTray;
+using Idealde.Modules.ToolBarTray.ViewModels;
 using Idealde.Modules.UndoRedo;
 using Microsoft.Practices.Unity;
 using Idealde.Modules.CodeCompiler;
@@ -96,7 +96,7 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
 
             //toolbar
-            _container.RegisterType<IToolBar, ToolBarViewModel>(
+            _container.RegisterType<IToolBarTray, ToolBarTrayViewModel>(
                 new ContainerControlledLifetimeManager());
 
             //output

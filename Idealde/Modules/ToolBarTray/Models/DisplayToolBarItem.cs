@@ -5,9 +5,9 @@ using System.Windows.Input;
 
 #endregion
 
-namespace Idealde.Modules.MainMenu.Models
+namespace Idealde.Modules.ToolBarTray.Models
 {
-    public class DisplayMenuItem : MenuItemBase
+    public class DisplayToolBarItem : ToolBarItemBase
     {
         // Bind properties 
 
@@ -23,19 +23,23 @@ namespace Idealde.Modules.MainMenu.Models
 
         public override ICommand Command => null;
 
+        public override bool IsShowText { get; }
+
         #endregion
 
         // Initializations
 
         #region Initializations
 
-        public DisplayMenuItem(string name, string text, string tooltip = "", Uri iconSource = null)
+        public DisplayToolBarItem(string name, string text, string tooltip = "", Uri iconSource = null, bool showText = false)
             : base(name)
         {
             Text = text;
+            IsShowText = showText;
             Tooltip = tooltip;
             IconSource = iconSource;
         }
+
 
         #endregion
     }

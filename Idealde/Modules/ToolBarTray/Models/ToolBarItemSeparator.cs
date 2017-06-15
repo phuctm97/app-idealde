@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Namespace
+
+using System;
 using System.Windows.Input;
 
-namespace Idealde.Modules.ToolBar.Model
+#endregion
+
+namespace Idealde.Modules.ToolBarTray.Models
 {
-    public class ToolBarItemSeparator:ToolBarItem
+    public class ToolBarItemSeparator : ToolBarItemBase
     {
         public ToolBarItemSeparator(string name) : base(name)
         {
@@ -18,5 +18,6 @@ namespace Idealde.Modules.ToolBar.Model
         public override Uri IconSource => null;
         public override KeyGesture KeyGesture => null;
         public override ICommand Command => null;
+        public override bool IsShowText => false;
     }
 }

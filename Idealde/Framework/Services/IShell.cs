@@ -4,7 +4,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.StatusBar;
-using Idealde.Modules.ToolBar;
+using Idealde.Modules.ToolBarTray;
 
 #endregion
 
@@ -15,7 +15,7 @@ namespace Idealde.Framework.Services
         // Bind models
         IMenu MainMenu { get; }
 
-        IToolBar ToolBar { get; }
+        IToolBarTray ToolBarTray { get; }
 
         IStatusBar StatusBar { get; }
 

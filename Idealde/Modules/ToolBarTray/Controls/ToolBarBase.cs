@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Namespace
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-
 using Idealde.Framework.Controls;
-using Idealde.Modules.ToolBar.Model;
+using Idealde.Modules.ToolBarTray.Models;
 
-namespace Idealde.Modules.ToolBar.Controls
+#endregion
+
+namespace Idealde.Modules.ToolBarTray.Controls
 {
     public class ToolBarBase : System.Windows.Controls.ToolBar
     {
@@ -24,12 +21,17 @@ namespace Idealde.Modules.ToolBar.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            if ( _currentItem is ToolBarItemSeparator )
-                return new Separator ( );
+            if (_currentItem is ToolBarItemSeparator)
+                return new Separator();
 
-            if (_currentItem is ToolBarItem)
-                return CreateButton<Button>(ButtonStyleKey, "ToolBarButton");
-
+            if (_currentItem is ToolBarItemBase)
+            {
+                if (((ToolBarItemBase) _currentItem).IsShowText)
+                {
+                    return CreateButton<Button>(ButtonStyleKey, "ToolBarButtonWithIconAndText");
+                }
+                return CreateButton<Button>(ButtonStyleKey, "ToolBarButtonWithIcon");
+            }
             return base.GetContainerForItemOverride();
         }
 
@@ -42,9 +44,8 @@ namespace Idealde.Modules.ToolBar.Controls
             return result;
         }
 
-        public ToolBarBase ( )
+        public ToolBarBase()
         {
-
             SetOverflowMode(this, OverflowMode.Always);
             SetResourceReference(StyleProperty, typeof(System.Windows.Controls.ToolBar));
         }
