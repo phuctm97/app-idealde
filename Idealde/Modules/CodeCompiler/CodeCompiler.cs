@@ -1,7 +1,9 @@
 ﻿#region Using Namespace
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Idealde.Properties;
 
 #endregion
@@ -10,8 +12,17 @@ namespace Idealde.Modules.CodeCompiler
 {
     public class CodeCompiler : ICodeCompiler
     {
-        public void CompileSingleFile(string sourceFilePath, string outputFilePath)
+        private readonly List<string> _canCompileFileTypes;
+
+        public bool CanCompileSingleFile(string sourceFilePath)
         {
+            return _canCompileFileTypes.Contains(Path.GetExtension(sourceFilePath));
+        }
+
+        public void CompileSingleFile(string sourceFilePath)
+        {
+            string sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
+
             var cl = new Process
             {
                 StartInfo = new ProcessStartInfo
@@ -21,11 +32,11 @@ namespace Idealde.Modules.CodeCompiler
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
-                    Arguments = $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {sourceFilePath}",
-                }
+                    Arguments = $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {sourceFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\"
+                },
+                EnableRaisingEvents = true
             };
 
-            cl.EnableRaisingEvents = true;
             cl.OutputDataReceived += OnCompilerOutputDataReceived;
             cl.ErrorDataReceived += OnCompilerErrorDataReceived;
             cl.Exited += OnCompilerExited;
@@ -38,11 +49,15 @@ namespace Idealde.Modules.CodeCompiler
 
         private void OnCompilerExited(object sender, EventArgs e)
         {
-            var cl = (Process)sender;
+            // release process
+            var cl = (Process) sender;
             cl.OutputDataReceived -= OnCompilerOutputDataReceived;
             cl.ErrorDataReceived -= OnCompilerErrorDataReceived;
             cl.Exited -= OnCompilerExited;
+            cl.Dispose();
+
             IsBusy = false;
+            OnExited?.Invoke(sender, e);
         }
 
         private void OnCompilerErrorDataReceived(object sender, DataReceivedEventArgs e)
@@ -59,11 +74,25 @@ namespace Idealde.Modules.CodeCompiler
 
         public event EventHandler<string> ErrorDataReceived;
 
+        public event EventHandler OnExited;
+
         public bool IsBusy { get; private set; }
 
         public CodeCompiler()
         {
             IsBusy = false;
+
+            _canCompileFileTypes = new List<string>();
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            _canCompileFileTypes.AddRange(new[]
+            {
+                ".cpp"
+            });
         }
     }
 }

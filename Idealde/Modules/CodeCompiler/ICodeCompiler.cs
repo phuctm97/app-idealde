@@ -8,10 +8,14 @@ namespace Idealde.Modules.CodeCompiler
     {
         bool IsBusy { get; }
 
-        void CompileSingleFile(string sourceFilePath, string outputFilePath = "");
+        bool CanCompileSingleFile(string sourceFilePath);
+
+        void CompileSingleFile(string sourceFilePath);
 
         event EventHandler<string> OutputDataReceived;
 
         event EventHandler<string> ErrorDataReceived;
+
+        event EventHandler OnExited;
     }
 }

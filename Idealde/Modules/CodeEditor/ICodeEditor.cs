@@ -6,7 +6,9 @@ using ScintillaNET;
 namespace Idealde.Modules.CodeEditor
 {
     public interface ICodeEditor: IPersistedDocument,
-        ICommandHandler<CompileCommandDefinition>
+        ICommandHandler<CompileSingleFileCommandDefinition>,
+        ICommandHandler<RunSingleFileCommandDefinition>,
+        ICommandHandler<CompileAndRunSingleFileCommandDefinition>
     {
         void SetLanguage(Lexer lexer);
         void Goto(int row, int column);

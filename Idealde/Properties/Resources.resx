@@ -268,4 +268,22 @@
   <data name="RunRebuildCommandTooltip" xml:space="preserve">
     <value />
   </data>
+  <data name="CompileAndRunSingleFileCommandText" xml:space="preserve">
+    <value>Compile And Run</value>
+  </data>
+  <data name="CompileAndRunSingleFileCommandTooltip" xml:space="preserve">
+    <value>Re-compile selected file, run it right after compilation complete</value>
+  </data>
+  <data name="CompileSingleFileCommandText" xml:space="preserve">
+    <value>Compile Single Selected Item</value>
+  </data>
+  <data name="CompileSingleFileCommandTooltip" xml:space="preserve">
+    <value>Compile only selected file, not work if it depends on other file(s)</value>
+  </data>
+  <data name="RunSingleFileCommandText" xml:space="preserve">
+    <value>Run Single Selected Item</value>
+  </data>
+  <data name="RunSingleFileCommandTooltip" xml:space="preserve">
+    <value>Run built output file of current selected item, auto compile if it wasn't built yet</value>
+  </data>
 </root>

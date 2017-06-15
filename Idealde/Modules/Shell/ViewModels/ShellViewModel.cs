@@ -183,14 +183,16 @@ namespace Idealde.Modules.Shell.ViewModels
             var runMenu = new Menu("Run", Resources.RunMenuText);
             MainMenu.AddMenu(runMenu);
 
-            var runRunMenu = new DisplayMenuItem("Run.Run", Resources.RunCommandText);
-            var runBuildMenu = new CommandMenuItem<CompileCommandDefinition>("Run.Build");
-            var runRebuildMenu = new DisplayMenuItem("Run.Rebuild", Resources.RunRebuildCommandText);
+            var runCompileSingleFileMenu =
+                new CommandMenuItem<CompileSingleFileCommandDefinition>("Run.CompileSingleFile");
+            var runRunSingleFileMenu =
+                new CommandMenuItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
+            var runCompileAndRunSingleFileMenu =
+                new CommandMenuItem<CompileAndRunSingleFileCommandDefinition>("Run.CompileAndRunSingleFile");
             MainMenu.AddMenuItem(runMenu,
-                runRunMenu,
-                new MenuItemSeparator("Run.S1"),
-                runBuildMenu,
-                runRebuildMenu);
+                runCompileSingleFileMenu,
+                runRunSingleFileMenu,
+                runCompileAndRunSingleFileMenu);
             //> Run menu
         }
 

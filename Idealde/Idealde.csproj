@@ -218,7 +218,9 @@
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
     <Compile Include="Modules\CodeCompiler\CodeCompiler.cs" />
-    <Compile Include="Modules\CodeCompiler\Commands\CompileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileAndRunSingleFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileSingleFileCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\RunSingleFileCommandDefinition.cs" />
     <Compile Include="Modules\CodeCompiler\ICodeCompiler.cs" />
     <Compile Include="Modules\CodeEditor\EditorProvider.cs" />
     <Compile Include="Modules\CodeEditor\ILanguageDefinitionManager.cs" />

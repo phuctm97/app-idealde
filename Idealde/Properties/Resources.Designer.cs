@@ -79,6 +79,42 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compile And Run.
+        /// </summary>
+        internal static string CompileAndRunSingleFileCommandText {
+            get {
+                return ResourceManager.GetString("CompileAndRunSingleFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Re-compile selected file, run it right after compilation complete.
+        /// </summary>
+        internal static string CompileAndRunSingleFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("CompileAndRunSingleFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile Single Selected Item.
+        /// </summary>
+        internal static string CompileSingleFileCommandText {
+            get {
+                return ResourceManager.GetString("CompileSingleFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile only selected file, not work if it depends on other file(s).
+        /// </summary>
+        internal static string CompileSingleFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("CompileSingleFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New File.
         /// </summary>
         internal static string CreateNewFileText {
@@ -454,6 +490,24 @@ namespace Idealde.Properties {
         internal static string RunRebuildCommandTooltip {
             get {
                 return ResourceManager.GetString("RunRebuildCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run Single Selected Item.
+        /// </summary>
+        internal static string RunSingleFileCommandText {
+            get {
+                return ResourceManager.GetString("RunSingleFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run built output file of current selected item, auto compile if it wasn&apos;t built yet.
+        /// </summary>
+        internal static string RunSingleFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("RunSingleFileCommandTooltip", resourceCulture);
             }
         }
         
