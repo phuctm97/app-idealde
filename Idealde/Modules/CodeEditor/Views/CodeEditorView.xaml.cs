@@ -91,6 +91,12 @@ namespace Idealde.Modules.CodeEditor.Views
         public CodeEditorView()
         {
             InitializeComponent();
+
+            // Display line numbers handlers
+            _zoom = ScintillaEditor.Zoom;
+            ScintillaEditor.Margins[0].Type = MarginType.Number;
+            ScintillaEditor.ZoomChanged += OnZoomChanged;
+
             IsDirty = false;
             // Scintilla keyword storages
             _keyWord1 = new Dictionary<Lexer, string>();
@@ -111,7 +117,10 @@ namespace Idealde.Modules.CodeEditor.Views
         private void ScintillaInitialize(object sender, RoutedEventArgs e)
         {
         }
+
         #endregion // initialization
+
+        #region Scintilla Method
 
         // reload configuration ( After resources directory changed )
         private void ReloadConfig()
@@ -500,6 +509,8 @@ namespace Idealde.Modules.CodeEditor.Views
             }
         }
 
+        #endregion
+
         #region Scintilla event handler ( Display line number )
 
         // OnTextChanged to display line number
@@ -510,10 +521,17 @@ namespace Idealde.Modules.CodeEditor.Views
             IsDirtyChanged?.Invoke(true);
             int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
             if (_maxRowCharLength == newMaxRowCharLength) return;
-            ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1)) + 2;
+            ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1));
             _maxRowCharLength = newMaxRowCharLength;
         }
 
+        private int _zoom;
+        private void OnZoomChanged(object sender, EventArgs e)
+        {
+            int newMaxRowCharLength = ScintillaEditor.Lines.Count.ToString().Length;
+            ScintillaEditor.Margins[0].Width = ScintillaEditor.TextWidth(ScintillaNET.Style.LineNumber, new string('9', newMaxRowCharLength + 1));
+            _maxRowCharLength = newMaxRowCharLength;
+        }
         #endregion
 
         #region CodeEditorView behaviors
