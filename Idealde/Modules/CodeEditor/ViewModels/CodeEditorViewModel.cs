@@ -272,13 +272,13 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 //show error(s)
                 foreach (var error in compileErrors)
                 {
-                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, filePath, error.Line,
+                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, error.Path, error.Line,
                         error.Column);
                 }
                 //show warning(s)
                 foreach (var warning in compileWarnings)
                 {
-                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, filePath,
+                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, warning.Path,
                         warning.Line,
                         warning.Column);
                 }

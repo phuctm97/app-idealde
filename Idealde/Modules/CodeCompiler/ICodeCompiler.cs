@@ -10,14 +10,16 @@ namespace Idealde.Modules.CodeCompiler
 {
     public class CompileError
     {
-        public CompileError(int line, int column, string code, string description)
+        public CompileError(int line, int column, string code, string description, string path)
         {
             Line = line;
             Column = column;
             Code = code;
             Description = description;
+            Path = path;
         }
 
+        public string Path { get; }
         public int Line { get; }
         public int Column { get; }
         public string Code { get; }
