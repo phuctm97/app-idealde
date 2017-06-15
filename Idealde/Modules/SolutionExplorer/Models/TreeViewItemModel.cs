@@ -5,16 +5,30 @@ namespace Idealde.Modules.SolutionExplorer.Models
 {
     public enum DirType
     {
-        Folder = 0,
-        File = 1
+        Default= 0,
+        Root = 1,
+        FolderClosed = 2,
+        FolderOpened = 3,
+        File = 4
     }
 
     public class TreeViewItemModel : PropertyChangedBase
     {
         private Uri _imageSource;
         private int _fontSize;
-        private int _objectType;
+        private DirType _objectType;
         private string _name;
+        private bool _expanded;
+
+        private const string RootImage =
+            @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/solution-explorer.png";
+        private const string FolderClosedImage =
+            @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder-closed.png";
+        private const string FolderOpenedImage =
+            @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder-opened.png";
+        private const string FileImage =
+            @"pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/file.png";
+
 
         public TreeViewItemModel(string name, string path)
         {
@@ -23,6 +37,8 @@ namespace Idealde.Modules.SolutionExplorer.Models
             Path = path;
             FontSize = 12;
         }
+
+        
 
         public string Path { get; }
 
@@ -37,7 +53,7 @@ namespace Idealde.Modules.SolutionExplorer.Models
             }
         }
 
-        public int ObjectType
+        public DirType ObjectType
         {
             get { return _objectType; }
             set
@@ -45,6 +61,7 @@ namespace Idealde.Modules.SolutionExplorer.Models
                 if (_objectType.Equals(value)) return;
                 _objectType = value;
                 NotifyOfPropertyChange(() => ObjectType);
+                ChangeImageSource();
             }
         }
 
@@ -62,7 +79,7 @@ namespace Idealde.Modules.SolutionExplorer.Models
         public Uri ImageSource
         {
             get { return _imageSource; }
-            set
+            private set
             {
                 if (Equals(_imageSource, value)) return;
                 _imageSource = value;
@@ -71,5 +88,53 @@ namespace Idealde.Modules.SolutionExplorer.Models
         }
 
         public IObservableCollection<TreeViewItemModel> SubItems { get; set; }
+
+        private void ChangeImageSource()
+        {
+            switch (ObjectType)
+            {
+                case DirType.FolderClosed:
+                    ImageSource = new Uri(FolderClosedImage, UriKind.Absolute);
+                    break;
+                case DirType.FolderOpened:
+                    ImageSource = new Uri(FolderOpenedImage, UriKind.Absolute);
+                    break;
+                case DirType.Root:
+                    ImageSource = new Uri(RootImage, UriKind.Absolute);
+                    break;
+                case DirType.File:
+                    ImageSource = new Uri(FileImage, UriKind.Absolute);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public bool Expanded
+        {
+            get { return _expanded; }
+            set
+            {
+                if (value.Equals(_expanded)) return;
+                _expanded = value;
+                NotifyOfPropertyChange(() => Expanded);
+                OnItemExpanded(_expanded);
+            }
+        }
+
+        private void OnItemExpanded(bool expanded)
+        {
+            switch (ObjectType)
+            {
+                case DirType.FolderClosed:
+                    ObjectType = DirType.FolderOpened;
+                    break;
+                case DirType.FolderOpened:
+                    ObjectType = DirType.FolderClosed;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

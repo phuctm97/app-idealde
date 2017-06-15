@@ -9,15 +9,11 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
     public class SolutionExplorerViewModel : Tool, ISolutionExplorer
     {
         private string _rootPath;
+
         public SolutionExplorerViewModel()
         {
             RootFolder = new BindableCollection<TreeViewItemModel>();
             RootPath = @"D:\A.System";
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
         }
 
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
@@ -32,10 +28,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
                 RootFolder.Clear();
                 RootFolder.Add(new TreeViewItemModel(_rootPath, _rootPath)
                 {
-                    ImageSource =
-                        new Uri(
-                            "pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/solution-explorer.png",
-                            UriKind.Absolute)
+                    ObjectType = DirType.Root
                 });
                 InitFromRootDirectory(RootFolder[0], _rootPath);
             }
@@ -54,11 +47,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             {
                 var item = new TreeViewItemModel(direct, direct)
                 {
-                    ObjectType = 0,
-                    ImageSource =
-                        new Uri(
-                            "pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/folder.png",
-                            UriKind.Absolute)
+                    ObjectType = DirType.FolderClosed
                 };
                 InitFromRootDirectory(item, direct);
                 tItem.SubItems.Add(item);
@@ -67,10 +56,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             {
                 var fItem = new TreeViewItemModel(file, file)
                 {
-                    ObjectType = 1,
-                    ImageSource =
-                        new Uri("pack://application:,,,/Idealde;Component/Modules/SolutionExplorer/IconSource/file.png",
-                            UriKind.Absolute)
+                    ObjectType = DirType.File
                 };
                 tItem.SubItems.Add(fItem);
             }
