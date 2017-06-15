@@ -45,7 +45,7 @@ namespace Idealde.Modules.CodeCompiler
             //config cl
             var cl = new Process
             {
-                StartInfo = new ProcessStartInfo
+                StartInfo = new ProcessStartInfo()
                 {
                     FileName = "cmd",
                     RedirectStandardOutput = true,
@@ -53,7 +53,7 @@ namespace Idealde.Modules.CodeCompiler
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     Arguments =
-                        $"/c {Settings.Default.VCVarSallPath} && cl /EHsc {tempFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\"
+                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {sourceFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\" 
                 },
                 EnableRaisingEvents = true
             };

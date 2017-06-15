@@ -13,6 +13,7 @@ namespace Idealde.Modules.CodeEditor
         void SetLexer(Lexer lexer);
         void SetContent(string text);
         void Goto(int row, int column);
+        void EditorFocus();
         string GetContent();
     }
 }

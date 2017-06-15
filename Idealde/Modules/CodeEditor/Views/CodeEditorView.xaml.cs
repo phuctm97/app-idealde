@@ -511,7 +511,7 @@ namespace Idealde.Modules.CodeEditor.Views
 
         #endregion
 
-        #region Scintilla event handler ( Display line number )
+        #region Scintilla event handler ( Display line number, line number effect by zoom )
 
         // OnTextChanged to display line number
         private int _maxRowCharLength;
@@ -552,6 +552,7 @@ namespace Idealde.Modules.CodeEditor.Views
         {
             ScintillaEditor.Lines[row].Goto();
             ScintillaEditor.GotoPosition(ScintillaEditor.CurrentPosition + column);
+            EditorFocus();
         }
 
         public void SetContent(string text)
@@ -562,6 +563,11 @@ namespace Idealde.Modules.CodeEditor.Views
         public string GetContent()
         {
             return ScintillaEditor.Text;
+        }
+
+        public void EditorFocus()
+        {
+            ScintillaEditor.Focus();
         }
         #endregion //behaviors
         

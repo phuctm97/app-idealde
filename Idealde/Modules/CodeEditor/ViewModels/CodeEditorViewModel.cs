@@ -137,6 +137,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         public void Goto(int row, int column)
         {
             _view.Goto(row, column);
+            _view.EditorFocus();
         }
 
         #endregion

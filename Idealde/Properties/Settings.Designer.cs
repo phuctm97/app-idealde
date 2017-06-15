@@ -25,7 +25,7 @@ namespace Idealde.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\app\\vs14\\VC\\vcvarsall.bat")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat")]
         public string VCVarSallPath {
             get {
                 return ((string)(this["VCVarSallPath"]));
