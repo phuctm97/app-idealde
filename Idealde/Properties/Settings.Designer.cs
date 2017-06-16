@@ -34,5 +34,29 @@ namespace Idealde.Properties {
                 this["VCVarSallPath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Nothing here")]
+        public string CompileOutputPath {
+            get {
+                return ((string)(this["CompileOutputPath"]));
+            }
+            set {
+                this["CompileOutputPath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/W1")]
+        public string CompileWarningLevel {
+            get {
+                return ((string)(this["CompileWarningLevel"]));
+            }
+            set {
+                this["CompileWarningLevel"] = value;
+            }
+        }
     }
 }

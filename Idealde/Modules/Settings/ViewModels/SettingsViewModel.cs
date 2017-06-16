@@ -7,6 +7,8 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
+using Idealde.Modules.Settings.Options.Compiler.ViewModels;
+using Idealde.Modules.Settings.Test.ViewModels;
 
 namespace Idealde.Modules.Settings.ViewModels
 {
@@ -31,6 +33,7 @@ namespace Idealde.Modules.Settings.ViewModels
             CancelCommand = new RelayCommand(o => TryClose(false));
             OkCommand = new RelayCommand(SaveChanges);
             DisplayName = "Settings";
+            _settingsEditors.Add(new CompilerSettingsViewModel());
         }
 
         #endregion
@@ -54,11 +57,13 @@ namespace Idealde.Modules.Settings.ViewModels
         public ICommand OkCommand { get; private set; }
         private void SaveChanges(object obj)
         {
+            var q = true;
             foreach (ISettingsEditor settingsEditor in _settingsEditors)
             {
-                settingsEditor.ApplyChanges();
+                var e = settingsEditor.ApplyChanges();
+                if (!e) q = false;
             }
-
+            if (q)
             TryClose(true);
         }
 

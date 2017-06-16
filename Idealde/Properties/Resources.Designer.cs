@@ -97,6 +97,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compiler.
+        /// </summary>
+        public static string CompilerSettingsName {
+            get {
+                return ResourceManager.GetString("CompilerSettingsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CompilerSettingsPath {
+            get {
+                return ResourceManager.GetString("CompilerSettingsPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compile Single Selected Item.
         /// </summary>
         public static string CompileSingleFileCommandText {

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
+using Idealde.Modules.Settings.ViewModels;
 using Idealde.Modules.SolutionExplorer.Models;
 
 namespace Idealde.Modules.SolutionExplorer.ViewModels
@@ -18,6 +19,13 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             RootPath = @"D:\A.System";
         }
 
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            //    IWindowManager manager = new WindowManager();
+            //    manager.ShowDialog(new SettingsViewModel(), null, null);
+            //
+        }
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
 
         // Root folder ( to update: one root to many roots )

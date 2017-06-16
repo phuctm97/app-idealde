@@ -307,4 +307,10 @@
   <data name="CompileSingleFileStartOutput" xml:space="preserve">
     <value>Compile single file start</value>
   </data>
+  <data name="CompilerSettingsName" xml:space="preserve">
+    <value>Compiler</value>
+  </data>
+  <data name="CompilerSettingsPath" xml:space="preserve">
+    <value />
+  </data>
 </root>

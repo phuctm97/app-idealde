@@ -5,5 +5,11 @@
     <Setting Name="VCVarSallPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat</Value>
     </Setting>
+    <Setting Name="CompileOutputPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Nothing here</Value>
+    </Setting>
+    <Setting Name="CompileWarningLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">/W1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

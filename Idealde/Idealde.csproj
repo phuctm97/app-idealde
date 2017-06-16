@@ -147,6 +147,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\Settings\Options\Compiler\Views\CompilerSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Settings\Test\Views\Test2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Modules\Settings\Test\Views\TestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Settings\Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -287,6 +299,19 @@
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Settings\ISettingsEditor.cs" />
+    <Compile Include="Modules\Settings\Options\Compiler\ViewModels\CompilerSettingsViewModel.cs" />
+    <Compile Include="Modules\Settings\Options\Compiler\ViewModels\WarningLevel.cs" />
+    <Compile Include="Modules\Settings\Options\Compiler\Views\CompilerSettingsView.xaml.cs">
+      <DependentUpon>CompilerSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Settings\Test\ViewModels\Test2ViewModel.cs" />
+    <Compile Include="Modules\Settings\Test\ViewModels\TestViewModel.cs" />
+    <Compile Include="Modules\Settings\Test\Views\Test2View.xaml.cs">
+      <DependentUpon>Test2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Modules\Settings\Test\Views\TestView.xaml.cs">
+      <DependentUpon>TestView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Settings\ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="Modules\Settings\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Modules\Settings\Views\SettingsView.xaml.cs">

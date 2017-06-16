@@ -5,6 +5,6 @@
         string SettingsPageName { get; }
         string SettingsPagePath { get; }
 
-        void ApplyChanges();
+        bool ApplyChanges();
     }
 }
