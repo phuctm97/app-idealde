@@ -7,19 +7,19 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
+using Idealde.Modules.Settings.Models;
 using Idealde.Modules.Settings.Options.Compiler.ViewModels;
-using Idealde.Modules.Settings.Test.ViewModels;
 
 namespace Idealde.Modules.Settings.ViewModels
 {
-    public class SettingsViewModel : Screen
+    public sealed class SettingsViewModel : Screen
     {
         // Backing field
 
         #region Backing field
 
         private readonly List<ISettingsEditor> _settingsEditors;
-        private SettingsPageViewModel _selectedPage;
+        private SettingsPage _selectedPage;
 
         #endregion
 
@@ -34,6 +34,34 @@ namespace Idealde.Modules.Settings.ViewModels
             OkCommand = new RelayCommand(SaveChanges);
             DisplayName = "Settings";
             _settingsEditors.Add(new CompilerSettingsViewModel());
+        }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            var pages = new List<SettingsPage>();
+
+            foreach (ISettingsEditor settingsEditor in _settingsEditors)
+            {
+                List<SettingsPage> parentCollection = GetParentCollection(settingsEditor, pages);
+
+                SettingsPage page =
+                    parentCollection.FirstOrDefault(m => m.Name == settingsEditor.SettingsPageName);
+
+                if (page == null)
+                {
+                    page = new SettingsPage
+                    {
+                        Name = settingsEditor.SettingsPageName,
+                    };
+                    parentCollection.Add(page);
+                }
+
+                page.Editors.Add(settingsEditor);
+            }
+
+            Pages = pages;
+            SelectedPage = GetFirstLeafPageRecursive(Pages);
         }
 
         #endregion
@@ -73,9 +101,9 @@ namespace Idealde.Modules.Settings.ViewModels
         // Properties
 
         #region Properties
-        public List<SettingsPageViewModel> Pages { get; private set; }
+        public List<SettingsPage> Pages { get; private set; }
 
-        public SettingsPageViewModel SelectedPage
+        public SettingsPage SelectedPage
         {
             get { return _selectedPage; }
             set
@@ -87,44 +115,12 @@ namespace Idealde.Modules.Settings.ViewModels
 
         #endregion
 
-        // Screen OnInitialize
-
-        #region OnInitialize
-        protected override void OnInitialize()
-        {
-            base.OnInitialize();
-            var pages = new List<SettingsPageViewModel>();
-
-            foreach (ISettingsEditor settingsEditor in _settingsEditors)
-            {
-                List<SettingsPageViewModel> parentCollection = GetParentCollection(settingsEditor, pages);
-
-                SettingsPageViewModel page =
-                    parentCollection.FirstOrDefault(m => m.Name == settingsEditor.SettingsPageName);
-
-                if (page == null)
-                {
-                    page = new SettingsPageViewModel
-                    {
-                        Name = settingsEditor.SettingsPageName,
-                    };
-                    parentCollection.Add(page);
-                }
-
-                page.Editors.Add(settingsEditor);
-            }
-
-            Pages = pages;
-            SelectedPage = GetFirstLeafPageRecursive(Pages);
-        }
-        #endregion
-
         // Initialize methods
 
         #region Initial & Add setting editor method
 
         // Get the first setting to view on view active
-        private static SettingsPageViewModel GetFirstLeafPageRecursive(List<SettingsPageViewModel> pages)
+        private static SettingsPage GetFirstLeafPageRecursive(List<SettingsPage> pages)
         {
             if (!pages.Any())
                 return null;
@@ -137,8 +133,8 @@ namespace Idealde.Modules.Settings.ViewModels
         }
 
         // Get parents setting of settingsEditor
-        private List<SettingsPageViewModel> GetParentCollection(ISettingsEditor settingsEditor,
-            List<SettingsPageViewModel> pages)
+        private List<SettingsPage> GetParentCollection(ISettingsEditor settingsEditor,
+            List<SettingsPage> pages)
         {
             if (string.IsNullOrEmpty(settingsEditor.SettingsPagePath))
             {
@@ -149,11 +145,11 @@ namespace Idealde.Modules.Settings.ViewModels
 
             foreach (string pathElement in path)
             {
-                SettingsPageViewModel page = pages.FirstOrDefault(s => s.Name == pathElement);
+                SettingsPage page = pages.FirstOrDefault(s => s.Name == pathElement);
 
                 if (page == null)
                 {
-                    page = new SettingsPageViewModel { Name = pathElement };
+                    page = new SettingsPage { Name = pathElement };
                     pages.Add(page);
                 }
 

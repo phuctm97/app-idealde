@@ -151,14 +151,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\Settings\Test\Views\Test2View.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Modules\Settings\Test\Views\TestView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Modules\Settings\Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,7 +204,6 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Framework\Behaviors\BindableTreeViewSelectedItemBehavior.cs" />
     <Compile Include="Framework\Behaviors\KeyboardFocusBehavior.cs" />
-    <Compile Include="Framework\Behaviors\WindowOptionsBehavior.cs" />
     <Compile Include="Framework\Commands\Command.cs" />
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
     <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
@@ -242,7 +233,6 @@
     <Compile Include="Framework\Themes\ITheme.cs" />
     <Compile Include="Framework\Themes\IThemeManager.cs" />
     <Compile Include="Framework\Themes\ThemeManager.cs" />
-    <Compile Include="Framework\Win32\NativeMethods.cs" />
     <Compile Include="Modules\CodeCompiler\CodeCompiler.cs" />
     <Compile Include="Modules\CodeCompiler\Commands\CompileAndRunSingleFileCommandDefinition.cs" />
     <Compile Include="Modules\CodeCompiler\Commands\CompileSingleFileCommandDefinition.cs" />
@@ -304,15 +294,7 @@
     <Compile Include="Modules\Settings\Options\Compiler\Views\CompilerSettingsView.xaml.cs">
       <DependentUpon>CompilerSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\Settings\Test\ViewModels\Test2ViewModel.cs" />
-    <Compile Include="Modules\Settings\Test\ViewModels\TestViewModel.cs" />
-    <Compile Include="Modules\Settings\Test\Views\Test2View.xaml.cs">
-      <DependentUpon>Test2View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Settings\Test\Views\TestView.xaml.cs">
-      <DependentUpon>TestView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Modules\Settings\ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="Modules\Settings\Models\SettingsPage.cs" />
     <Compile Include="Modules\Settings\ViewModels\SettingsViewModel.cs" />
     <Compile Include="Modules\Settings\Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -393,6 +375,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Framework\Menus\" />
+    <Folder Include="Framework\Win32\" />
     <Folder Include="Modules\MainMenu\Commands\" />
   </ItemGroup>
   <ItemGroup>
