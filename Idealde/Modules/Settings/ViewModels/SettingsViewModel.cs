@@ -18,14 +18,13 @@ namespace Idealde.Modules.Settings.ViewModels
 
         #region Backing fields
 
-        // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly List<ISettingsEditor> _settingsEditors;
+        private IEnumerable<ISettingsEditor> _settingsEditors;
         private SettingsPage _selectedPage;
 
         #endregion
 
         // Bind models
-
+        
         #region Bind models
 
         public IObservableCollection<SettingsPage> Pages { get; }
@@ -68,6 +67,7 @@ namespace Idealde.Modules.Settings.ViewModels
         protected override void OnInitialize()
         {
             Pages.Clear();
+            _settingsEditors = IoC.GetAll<ISettingsEditor>();
 
             foreach (var settingsEditor in _settingsEditors)
             {
