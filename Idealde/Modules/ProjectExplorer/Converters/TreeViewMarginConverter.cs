@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using MahApps.Metro.Converters;
 
-namespace Idealde.Modules.SolutionExplorer.Converters
+namespace Idealde.Modules.ProjectExplorer.Converters
 {
     public class TreeViewMarginConverter : IValueConverter
     {

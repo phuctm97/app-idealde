@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Idealde.Modules.SolutionExplorer.Views
+namespace Idealde.Modules.ProjectExplorer.Views
 {
     /// <summary>
     /// Interaction logic for SolutionExplorerView.xaml
     /// </summary>
-    public partial class SolutionExplorerView : UserControl, ISolutionExplorerView
+    public partial class ProjectExplorerView : UserControl, IProjectExplorerView
     {
-        public SolutionExplorerView()
+        public ProjectExplorerView()
         {
             InitializeComponent();
         }

@@ -1,18 +1,21 @@
-﻿using System.IO;
+﻿#region Using Namespace
+
+using System.IO;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
-using Idealde.Modules.Settings.ViewModels;
-using Idealde.Modules.SolutionExplorer.Models;
+using Idealde.Modules.ProjectExplorer.Models;
 
-namespace Idealde.Modules.SolutionExplorer.ViewModels
+#endregion
+
+namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class SolutionExplorerViewModel : Tool, ISolutionExplorer
+    public class ProjectExplorerViewModel : Tool, IProjectExplorer
     {
         public override PaneLocation PreferredLocation => PaneLocation.Right;
 
         private string _rootPath;
 
-        public SolutionExplorerViewModel()
+        public ProjectExplorerViewModel()
         {
             DisplayName = "Solution Explorer";
             RootFolder = new BindableCollection<TreeViewItemModel>();
@@ -26,8 +29,8 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             //// Test settings window
             //IWindowManager manager = new WindowManager();
             //manager.ShowDialog(new SettingsViewModel(), null, null);
-
         }
+
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
 
         // Root folder ( to update: one root to many roots )
@@ -36,7 +39,7 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
             get { return _rootPath; }
             set
             {
-                if ((_rootPath == string.Empty && _rootPath == null) || !Directory.Exists(_rootPath)) return;
+                if (_rootPath == string.Empty && _rootPath == null || !Directory.Exists(_rootPath)) return;
                 if (Equals(_rootPath, value)) return;
                 _rootPath = value;
                 RootFolder.Clear();

@@ -21,8 +21,8 @@ using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
-using Idealde.Modules.SolutionExplorer;
-using Idealde.Modules.SolutionExplorer.ViewModels;
+using Idealde.Modules.ProjectExplorer;
+using Idealde.Modules.ProjectExplorer.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBarTray;
@@ -130,7 +130,7 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
 
             //solution explorer
-            _container.RegisterType<ISolutionExplorer, SolutionExplorerViewModel>(
+            _container.RegisterType<IProjectExplorer, ProjectExplorerViewModel>(
                 new ContainerControlledLifetimeManager());
 
             //undo redo

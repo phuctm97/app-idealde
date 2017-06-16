@@ -1,7 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
 
-namespace Idealde.Modules.SolutionExplorer.Models
+namespace Idealde.Modules.ProjectExplorer.Models
 {
     public enum DirType
     {
