@@ -2,12 +2,72 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Idealde.Modules.Settings.Views"
+        xmlns:behavior="clr-namespace:Idealde.Framework.Behaviors"
+        xmlns:cal="http://www.caliburnproject.org"
         Width="760" Height="500" MinWidth="512" MinHeight="300"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"
         Background="{x:Static SystemColors.ControlBrush}">
-    <Grid />
+    <i:Interaction.Behaviors>
+        <behavior:WindowOptionsBehavior ShowIcon="False"
+                                        ShowMaximizeBox="False"
+                                        ShowMinimizeBox="False"/>
+    </i:Interaction.Behaviors>
+    <Grid Margin="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="12"/>
+            <ColumnDefinition Width="*" MinWidth="230"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TreeView Grid.Row="0" Grid.Column="0" x:Name="TreeView"
+                  ItemsSource="{Binding Pages}" SelectedValuePath="Editors" 
+                  Background="Transparent">
+            <i:Interaction.Behaviors>
+                <behavior:BindableTreeViewSelectedItemBehavior SelectedItem="{Binding SelectedPage, Mode=TwoWay}"/>
+            </i:Interaction.Behaviors>
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
+        <Grid Grid.Row="0" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>    
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <ItemsControl HorizontalContentAlignment="Stretch"
+                              ItemsSource="{Binding ElementName=TreeView, Path=SelectedValue}"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              BorderBrush="{x:Null}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ContentControl cal:View.Model="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer> 
+            
+            <Rectangle Grid.Row="1" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}" VerticalAlignment="Bottom"></Rectangle>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="2" Margin="0 12 0 0" HorizontalAlignment="Right"
+              IsSharedSizeScope="True">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="WindowButtons" />
+                <ColumnDefinition SharedSizeGroup="WindowButtons" />
+            </Grid.ColumnDefinitions>
+
+            <Button Margin="12 0 0 0" Padding="4" Grid.Column="0" IsDefault="True" Command="{Binding OkCommand}">OK</Button>
+            <Button Margin="12 0 0 0" Padding="4" Grid.Column="1" IsCancel="True" MinWidth="80" Command="{Binding CancelCommand}">Cancel</Button>
+        </Grid>
+    </Grid>
 </Window>
