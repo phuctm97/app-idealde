@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
+using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.CodeEditor;
@@ -129,7 +130,9 @@ namespace Idealde
                 ViewErrorListCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
-            //solution explorer
+            //project explorer
+            _container.RegisterType<IProjectController, ProjectController>(
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<IProjectExplorer, ProjectExplorerViewModel>(
                 new ContainerControlledLifetimeManager());
 
