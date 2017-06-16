@@ -375,7 +375,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Framework\Menus\" />
-    <Folder Include="Framework\Win32\" />
     <Folder Include="Modules\MainMenu\Commands\" />
   </ItemGroup>
   <ItemGroup>

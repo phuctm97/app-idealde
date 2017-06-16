@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Modules.Settings.Models;
-using Idealde.Modules.Settings.Options.Compiler.ViewModels;
 
 #endregion
 
@@ -19,6 +18,7 @@ namespace Idealde.Modules.Settings.ViewModels
 
         #region Backing fields
 
+        // ReSharper disable once CollectionNeverUpdated.Local
         private readonly List<ISettingsEditor> _settingsEditors;
         private SettingsPage _selectedPage;
 
@@ -28,7 +28,7 @@ namespace Idealde.Modules.Settings.ViewModels
 
         #region Bind models
 
-        public List<SettingsPage> Pages { get; private set; }
+        public IObservableCollection<SettingsPage> Pages { get; }
 
         public SettingsPage SelectedPage
         {
@@ -45,9 +45,11 @@ namespace Idealde.Modules.Settings.ViewModels
         // Bind properties
 
         #region Bind properties
+
         public ICommand CancelCommand { get; }
 
-        public ICommand OkCommand { get; } 
+        public ICommand OkCommand { get; }
+
         #endregion
 
         // Initializations
@@ -57,22 +59,22 @@ namespace Idealde.Modules.Settings.ViewModels
         public SettingsViewModel()
         {
             _settingsEditors = new List<ISettingsEditor>();
+            OkCommand = new RelayCommand(p => SaveChanges());
             CancelCommand = new RelayCommand(p => TryClose(false));
-            OkCommand = new RelayCommand(SaveChanges);
+            Pages = new BindableCollection<SettingsPage>();
             DisplayName = "Settings";
         }
 
         protected override void OnInitialize()
         {
-            base.OnInitialize();
-            var pages = new List<SettingsPage>();
+            Pages.Clear();
 
             foreach (var settingsEditor in _settingsEditors)
             {
-                var parentCollection = GetParentCollection(settingsEditor, pages);
+                var parentPageCollection = GenerateAndGetParentPages(settingsEditor, Pages);
 
                 var page =
-                    parentCollection.FirstOrDefault(m => m.Name == settingsEditor.SettingsPageName);
+                    parentPageCollection.FirstOrDefault(m => m.Name == settingsEditor.SettingsPageName);
 
                 if (page == null)
                 {
@@ -80,45 +82,49 @@ namespace Idealde.Modules.Settings.ViewModels
                     {
                         Name = settingsEditor.SettingsPageName
                     };
-                    parentCollection.Add(page);
+                    parentPageCollection.Add(page);
                 }
 
                 page.Editors.Add(settingsEditor);
             }
 
-            Pages = pages;
-            SelectedPage = GetFirstLeafPageRecursive(Pages);
+            SelectedPage = GetFirstLeafPage(Pages);
+
+            base.OnInitialize();
         }
 
-        private SettingsPage GetFirstLeafPageRecursive(List<SettingsPage> pages)
+        private SettingsPage GetFirstLeafPage(ICollection<SettingsPage> pages)
         {
-            if (!pages.Any())
-                return null;
+            while (true)
+            {
+                if (!pages.Any())
+                    return null;
 
-            var firstPage = pages.First();
-            if (!firstPage.Children.Any())
-                return firstPage;
+                var firstPage = pages.First();
+                if (!firstPage.Children.Any())
+                    return firstPage;
 
-            return GetFirstLeafPageRecursive(firstPage.Children);
+                pages = firstPage.Children;
+            }
         }
 
-        private List<SettingsPage> GetParentCollection(ISettingsEditor settingsEditor,
-            List<SettingsPage> pages)
+        private ICollection<SettingsPage> GenerateAndGetParentPages(ISettingsEditor editor,
+            ICollection<SettingsPage> pages)
         {
-            if (string.IsNullOrEmpty(settingsEditor.SettingsPagePath))
+            if (string.IsNullOrEmpty(editor.SettingsPagePath))
             {
                 return pages;
             }
 
-            var path = settingsEditor.SettingsPagePath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
+            var parentPageNames = editor.SettingsPagePath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
 
-            foreach (var pathElement in path)
+            foreach (var pageName in parentPageNames)
             {
-                var page = pages.FirstOrDefault(s => s.Name == pathElement);
+                var page = pages.FirstOrDefault(s => s.Name == pageName);
 
                 if (page == null)
                 {
-                    page = new SettingsPage {Name = pathElement};
+                    page = new SettingsPage {Name = pageName};
                     pages.Add(page);
                 }
 
@@ -132,9 +138,9 @@ namespace Idealde.Modules.Settings.ViewModels
 
         // Behaviors
 
-        #region Methods
+        #region Behaviors
 
-        private void SaveChanges(object obj)
+        private void SaveChanges()
         {
             var q = true;
             foreach (var settingsEditor in _settingsEditors)
