@@ -22,14 +22,6 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             RootPath = @"D:\A.System";
         }
 
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-
-            //// Test settings window
-            //IWindowManager manager = new WindowManager();
-            //manager.ShowDialog(new SettingsViewModel(), null, null);
-        }
 
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
 
@@ -78,5 +70,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 tItem.SubItems.Add(fItem);
             }
         }
+
+        public IObservableCollection<ProjectItemBase> Items { get; }
     }
 }
