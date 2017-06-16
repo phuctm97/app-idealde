@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Modules.Settings.Models;
-using Idealde.Modules.Settings.Options.Compiler.ViewModels;
 
 #endregion
 
@@ -19,13 +18,13 @@ namespace Idealde.Modules.Settings.ViewModels
 
         #region Backing fields
 
-        private readonly List<ISettingsEditor> _settingsEditors;
+        private IEnumerable<ISettingsEditor> _settingsEditors;
         private SettingsPage _selectedPage;
 
         #endregion
 
         // Bind models
-
+        
         #region Bind models
 
         public List<SettingsPage> Pages { get; private set; }
@@ -66,6 +65,7 @@ namespace Idealde.Modules.Settings.ViewModels
         {
             base.OnInitialize();
             var pages = new List<SettingsPage>();
+            _settingsEditors = IoC.GetAll<ISettingsEditor>();
 
             foreach (var settingsEditor in _settingsEditors)
             {

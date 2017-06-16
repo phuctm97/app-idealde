@@ -22,8 +22,10 @@ namespace Idealde.Modules.SolutionExplorer.ViewModels
         protected override void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
-            IWindowManager manager = new WindowManager();
-            manager.ShowDialog(new SettingsViewModel(), null, null);
+
+            //// Test settings window
+            //IWindowManager manager = new WindowManager();
+            //manager.ShowDialog(new SettingsViewModel(), null, null);
 
         }
         public IObservableCollection<TreeViewItemModel> RootFolder { get; set; }
