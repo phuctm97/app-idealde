@@ -57,7 +57,6 @@ namespace Idealde.Modules.Settings.ViewModels
 
         public SettingsViewModel()
         {
-            _settingsEditors = new List<ISettingsEditor>();
             OkCommand = new RelayCommand(p => SaveChanges());
             CancelCommand = new RelayCommand(p => TryClose(false));
             Pages = new BindableCollection<SettingsPage>();

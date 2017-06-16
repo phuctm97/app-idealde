@@ -1,17 +1,59 @@
-﻿using System.Collections.Generic;
+﻿#region Using Namespace
+
+using Caliburn.Micro;
+
+#endregion
 
 namespace Idealde.Modules.Settings.Models
 {
-    public class SettingsPage
+    public class SettingsPage : PropertyChangedBase
     {
+        // Backing fields
+
+        #region Backing fields
+
+        private string _name;
+
+        #endregion
+
+        // Initializations
+
+        #region Initializations
+
         public SettingsPage()
         {
-            Children = new List<SettingsPage>();
-            Editors = new List<ISettingsEditor>();
+            Children = new BindableCollection<SettingsPage>();
+
+            Editors = new BindableCollection<ISettingsEditor>();
         }
 
-        public string Name { get; set; }
-        public List<ISettingsEditor> Editors { get; private set; }
-        public List<SettingsPage> Children { get; private set; }
+        #endregion
+
+        // Bind properties
+
+        #region Bind properties
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (value == _name) return;
+                _name = value;
+                NotifyOfPropertyChange(() => Name);
+            }
+        }
+
+        #endregion
+
+        // Bind models
+
+        #region Bind models
+
+        public IObservableCollection<ISettingsEditor> Editors { get; }
+
+        public IObservableCollection<SettingsPage> Children { get; }
+
+        #endregion
     }
 }
