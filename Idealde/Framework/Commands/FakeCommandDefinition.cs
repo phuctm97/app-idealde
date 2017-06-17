@@ -1,6 +1,6 @@
 ﻿using Idealde.Framework.Commands;
 
-namespace Idealde.Modules.ProjectExplorer.Commands
+namespace Idealde.Framework.Commands
 {
     public class FakeCommandDefinition : CommandDefinition
     {

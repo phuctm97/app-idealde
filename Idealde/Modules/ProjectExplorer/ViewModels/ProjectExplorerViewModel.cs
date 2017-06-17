@@ -1,10 +1,11 @@
 ﻿#region Using Namespace
 
+using System;
 using System.Linq;
 using Caliburn.Micro;
+using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
 using Idealde.Modules.MainMenu.Models;
-using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Models;
 
 #endregion
@@ -32,6 +33,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         public void PopulateMenu(ProjectItemBase item)
         {
+            if (item == null) return;
+
             MenuItems.Clear();
 
             MenuItemBase parentMenuItem = null;
@@ -43,8 +46,13 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 // fake command definition
                 if (command.CommandDefinition is FakeCommandDefinition)
                 {
+                    // reset parent
+                    if (string.IsNullOrEmpty(command.CommandDefinition.Name))
+                    {
+                        parentMenuItem = null;
+                    }
                     // fake to add separator
-                    if (command.CommandDefinition.Name == "|")
+                    else if (command.CommandDefinition.Name == "|")
                     {
                         newMenuItem = new MenuItemSeparator(string.Empty);
                     }
@@ -53,24 +61,33 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                     {
                         // extract ancestors
                         var parentNames = command.CommandDefinition.Name.Trim().Split(new[] {'|'},
-                            System.StringSplitOptions.RemoveEmptyEntries);
+                            StringSplitOptions.RemoveEmptyEntries);
 
                         // find parent
-                        if (parentNames.Length > 0)
+                        if (parentNames.Length == 0)
                         {
-                            var parentToFind = MenuItems.FirstOrDefault(p => p.Name == parentNames.First());
+                            parentMenuItem = null;
+                        }
+                        else
+                        {
+                            parentMenuItem = MenuItems.FirstOrDefault(p => p.Name == parentNames.First());
+                            if (parentMenuItem == null)
+                            {
+                                parentMenuItem = new DisplayMenuItem(parentNames.First(), parentNames.First());
+                                MenuItems.Add(parentMenuItem);
+                            }
+
                             for (var i = 1; i < parentNames.Length; i++)
                             {
-                                if (parentToFind == null) break;
-                                parentToFind = parentToFind.Children.FirstOrDefault(p => p.Name == parentNames[i]);
+                                var nextMenuItem = parentMenuItem.Children.FirstOrDefault(p => p.Name == parentNames[i]);
+                                if (nextMenuItem == null)
+                                {
+                                    nextMenuItem = new DisplayMenuItem(parentNames[i], parentNames[i]);
+                                    parentMenuItem.Children.Add(nextMenuItem);
+                                }
+                                parentMenuItem = nextMenuItem;
                             }
-                            if (parentToFind != null) parentMenuItem = parentToFind;
                         }
-                    }
-                    // fake to add display item
-                    else
-                    {
-                        newMenuItem = new DisplayMenuItem(command.CommandDefinition.Name, command.Text);
                     }
                 }
 

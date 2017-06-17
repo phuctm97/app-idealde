@@ -38,6 +38,7 @@ namespace Idealde.Framework.Commands
         // Features
 
         #region Features
+
         public TargatableCommand GetTargetableCommand(Command command)
         {
             TargatableCommand targetableCommand = null;
@@ -59,7 +60,7 @@ namespace Idealde.Framework.Commands
             if (!_commandDefinitionsLookup.TryGetValue(commandDefinitionType, out commandDefinition))
             {
                 // create a new one and hash to table
-                commandDefinition = (CommandDefinition)IoC.GetInstance(commandDefinitionType, string.Empty);
+                commandDefinition = (CommandDefinition) IoC.GetInstance(commandDefinitionType, string.Empty);
                 _commandDefinitionsLookup.Add(commandDefinitionType, commandDefinition);
             }
             return commandDefinition;
@@ -67,6 +68,11 @@ namespace Idealde.Framework.Commands
 
         public Command GetCommand(CommandDefinition commandDefinition)
         {
+            if (commandDefinition is FakeCommandDefinition)
+            {
+                return new Command(commandDefinition);
+            }
+
             Command command = null;
             // try look up in stored hash table
             if (!_commandsLookup.TryGetValue(commandDefinition, out command))
@@ -77,7 +83,8 @@ namespace Idealde.Framework.Commands
             }
 
             return command;
-        } 
+        }
+
         #endregion
     }
 }
