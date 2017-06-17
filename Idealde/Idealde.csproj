@@ -291,6 +291,7 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ProjectExplorer\Commands\FakeCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FileProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FolderProjectItemDefinition.cs" />
@@ -383,7 +384,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\MainMenu\Commands\" />
-    <Folder Include="Modules\ProjectExplorer\Commands\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Output.png" />
