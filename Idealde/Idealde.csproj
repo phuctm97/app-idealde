@@ -222,6 +222,7 @@
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\PersistedDocument.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
+    <Compile Include="Framework\Projects\FileInfo.cs" />
     <Compile Include="Framework\Projects\IProjectController.cs" />
     <Compile Include="Framework\Projects\ProjectController.cs" />
     <Compile Include="Framework\Services\IEditorProvider.cs" />
