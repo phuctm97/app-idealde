@@ -82,7 +82,11 @@ namespace Idealde.Modules.ProjectExplorer.Models
             var shell = IoC.Get<IShell>();
 
             var filePath = ((ProjectItemBase)projectItem).Tag as string;
-            if (!File.Exists(filePath)) MessageBox.Show("File not exists in current project");
+            if (!File.Exists(filePath))
+            { 
+                MessageBox.Show("File not exists in current project");
+                return;
+            }
 
             editor.Load(filePath);
 

@@ -6,17 +6,69 @@
              xmlns:converter="clr-namespace:Idealde.Modules.ProjectExplorer.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <!-- Mahapps resources -->
     <UserControl.Resources>
         <ResourceDictionary>
-            <converter:TreeViewMarginConverter x:Key="LengthConverter" Length="12"/>
-            <converter:NullableValueConverter x:Key="NullableValueConverter"/>
-            <Image x:Key="ProjectItemIcon" HorizontalAlignment="Center" VerticalAlignment="Center" x:Shared="false" 
+            <converter:TreeViewMarginConverter x:Key="LengthConverter" Length="12" />
+            <converter:NullableValueConverter x:Key="NullableValueConverter" />
+            <Image x:Key="ProjectItemIcon" HorizontalAlignment="Center" VerticalAlignment="Center" x:Shared="false"
                    Source="{Binding IconSource, Converter={StaticResource NullableValueConverter}}" />
+            <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z" />
+            <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="Height" Value="16" />
+                <Setter Property="Margin" Value="1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Grid Width="16"
+                                  Height="16"
+                                  Margin="{TemplateBinding Margin}"
+                                  Background="Transparent">
+                                <Path x:Name="ExpandPath"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Data="{DynamicResource TreeArrow}"
+                                      Fill="Transparent"
+                                      Stroke="{DynamicResource BlackBrush}">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="135" CenterX="3" CenterY="3" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource GrayBrush1}" />
+                                    <Setter TargetName="ExpandPath" Property="RenderTransform">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="180" CenterX="3" CenterY="3" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource BlackBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource GrayBrush5}" />
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsEnabled" Value="False" />
+                                        <Condition Property="IsChecked" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                    <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource GrayBrush5}" />
+                                </MultiTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ExpandPath" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                                    <Setter TargetName="ExpandPath" Property="Stroke" Value="{DynamicResource AccentColorBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Width" Value="16" />
+            </Style>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary
@@ -24,18 +76,19 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
+
     <!-- Folder treeview -->
-    <TreeView ItemsSource="{Binding Items}" Style="{DynamicResource MetroTreeView}">
+    <TreeView ItemsSource="{Binding Items}">
         <TreeView.Resources>
             <!-- TreeViewItem styles -->
             <Style TargetType="{x:Type TreeViewItem}">
                 <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />
-                <Setter Property="IsExpanded" Value="{Binding IsOpen, Mode=TwoWay}"/>
+                <Setter Property="IsExpanded" Value="{Binding IsOpen, Mode=TwoWay}" />
                 <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="{Binding HorizontalContentAlignment, Mode=OneWay, FallbackValue=Stretch, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                 <Setter Property="MinHeight" Value="25" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
                 <Setter Property="Template">
@@ -50,9 +103,10 @@
                                         BorderThickness="{TemplateBinding BorderThickness}"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                         UseLayoutRounding="True">
-                                    <Grid Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
-                                          VerticalAlignment="Stretch"
-                                          Background="Transparent">
+                                    <Grid
+                                        Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
+                                        VerticalAlignment="Stretch"
+                                        Background="Transparent">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" MinWidth="19" />
                                             <ColumnDefinition Width="*" />
@@ -60,8 +114,7 @@
                                         <ToggleButton x:Name="Expander"
                                                       ClickMode="Press"
                                                       IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
-                                                      Style="{DynamicResource ExpandCollapseToggleStyle}" >
-                                        </ToggleButton>
+                                                      Style="{DynamicResource ExpandCollapseToggleStyle}" />
                                         <ContentPresenter x:Name="PART_Header"
                                                           Grid.Column="1"
                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -70,7 +123,8 @@
                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     </Grid>
                                 </Border>
-                                <ItemsPresenter x:Name="ItemsHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <ItemsPresenter x:Name="ItemsHost"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </StackPanel>
                             <ControlTemplate.Triggers>
 
@@ -84,11 +138,13 @@
 
                                 <Trigger SourceName="Bd" Property="IsMouseOver" Value="True">
                                     <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}" />
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush3}" />
+                                    <Setter TargetName="Bd" Property="Background"
+                                            Value="{DynamicResource AccentColorBrush3}" />
                                 </Trigger>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                                    <Setter TargetName="Bd" Property="Background"
+                                            Value="{DynamicResource AccentColorBrush}" />
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
@@ -99,8 +155,10 @@
                                         <Condition Property="IsSelected" Value="True" />
                                     </MultiTrigger.Conditions>
                                     <MultiTrigger.Setters>
-                                        <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
-                                        <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                        <Setter TargetName="Bd" Property="Background"
+                                                Value="{DynamicResource GrayBrush7}" />
+                                        <Setter Property="Foreground"
+                                                Value="{DynamicResource AccentSelectedColorBrush}" />
                                     </MultiTrigger.Setters>
                                 </MultiTrigger>
                                 <MultiTrigger>
@@ -108,32 +166,27 @@
                                         <Condition Property="IsSelected" Value="True" />
                                         <Condition Property="Selector.IsSelectionActive" Value="True" />
                                     </MultiTrigger.Conditions>
-                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush2}" />
+                                    <Setter TargetName="Bd" Property="Background"
+                                            Value="{DynamicResource AccentColorBrush2}" />
                                 </MultiTrigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Center, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                <Style.Triggers>
-                    <Trigger Property="VirtualizingStackPanel.IsVirtualizing" Value="True">
-                        <Setter Property="ItemsPanel">
-                            <Setter.Value>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Trigger>
-                </Style.Triggers>
+                <Setter Property="VerticalContentAlignment"
+                        Value="{Binding VerticalContentAlignment, Mode=OneWay, FallbackValue=Center, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
             </Style>
         </TreeView.Resources>
+        <TreeView.ContextMenu>
+            <ContextMenu>
+            </ContextMenu>
+        </TreeView.ContextMenu>
         <!-- Item template -->
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                 <StackPanel Orientation="Horizontal">
                     <ContentControl Width="20" Height="20" Content="{StaticResource ProjectItemIcon}" />
-                    <TextBlock Text="{Binding Text}"/>
+                    <TextBlock Text="{Binding Text}" />
                 </StackPanel>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>

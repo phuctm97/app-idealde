@@ -52,7 +52,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
             get { return _isOpen; }
             set
             {
-                if (value == _isOpen) return;
+                if (value == _isOpen || Children.Count==0) return;
                 _isOpen = value;
                 NotifyOfPropertyChange(() => IsOpen);
                 NotifyOfPropertyChange(() => IconSource);
