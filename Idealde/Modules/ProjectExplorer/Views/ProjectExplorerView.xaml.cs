@@ -25,5 +25,8 @@ namespace Idealde.Modules.ProjectExplorer.Views
             projectItem.ActiveCommand.Execute(projectItem);
         }
 
+        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+        }
     }
 }

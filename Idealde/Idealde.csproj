@@ -327,7 +327,6 @@
     <Compile Include="Modules\ProjectExplorer\Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\IProjectExplorer.cs" />
     <Compile Include="Modules\ProjectExplorer\IProjectExplorerView.cs" />
-    <Compile Include="Modules\ProjectExplorer\Models\TreeViewItemModel.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectExplorerViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\Views\ProjectExplorerView.xaml.cs">
       <DependentUpon>ProjectExplorerView.xaml</DependentUpon>
