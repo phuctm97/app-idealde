@@ -149,12 +149,13 @@
     </UserControl.Resources>
 
     <!-- Project items treeview -->
-    <TreeView ItemsSource="{Binding Items}" ContextMenuOpening="OnContextMenuOpening">
+    <TreeView ItemsSource="{Binding Items}" x:Name="ProjectTree">
         
         <!-- TreeView resources -->
         <TreeView.Resources>
             <Style TargetType="{x:Type TreeViewItem}">
                 <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />
+                <EventSetter Event="MouseRightButtonDown" Handler="OnMouseRightButtonDown"/>
                 <Setter Property="IsExpanded" Value="{Binding IsOpen, Mode=TwoWay}" />
                 <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -299,7 +300,7 @@
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="ContextMenuOpening">
                 <cal:ActionMessage MethodName="PopulateMenu">
-                    <cal:Parameter Value="{Binding SelectedItem}"/>
+                    <cal:Parameter Value="{Binding ElementName=ProjectTree, Path=SelectedItem}" />
                 </cal:ActionMessage>
             </i:EventTrigger>
         </i:Interaction.Triggers>

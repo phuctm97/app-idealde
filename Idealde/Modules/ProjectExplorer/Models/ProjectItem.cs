@@ -30,9 +30,10 @@ namespace Idealde.Modules.ProjectExplorer.Models
         {
             get
             {
-                return
-                    ProjectItemDefintion.CommandDefinitions.Select(
-                        commandDefinition => _commandService.GetCommand(commandDefinition));
+                foreach (var commandDefinition in ProjectItemDefintion.CommandDefinitions)
+                {
+                    yield return _commandService.GetCommand(commandDefinition);
+                }
             }
         }
 

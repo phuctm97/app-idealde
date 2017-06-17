@@ -21,11 +21,6 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         {
             DisplayName = "Solution Explorer";
             Items = new BindableCollection<ProjectItemBase>();
-
-            MenuItems = new BindableCollection<MenuItemBase>
-            {
-                new DisplayMenuItem("OpenMenu", "Open")
-            };
         }
 
 

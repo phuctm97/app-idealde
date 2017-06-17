@@ -25,8 +25,10 @@ namespace Idealde.Modules.ProjectExplorer.Views
             projectItem.ActiveCommand.Execute(projectItem);
         }
 
-        private void OnContextMenuOpening(object sender, ContextMenuEventArgs e)
+        private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var item = sender as TreeViewItem;
+            item?.Focus();
         }
     }
 }
