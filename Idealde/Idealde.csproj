@@ -147,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Settings\Options\Compiler\Views\CompilerSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -294,6 +298,10 @@
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectSettingsViewModel.cs" />
+    <Compile Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml.cs">
+      <DependentUpon>ProjectSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Settings\ISettingsEditor.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\CompilerSettingsViewModel.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\WarningLevel.cs" />

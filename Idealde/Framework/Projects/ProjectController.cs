@@ -13,10 +13,10 @@ namespace Idealde.Framework.ProjectExplorer.Models
     public class ProjectController : IProjectController
     {
         private readonly Dictionary<Type, ProjectItemDefinition> _projectItemTypeToDefinitionLookup;
-        public List<FileInfo> Files { get; }
-        public List<string> Folders { get; }
-        public List<string> LibraryFiles { get; }
-        public List<string> OutputType { get; }
+        public List<FileInfo> Files { get;set;}
+        public List<string> Folders { get; set; }
+        public List<string> LibraryFiles { get; set; }
+        public List<string> OutputType { get; set; }
 
         public ProjectController()
         {
@@ -49,17 +49,17 @@ namespace Idealde.Framework.ProjectExplorer.Models
                     file.Element("MemoryAddress")?.Value));
             }
 
-            foreach (var folder in projectFile.Descendants("FolderGroup"))
+            foreach (var folder in projectFile.Descendants("FolderItem"))
             {
                 Folders.Add(folder.Value);
             }
 
-            foreach (var libFile in projectFile.Descendants("LibraryFileGroup"))
+            foreach (var libFile in projectFile.Descendants("LibFileItem"))
             {
                 LibraryFiles.Add(libFile.Value);
             }
 
-            foreach (var outputType in projectFile.Descendants("OutputGroup"))
+            foreach (var outputType in projectFile.Descendants("OutputItem"))
             {
                 OutputType.Add(outputType.Value);
             }
@@ -92,12 +92,12 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
             foreach (var libraryFile in LibraryFiles)
             {
-                projectFile.Root?.Element("LibraryFileGroup")?.Add(new XElement("FolderItem", libraryFile));
+                projectFile.Root?.Element("LibraryFileGroup")?.Add(new XElement("LibFileItem", libraryFile));
             }
 
             foreach (var outputType in OutputType)
             {
-                projectFile.Root?.Element("OutputGroup")?.Add(new XElement("FolderItem", outputType));
+                projectFile.Root?.Element("OutputGroup")?.Add(new XElement("OutputItem", outputType));
             }
 
             projectFile.Save(path);

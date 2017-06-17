@@ -1,4 +1,6 @@
-﻿namespace Idealde.Modules.Settings
+﻿using Caliburn.Micro;
+
+namespace Idealde.Modules.Settings
 {
     public interface ISettingsEditor
     {

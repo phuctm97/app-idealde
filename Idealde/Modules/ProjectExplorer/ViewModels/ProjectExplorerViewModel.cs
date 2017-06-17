@@ -78,5 +78,10 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 tItem.SubItems.Add(fItem);
             }
         }
+
+        public IObservableCollection < ProjectItemBase > Items
+        {
+            get;
+        }
     }
 }
