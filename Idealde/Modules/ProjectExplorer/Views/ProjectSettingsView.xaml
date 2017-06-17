@@ -18,6 +18,8 @@
                            Width="100" />
                     <TextBox x:Name="txtFoldersInclude"
                              AcceptsReturn="True"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Auto"
                              Height="80"
                              Text="{Binding FoldersInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                              Width="300" />
@@ -29,6 +31,8 @@
                            Width="100" />
                     <TextBox x:Name="txbLibraryFiles"
                              AcceptsReturn="True"
+                             HorizontalScrollBarVisibility="Auto"
+                             VerticalScrollBarVisibility="Auto"
                              Height="80"
                              Text="{Binding LibraryFiles,UpdateSourceTrigger=PropertyChanged}"
                              Width="300" />
