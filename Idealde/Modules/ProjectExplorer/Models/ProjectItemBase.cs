@@ -18,7 +18,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
         #region Backing fields
 
         private string _text;
-        private ProjectItemState _state;
+        private bool _isOpen;
 
         #endregion
 
@@ -26,10 +26,12 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         #region Bind properties
 
+        public abstract object Tag { get; set; }
+
         public abstract Uri IconSource { get; }
 
         public abstract string Tooltip { get; }
-
+         
         public abstract ICommand ActiveCommand { get; }
 
         public abstract IEnumerable<Command> OptionCommands { get; }
@@ -45,14 +47,15 @@ namespace Idealde.Modules.ProjectExplorer.Models
             }
         }
 
-        public ProjectItemState State
+        public bool IsOpen
         {
-            get { return _state; }
+            get { return _isOpen; }
             set
             {
-                if (value == _state) return;
-                _state = value;
-                NotifyOfPropertyChange(() => State);
+                if (value == _isOpen) return;
+                _isOpen = value;
+                NotifyOfPropertyChange(() => IsOpen);
+                NotifyOfPropertyChange(() => IconSource);
             }
         }
 
@@ -64,11 +67,15 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public IObservableCollection<ProjectItemBase> Children { get; }
 
+        
         #endregion
 
         protected ProjectItemBase()
         {
             Children = new BindableCollection<ProjectItemBase>();
+            IsOpen = false;
         }
+
+
     }
 }

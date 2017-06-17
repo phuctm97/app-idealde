@@ -124,33 +124,34 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         #region On item expanded ( Change image source )
         // On item expanded
-        public bool Expanded
-        {
-            get { return _expanded; }
-            set
-            {
-                if (value.Equals(_expanded)) return;
-                _expanded = value;
-                NotifyOfPropertyChange(() => Expanded);
-                OnItemExpanded(_expanded);
-            }
-        }
+        //public bool Expanded
+        //{
+        //    get { return _expanded; }
+        //    set
+        //    {
+        //        if (value.Equals(_expanded)) return;
+        //        _expanded = value;
+        //        NotifyOfPropertyChange(() => Expanded);
+        //        OnItemExpanded(_expanded);
+        //    }
+        //}
 
-        private void OnItemExpanded(bool expanded)
-        {
-            switch (ObjectType)
-            {
-                case DirType.FolderClosed:
-                    ObjectType = DirType.FolderOpened;
-                    break;
-                case DirType.FolderOpened:
-                    ObjectType = DirType.FolderClosed;
-                    break;
-                default:
-                    break;
-            }
-        }
+        //private void OnItemExpanded(bool expanded)
+        //{
+        //    switch (ObjectType)
+        //    {
+        //        case DirType.FolderClosed:
+        //            ObjectType = DirType.FolderOpened;
+        //            break;
+        //        case DirType.FolderOpened:
+        //            ObjectType = DirType.FolderClosed;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         #endregion // On item expanded
+
     }
 }

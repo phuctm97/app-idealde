@@ -11,6 +11,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:TreeViewMarginConverter x:Key="LengthConverter" Length="12"/>
+            <converter:NullableValueConverter x:Key="NullableValueConverter"/>
+            <Image x:Key="ProjectItemIcon" HorizontalAlignment="Center" VerticalAlignment="Center" x:Shared="false" 
+                   Source="{Binding IconSource, Converter={StaticResource NullableValueConverter}}" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -23,11 +26,12 @@
     </UserControl.Resources>
     
     <!-- Folder treeview -->
-    <TreeView ItemsSource="{Binding RootFolder}" Style="{DynamicResource MetroTreeView}">
+    <TreeView ItemsSource="{Binding Items}" Style="{DynamicResource MetroTreeView}">
         <TreeView.Resources>
             <!-- TreeViewItem styles -->
             <Style TargetType="{x:Type TreeViewItem}">
-                <Setter Property="IsExpanded" Value="{Binding Expanded, Mode=TwoWay}" />
+                <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />
+                <Setter Property="IsExpanded" Value="{Binding IsOpen, Mode=TwoWay}"/>
                 <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -56,7 +60,8 @@
                                         <ToggleButton x:Name="Expander"
                                                       ClickMode="Press"
                                                       IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
-                                                      Style="{DynamicResource ExpandCollapseToggleStyle}" />
+                                                      Style="{DynamicResource ExpandCollapseToggleStyle}" >
+                                        </ToggleButton>
                                         <ContentPresenter x:Name="PART_Header"
                                                           Grid.Column="1"
                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -68,6 +73,7 @@
                                 <ItemsPresenter x:Name="ItemsHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </StackPanel>
                             <ControlTemplate.Triggers>
+
                                 <Trigger Property="IsExpanded" Value="False">
                                     <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed" />
                                 </Trigger>
@@ -124,11 +130,10 @@
         </TreeView.Resources>
         <!-- Item template -->
         <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate ItemsSource="{Binding SubItems}" x:Name="ddd">
+            <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding Path=Path}" Visibility="Collapsed" x:Name="LabelStorePath" />
-                    <Image Width="20" Height="20" Stretch="None" Source="{Binding ImageSource}" />
-                    <TextBlock Text="{Binding Name}" FontSize="{Binding FontSize}" />
+                    <ContentControl Width="20" Height="20" Content="{StaticResource ProjectItemIcon}" />
+                    <TextBlock Text="{Binding Text}"/>
                 </StackPanel>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>

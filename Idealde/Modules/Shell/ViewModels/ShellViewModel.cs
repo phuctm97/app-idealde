@@ -13,6 +13,7 @@ using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.ProjectExplorer;
+using Idealde.Modules.ProjectExplorer.Models;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBarTray;
 using Idealde.Modules.ToolBarTray.Models;
@@ -247,6 +248,28 @@ namespace Idealde.Modules.Shell.ViewModels
         private void LoadDefaultTools()
         {
             ShowTool<IProjectExplorer>();
+
+
+            var folder1 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1"};
+            var foldera = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" };
+            var folderb = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" };
+            foldera.Children.Add(folderb);
+            folder1.Children.Add(foldera);
+            var folder2 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder2" };
+            var folder3 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder3" };
+
+            var file1 = new ProjectItem<FileProjectItemDefinition>() {Text = "File1", Tag = "D:\\A.System\\ms.cis"};
+            var file2 = new ProjectItem<FileProjectItemDefinition>() {Text = "File2", Tag = "D:\\A.System\\ms.config"};
+            var file3 = new ProjectItem<FileProjectItemDefinition>() {Text = "File3", Tag = "D:\\A.System\\ms.cpp"};
+
+            foldera.Children.Add(file1);
+            foldera.Children.Add(file2);
+            foldera.Children.Add(file3);
+
+            IoC.Get<IProjectExplorer>().Items.Add(folder1);
+            IoC.Get<IProjectExplorer>().Items.Add(folder2);
+            IoC.Get<IProjectExplorer>().Items.Add(folder3);
+
         }
 
         #endregion

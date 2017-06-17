@@ -290,6 +290,9 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ProjectExplorer\Converters\NullableValueConverter.cs" />
+    <Compile Include="Modules\ProjectExplorer\Models\FileProjectItemDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Models\FolderProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
@@ -380,6 +383,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\MainMenu\Commands\" />
+    <Folder Include="Modules\ProjectExplorer\Commands\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Output.png" />
@@ -428,6 +432,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\BuildSelection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\File.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

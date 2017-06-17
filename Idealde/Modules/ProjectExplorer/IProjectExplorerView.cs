@@ -1,8 +1,6 @@
 ﻿namespace Idealde.Modules.ProjectExplorer
 {
-    public delegate void TreeViewItemExpandedEventHandler(string path);
-    internal interface IProjectExplorerView
+    public interface IProjectExplorerView
     {
-        event TreeViewItemExpandedEventHandler TreeViewItemExpanded;
     }
 }

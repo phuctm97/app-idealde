@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Idealde.Modules.ProjectExplorer.Models;
 
 namespace Idealde.Modules.ProjectExplorer.Views
 {
@@ -25,11 +16,14 @@ namespace Idealde.Modules.ProjectExplorer.Views
             InitializeComponent();
         }
 
-        public event TreeViewItemExpandedEventHandler TreeViewItemExpanded;
-
-        public void OnItemExpanded(object sender, EventArgs e)
+        private void OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var item = (TreeView)sender;
+            var item = sender as TreeViewItem;
+            var projectItem = item?.DataContext as ProjectItemBase;
+            if (projectItem?.ActiveCommand == null) return;
+            if (!projectItem.ActiveCommand.CanExecute(projectItem)) return;
+            projectItem.ActiveCommand.Execute(projectItem);
         }
+
     }
 }
