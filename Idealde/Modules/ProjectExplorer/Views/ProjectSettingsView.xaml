@@ -5,53 +5,46 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Idealde.Modules.ProjectExplorer.Views"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300">
+             d:DesignHeight="400"
+             d:DesignWidth="600">
     <Grid>
-        <Label x:Name="lbFoldesInclude"
-               Content="Folders Include"
-               HorizontalAlignment="Left"
-               Margin="21,33,0,0"
-               VerticalAlignment="Top" />
-        <TextBox x:Name="txtFoldersInclude"
-                 AcceptsReturn="True"
-                 HorizontalAlignment="Left"
-                 Height="99"
-                 Margin="135,37,-218,0"
-                 Text="{Binding FoldersInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="383" />
-        <Label x:Name="lbLibraryFiles"
-               Content="Library Files"
-               HorizontalAlignment="Left"
-               Height="24"
-               Margin="21,150,0,0"
-               VerticalAlignment="Top"
-               Width="94" />
-        <TextBox x:Name="txbLibraryFiles"
-                 AcceptsReturn="True"
-                 HorizontalAlignment="Left"
-                 Height="93"
-                 Margin="135,154,-218,0"
-                 TextWrapping="Wrap"
-                 Text="{Binding LibraryFiles,UpdateSourceTrigger=PropertyChanged}"
-                 VerticalAlignment="Top"
-                 Width="383" />
-        <Label x:Name="lbOutputType"
-               Content="Output Type"
-               HorizontalAlignment="Left"
-               Height="25"
-               Margin="21,258,0,0"
-               VerticalAlignment="Top"
-               Width="95" />
-        <ComboBox x:Name="cboOutputs"
-                  SelectedItem="{Binding OutputType,UpdateSourceTrigger=PropertyChanged}"
-                  HorizontalAlignment="Left"
-                  ItemsSource="{Binding ListOutputs}"
-                  Height="25"
-                  Margin="135,265,0,0"
-                  VerticalAlignment="Top"
-                  Width="155" />
-
+        <GroupBox Header="Settings">
+            <StackPanel Orientation="Vertical"
+                        Margin="15">
+                <StackPanel Orientation="Horizontal"
+                            Margin="15">
+                    <Label x:Name="lbFoldesInclude"
+                           Content="Folders Include"
+                           Width="100" />
+                    <TextBox x:Name="txtFoldersInclude"
+                             AcceptsReturn="True"
+                             Height="80"
+                             Text="{Binding FoldersInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                             Width="300" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="15">
+                    <Label x:Name="lbLibraryFiles"
+                           Content="Library Files"
+                           Width="100" />
+                    <TextBox x:Name="txbLibraryFiles"
+                             AcceptsReturn="True"
+                             Height="80"
+                             Text="{Binding LibraryFiles,UpdateSourceTrigger=PropertyChanged}"
+                             Width="300" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Margin="15">
+                    <Label x:Name="lbOutputType"
+                           Content="Output Type"
+                           Width="100" />
+                    <ComboBox x:Name="cboOutputs"
+                              SelectedItem="{Binding OutputType,UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding ListOutputs}"
+                              Height="25"
+                              Width="155" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
     </Grid>
 </UserControl>
