@@ -23,6 +23,7 @@ namespace Idealde.Framework.ProjectExplorer.Models
         public ProjectController()
         {
             _projectItemTypeToDefinitionLookup = new Dictionary<Type, ProjectItemDefinition>();
+            Files=new List < FileInfo > ();
             Folders=new List < string > ();
             LibraryFiles=new List < string > ();
             OutputType =new List < string > ();
