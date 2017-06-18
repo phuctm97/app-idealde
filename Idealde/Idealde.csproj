@@ -147,11 +147,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-<<<<<<< HEAD
     <Page Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml">
-=======
-    <Page Include="Modules\ProjectExplorer\Views\UserInputView.xaml">
->>>>>>> master
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,15 +304,9 @@
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
-<<<<<<< HEAD
     <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectSettingsViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml.cs">
       <DependentUpon>ProjectSettingsView.xaml</DependentUpon>
-=======
-    <Compile Include="Modules\ProjectExplorer\ViewModels\UserInputViewModel.cs" />
-    <Compile Include="Modules\ProjectExplorer\Views\UserInputView.xaml.cs">
-      <DependentUpon>UserInputView.xaml</DependentUpon>
->>>>>>> master
     </Compile>
     <Compile Include="Modules\Settings\ISettingsEditor.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\CompilerSettingsViewModel.cs" />

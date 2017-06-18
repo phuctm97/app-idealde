@@ -13,11 +13,8 @@ using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.ProjectExplorer;
-<<<<<<< HEAD
 using Idealde.Modules.ProjectExplorer.ViewModels;
-=======
 using Idealde.Modules.ProjectExplorer.Models;
->>>>>>> master
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBarTray;
 using Idealde.Modules.ToolBarTray.Models;
