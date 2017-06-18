@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Forms;
 using Idealde.Modules.CodeEditor.Models;
 using ScintillaNET;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Idealde.Modules.CodeEditor.Views
 {
@@ -590,11 +591,21 @@ namespace Idealde.Modules.CodeEditor.Views
             return ScintillaEditor.Text;
         }
 
+        public void Undo()
+        {
+            ScintillaEditor.Undo();
+        }
+
+        public void Redo()
+        {
+            ScintillaEditor.Redo();
+        }
+
         public void EditorFocus()
         {
             ScintillaEditor.Focus();
         }
         #endregion //behaviors
-        
+
     }
 }

@@ -13,5 +13,8 @@ namespace Idealde.Modules.CodeEditor
         void SetLanguage(Lexer lexer);
         void Goto(int row, int column);
         string GetContent();
+
+        void Undo();
+        void Redo();
     }
 }

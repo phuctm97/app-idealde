@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
-using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Modules.CodeEditor.Commands;
@@ -17,12 +16,11 @@ namespace Idealde.Modules.ProjectExplorer.Models
             get
             {
                 yield return _commandService.GetCommandDefinition(typeof(OpenFileCommandDefinition));
-                yield return new FakeCommandDefinition("Add");
-                yield return new FakeCommandDefinition("|Add");
+                yield return new FakeCommandDefinition("Add|");
                 yield return _commandService.GetCommandDefinition(typeof(NewCppHeaderCommandDefinition));
                 yield return _commandService.GetCommandDefinition(typeof(NewCppSourceCommandDefinition));
                 yield return new FakeCommandDefinition("");
-                yield return _commandService.GetCommandDefinition(typeof(SaveFileCommandDefinition));
+                yield return _commandService.GetCommandDefinition(typeof(RemoveFileCommandDefinition));
             }
         }
 

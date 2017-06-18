@@ -134,6 +134,16 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             return _view.GetContent();
         }
 
+        public void Undo()
+        {
+            _view?.Undo();
+        }
+
+        public void Redo()
+        {
+            _view?.Redo();
+        }
+
         public void Goto(int row, int column)
         {
             _view.Goto(row, column);

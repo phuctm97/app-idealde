@@ -250,13 +250,13 @@ namespace Idealde.Modules.Shell.ViewModels
             ShowTool<IProjectExplorer>();
 
 
-            var folder1 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1"};
-            var foldera = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" };
-            var folderb = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" };
+            var folder1 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" , Tag = "D:\\A.System"};
+            var foldera = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" , Tag = "D:\\A.System\\Bills" };
+            var folderb = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder1" , Tag = "D:\\A.System\\Bills\\Bills" };
             foldera.Children.Add(folderb);
             folder1.Children.Add(foldera);
-            var folder2 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder2" };
-            var folder3 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder3" };
+            var folder2 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder2" , Tag = "D:\\Desktop"};
+            var folder3 = new ProjectItem<FolderProjectItemDefinition>() { Text = "Folder3",  Tag = "D:\\Driver" };
 
             var file1 = new ProjectItem<FileProjectItemDefinition>() {Text = "File1", Tag = "D:\\A.System\\ms.cis"};
             var file2 = new ProjectItem<FileProjectItemDefinition>() {Text = "File2", Tag = "D:\\A.System\\ms.config"};

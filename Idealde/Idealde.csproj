@@ -147,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\ProjectExplorer\Views\UserInputView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\Settings\Options\Compiler\Views\CompilerSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,12 +207,14 @@
   <ItemGroup>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Framework\Behaviors\BindableTreeViewSelectedItemBehavior.cs" />
+    <Compile Include="Framework\Behaviors\BindableTreeViewSelectedItemExpandingBehavior.cs" />
     <Compile Include="Framework\Behaviors\KeyboardFocusBehavior.cs" />
     <Compile Include="Framework\Commands\Command.cs" />
     <Compile Include="Framework\Commands\CommandDefinition.cs" />
     <Compile Include="Framework\Commands\CommandHandlerWrapper.cs" />
     <Compile Include="Framework\Commands\CommandRouter.cs" />
     <Compile Include="Framework\Commands\CommandService.cs" />
+    <Compile Include="Framework\Commands\FakeCommandDefinition.cs" />
     <Compile Include="Framework\Controls\DynamicStyle.cs" />
     <Compile Include="Framework\Commands\ICommandHandler.cs" />
     <Compile Include="Framework\Commands\ICommandRouter.cs" />
@@ -291,13 +297,17 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ProjectExplorer\Commands\FakeCommandDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\RemoveFileCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FileProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FolderProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\ViewModels\UserInputViewModel.cs" />
+    <Compile Include="Modules\ProjectExplorer\Views\UserInputView.xaml.cs">
+      <DependentUpon>UserInputView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\Settings\ISettingsEditor.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\CompilerSettingsViewModel.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\WarningLevel.cs" />
@@ -328,7 +338,6 @@
     </Compile>
     <Compile Include="Modules\ProjectExplorer\Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\IProjectExplorer.cs" />
-    <Compile Include="Modules\ProjectExplorer\IProjectExplorerView.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectExplorerViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\Views\ProjectExplorerView.xaml.cs">
       <DependentUpon>ProjectExplorerView.xaml</DependentUpon>

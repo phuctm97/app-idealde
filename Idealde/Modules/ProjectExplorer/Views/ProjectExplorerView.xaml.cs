@@ -9,7 +9,7 @@ namespace Idealde.Modules.ProjectExplorer.Views
     /// <summary>
     /// Interaction logic for SolutionExplorerView.xaml
     /// </summary>
-    public partial class ProjectExplorerView : UserControl, IProjectExplorerView
+    public partial class ProjectExplorerView : UserControl
     {
         public ProjectExplorerView()
         {
@@ -29,6 +29,8 @@ namespace Idealde.Modules.ProjectExplorer.Views
         {
             var item = sender as TreeViewItem;
             item?.Focus();
+            e.Handled = true;
         }
+
     }
 }

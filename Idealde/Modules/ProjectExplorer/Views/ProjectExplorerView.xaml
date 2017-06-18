@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:Idealde.Modules.MainMenu.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:Idealde.Framework.Behaviors"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:converter="clr-namespace:Idealde.Modules.ProjectExplorer.Converters"
              xmlns:converters="clr-namespace:Idealde.Modules.MainMenu.Converters"
@@ -150,12 +151,14 @@
 
     <!-- Project items treeview -->
     <TreeView ItemsSource="{Binding Items}" x:Name="ProjectTree">
-        
+        <i:Interaction.Behaviors>
+            <behaviors:BindableTreeViewSelectedItemExpandingBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}"/>
+        </i:Interaction.Behaviors>
         <!-- TreeView resources -->
         <TreeView.Resources>
             <Style TargetType="{x:Type TreeViewItem}">
                 <EventSetter Event="MouseDoubleClick" Handler="OnMouseDoubleClick" />
-                <EventSetter Event="MouseRightButtonDown" Handler="OnMouseRightButtonDown"/>
+                <EventSetter Event="MouseRightButtonDown" Handler="OnMouseRightButtonDown" />
                 <Setter Property="IsExpanded" Value="{Binding IsOpen, Mode=TwoWay}" />
                 <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -290,12 +293,12 @@
         <TreeView.ItemTemplate>
             <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                 <StackPanel Orientation="Horizontal">
-                    <ContentControl Width="20" Height="20" Content="{StaticResource ProjectItemIcon}" />
+                    <ContentControl Width="16" Height="16" Margin="0 0 3 0"  Content="{StaticResource ProjectItemIcon}" />
                     <TextBlock Text="{Binding Text}" />
                 </StackPanel>
             </HierarchicalDataTemplate>
         </TreeView.ItemTemplate>
-        
+
         <!-- Triggers -->
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="ContextMenuOpening">
@@ -304,6 +307,6 @@
                 </cal:ActionMessage>
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        
+
     </TreeView>
 </UserControl>
