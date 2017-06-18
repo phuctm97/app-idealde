@@ -45,11 +45,10 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
             foreach (var file in projectFile.Descendants("FileItem"))
             {
-                var name = file.Element("Name")?.Value ?? string.Empty;
-                var virtualPath = file.Element("VitualAddress")?.Value ?? string.Empty;
-                var realPath = file.Element("MemoryAddress")?.Value ?? string.Empty;
+                var virtualPath = file.Element("VirtualPath")?.Value ?? string.Empty;
+                var realPath = file.Element("RealPath")?.Value ?? string.Empty;
 
-                projectInfo.Files.Add(new FileInfo(name, virtualPath, realPath));
+                projectInfo.Files.Add(new FileInfo(virtualPath, realPath));
             }
 
             foreach (var folder in projectFile.Descendants("FolderItem"))
@@ -75,6 +74,8 @@ namespace Idealde.Framework.ProjectExplorer.Models
                 }
             }
 
+            projectInfo.ProjectName = projectFile.Attribute ( "Name" ).Value.ToString ( );
+
             return projectInfo;
         }
 
@@ -82,7 +83,7 @@ namespace Idealde.Framework.ProjectExplorer.Models
         {
             var projectFile = new XDocument(
                 new XDeclaration("1.0", "UTF-8", null),
-                new XElement("Project",
+                new XElement("Project", new XAttribute("Name",info.ProjectName),
                     new XElement("FileGroup"),
                     new XElement("FolderGroup"),
                     new XElement("LibraryFileGroup"),
@@ -98,9 +99,8 @@ namespace Idealde.Framework.ProjectExplorer.Models
                 foreach (var file in info.Files)
                 {
                     fileGroup.Add(new XElement("FileItem",
-                        new XElement("Name", file.Name),
-                        new XElement("VitualAddress", file.VirtualPath),
-                        new XElement("MemoryAddress", file.RealPath)
+                        new XElement("VirtualPath", file.VirtualPath),
+                        new XElement("RealPath", file.RealPath)
                     ));
                 }
             }

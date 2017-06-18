@@ -8,15 +8,12 @@ namespace Idealde.Framework.Projects
 {
     public class FileInfo
     {
-        public string Name { set; get; }
-
         public string VirtualPath { set; get; }
 
         public string RealPath { set; get; }
 
-        public FileInfo(string name, string virtualPath, string realPath)
+        public FileInfo(string virtualPath, string realPath)
         {
-            Name = name;
             VirtualPath = virtualPath;
             RealPath = realPath;
         }
@@ -39,6 +36,8 @@ namespace Idealde.Framework.Projects
         public ProjectOutputType OutputType { get; set; }
 
         public string Path { get; set; }
+
+        public string ProjectName { get; set; }
 
         public ProjectInfo()
         {
