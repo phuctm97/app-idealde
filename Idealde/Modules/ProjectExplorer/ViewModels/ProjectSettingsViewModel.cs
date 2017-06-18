@@ -1,50 +1,41 @@
-﻿using System;
+﻿#region Using Namespace
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
 using Caliburn.Micro;
-
 using Idealde.Framework.Panes;
 using Idealde.Framework.ProjectExplorer.Models;
-using Idealde.Modules.Settings;
+using Idealde.Framework.Projects;
+
+#endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class ProjectSettingsViewModel:PersistedDocument
+    public class ProjectSettingsViewModel : PersistedDocument
     {
         private string _foldersInclude;
         private string _libraryFiles;
-        private string _outputType;
-        public string [ ] ListOutputs
-        {
-            get;
-            set;
-        }
+        private ProjectOutputType _outputType;
+        public IEnumerable<ProjectOutputType> ListOutputs { get; }
+
         public string FoldersInclude
         {
-            get
-            {
-                return _foldersInclude;
-            }
+            get { return _foldersInclude; }
             set
             {
-                if ( _foldersInclude != value )
+                if (_foldersInclude != value)
                 {
                     _foldersInclude = value;
                     NotifyOfPropertyChange(() => FoldersInclude);
                 }
-
             }
         }
 
         public string LibraryFiles
         {
-            get
-            {
-                return _libraryFiles;
-            }
+            get { return _libraryFiles; }
             set
             {
                 if (_libraryFiles != value)
@@ -52,16 +43,12 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                     _libraryFiles = value;
                     NotifyOfPropertyChange(() => LibraryFiles);
                 }
-
             }
         }
 
-        public string OutputType
+        public ProjectOutputType OutputType
         {
-            get
-            {
-                return _outputType;
-            }
+            get { return _outputType; }
             set
             {
                 if (_outputType != value)
@@ -69,72 +56,58 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                     _outputType = value;
                     NotifyOfPropertyChange(() => LibraryFiles);
                 }
-
             }
         }
-        
 
-        public ProjectSettingsViewModel ( )
+        public ProjectSettingsViewModel()
         {
-            IoC.Get<ProjectController>().Load("E:\\chophuc.vcxproj");
-            DoLoad ( );
-            ListOutputs = new string [ ]
-            {
-                "dll",
-                "exe"
-            };
-
+            ListOutputs = Enum.GetValues(typeof(ProjectOutputType)).Cast<ProjectOutputType>();
         }
 
-        protected override Task DoNew ( )
+        protected override Task DoNew()
         {
             return Task.FromResult(true);
         }
 
-        protected override Task DoLoad ( )
+        protected override Task DoLoad()
         {
-            foreach ( var folder in IoC.Get<IProjectController>().Folders )
+            var projectManager = IoC.Get<IProjectManager>();
+            var projectInfo = projectManager.Load(FilePath);
+
+            foreach (var folder in projectInfo.IncludeDirectories)
             {
                 FoldersInclude += folder + Environment.NewLine;
             }
+            FoldersInclude = FoldersInclude.Trim();
 
-            FoldersInclude=FoldersInclude.Trim ( );
-
-            foreach ( var libraryFile in IoC.Get<IProjectController>().LibraryFiles )
+            foreach (var libraryFile in projectInfo.PrebuiltLibraries)
             {
                 LibraryFiles += libraryFile + Environment.NewLine;
             }
+            LibraryFiles = LibraryFiles.Trim();
 
-            LibraryFiles=LibraryFiles.Trim ( );
+            OutputType = projectInfo.OutputType;
 
-            foreach ( var outputType in IoC.Get<IProjectController>().OutputType )
-            {
-                OutputType = outputType;
-            }
-
-            OutputType=OutputType.Trim ( );
-            
             return Task.FromResult(true);
         }
 
-        protected override Task DoSave ( )
+        protected override Task DoSave()
         {
-            IoC.Get < IProjectController > ( ).Folders = FoldersInclude.Split ( new string [ ]
+            var projectInfo = new ProjectInfo();
+            projectInfo.IncludeDirectories.AddRange(FoldersInclude.Split(new[]
             {
                 Environment.NewLine
-            }, StringSplitOptions.None ).ToList ( );
+            }, StringSplitOptions.RemoveEmptyEntries));
 
-            IoC.Get < IProjectController > ( ).LibraryFiles = LibraryFiles.Split ( new string [ ]
+            projectInfo.PrebuiltLibraries.AddRange(LibraryFiles.Split(new[]
             {
                 Environment.NewLine
-            }, StringSplitOptions.None ).ToList ( );
+            }, StringSplitOptions.RemoveEmptyEntries));
 
-            IoC.Get<IProjectController>().OutputType = OutputType.Split(new string[]
-            {
-                Environment.NewLine
-            }, StringSplitOptions.None).ToList();
+            projectInfo.OutputType = projectInfo.OutputType;
 
-            IoC.Get<IProjectController>().Save(FilePath);
+            var projectManager = IoC.Get<IProjectManager>();
+            projectManager.Save( projectInfo, FilePath);
 
             return Task.FromResult(true);
         }

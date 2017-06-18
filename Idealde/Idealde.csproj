@@ -147,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\ProjectExplorer\Views\NewProjectSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -228,9 +232,9 @@
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\PersistedDocument.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
-    <Compile Include="Framework\Projects\FileInfo.cs" />
-    <Compile Include="Framework\Projects\IProjectController.cs" />
-    <Compile Include="Framework\Projects\ProjectController.cs" />
+    <Compile Include="Framework\Projects\IProjectManager.cs" />
+    <Compile Include="Framework\Projects\ProjectInfo.cs" />
+    <Compile Include="Framework\Projects\ProjectManager.cs" />
     <Compile Include="Framework\Services\IEditorProvider.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IResourceManager.cs" />
@@ -298,13 +302,19 @@
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\ProjectExplorer\Commands\RemoveFileCommandDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandHandler.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\NullableValueConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FileProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\FolderProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\ViewModels\NewProjectSettingsViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectSettingsViewModel.cs" />
+    <Compile Include="Modules\ProjectExplorer\Views\NewProjectSettingsView.xaml.cs">
+      <DependentUpon>NewProjectSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml.cs">
       <DependentUpon>ProjectSettingsView.xaml</DependentUpon>
     </Compile>
@@ -324,6 +334,8 @@
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\NewCppProjectCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\NewProjectCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\SaveFileAsCommandDefinition.cs" />
@@ -444,6 +456,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\File.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Application.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\NewProject.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

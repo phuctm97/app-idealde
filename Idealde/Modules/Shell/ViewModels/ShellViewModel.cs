@@ -11,6 +11,7 @@ using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.Output.Commands;
+using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBarTray;
@@ -137,9 +138,10 @@ namespace Idealde.Modules.Shell.ViewModels
                 fileExitMenu);
 
             //< File.New menu
+            var fileNewCppProjectMenu = new CommandMenuItem<NewCppProjectCommandDefinition>("File.New.CppProject");
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
-            MainMenu.AddMenuItem(fileNewMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+            MainMenu.AddMenuItem(fileNewMenu, fileNewCppProjectMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
             //> File.New menu
 
             //> File menu
@@ -176,10 +178,11 @@ namespace Idealde.Modules.Shell.ViewModels
             var viewMenu = new Menu("View", Resources.ViewMenuText);
             MainMenu.AddMenu(viewMenu);
 
+            var viewProjectExplorer = new CommandMenuItem<ViewProjectExplorerCommandDefinition>("View.ProjectExplorer");
             var viewOutputMenu = new CommandMenuItem<ViewOutputCommandDefinition>("View.Output");
             var viewErrorListMenu =
                 new CommandMenuItem<ViewErrorListCommandDefinition>("View.ErrorList");
-            MainMenu.AddMenuItem(viewMenu, viewOutputMenu, viewErrorListMenu);
+            MainMenu.AddMenuItem(viewMenu, viewProjectExplorer, viewOutputMenu, viewErrorListMenu);
             //> View menu
 
             //< Run menu

@@ -79,6 +79,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Browse Project Root Path.
+        /// </summary>
+        public static string BrowseProjectRootPathDisplayText {
+            get {
+                return ResourceManager.GetString("BrowseProjectRootPathDisplayText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compile And Run.
         /// </summary>
         public static string CompileAndRunSingleFileCommandText {
@@ -376,6 +385,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C++ Project.
+        /// </summary>
+        public static string FileNewCppProjectCommandText {
+            get {
+                return ResourceManager.GetString("FileNewCppProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Empty C++Project.
+        /// </summary>
+        public static string FileNewCppProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileNewCppProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to C++ Source (.cpp).
         /// </summary>
         public static string FileNewCppSourceCommandText {
@@ -493,11 +520,38 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Project.
+        /// </summary>
+        public static string NewProjectWindowTitle {
+            get {
+                return ResourceManager.GetString("NewProjectWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string OpenFileDialogTitle {
             get {
                 return ResourceManager.GetString("OpenFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter project name.
+        /// </summary>
+        public static string PleaseEnterProjectNameText {
+            get {
+                return ResourceManager.GetString("PleaseEnterProjectNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project root directory not exist.
+        /// </summary>
+        public static string ProjectRootDirectoryNotExistText {
+            get {
+                return ResourceManager.GetString("ProjectRootDirectoryNotExistText", resourceCulture);
             }
         }
         
@@ -642,6 +696,24 @@ namespace Idealde.Properties {
         public static string ViewOutputCommandTooltip {
             get {
                 return ResourceManager.GetString("ViewOutputCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Explorer.
+        /// </summary>
+        public static string ViewProjectExplorerCommadText {
+            get {
+                return ResourceManager.GetString("ViewProjectExplorerCommadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Project Explorer Tool Window.
+        /// </summary>
+        public static string ViewProjectExplorerCommandTooltip {
+            get {
+                return ResourceManager.GetString("ViewProjectExplorerCommandTooltip", resourceCulture);
             }
         }
         

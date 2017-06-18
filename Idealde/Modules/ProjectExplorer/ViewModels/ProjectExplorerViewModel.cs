@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
+using Idealde.Framework.Projects;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.ProjectExplorer.Commands;
@@ -17,31 +18,46 @@ using Idealde.Modules.ProjectExplorer.Models;
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
     public class ProjectExplorerViewModel : Tool, IProjectExplorer,
-        ICommandHandler<NewCppHeaderCommandDefinition>, ICommandHandler<RemoveFileCommandDefinition>,
+        ICommandHandler<NewCppHeaderCommandDefinition>,
+        ICommandHandler<RemoveFileCommandDefinition>,
         ICommandHandler<NewCppSourceCommandDefinition>
     {
-        #region Backing field
+        // Backing fields
+
+        #region Backing fields
 
         private ProjectItemBase _selectedItem;
+        private ProjectInfo _projectInfo;
 
         #endregion
 
-        #region Initialization
+        // Bind properties
+
+        #region Bind properties
 
         public override PaneLocation PreferredLocation => PaneLocation.Right;
 
+        #endregion
+
+        // Initializations
+
+        #region Initializations
+
         public ProjectExplorerViewModel()
         {
-            DisplayName = "Solution Explorer";
+            DisplayName = "Project Explorer";
             Items = new BindableCollection<ProjectItemBase>();
             MenuItems = new BindableCollection<MenuItemBase>();
         }
 
         #endregion
 
+        // Bind models
+
         #region Bind models
 
         public IObservableCollection<ProjectItemBase> Items { get; }
+
         public IObservableCollection<MenuItemBase> MenuItems { get; }
 
         public ProjectItemBase SelectedItem
@@ -57,59 +73,25 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #endregion
 
-        #region  Command Handler
+        // Behaviors
 
-        Task ICommandHandler<NewCppSourceCommandDefinition>.Run(Command command)
+        #region Behaviors
+
+        public ProjectInfo ProjectInfo
         {
-            AddNewFile("Create source file", ".cpp");
-            return Task.FromResult(true);
+            get { return _projectInfo; }
+            set
+            {
+                _projectInfo = value;
+                Refresh();
+            }
         }
-
-
-        void ICommandHandler<NewCppSourceCommandDefinition>.Update(Command command)
-        {
-            // Nothing to do
-        }
-
-        void ICommandHandler<NewCppHeaderCommandDefinition>.Update(Command command)
-        {
-            // nothing to do
-        }
-
-        Task ICommandHandler<NewCppHeaderCommandDefinition>.Run(Command command)
-        {
-            AddNewFile("Create new header", ".h");
-            return Task.FromResult(true);
-        }
-
-        Task ICommandHandler<RemoveFileCommandDefinition>.Run(Command command)
-        {
-            // delete children
-            File.Delete((string) SelectedItem.Tag);
-            SelectedItem.Children.Clear();
-
-            // delete file from project tree
-            //????????????????????????????????????
-
-
-            return Task.FromResult(true);
-        }
-
-        void ICommandHandler<RemoveFileCommandDefinition>.Update(Command command)
-        {
-            // nothing to do
-        }
-
-        #endregion
-
-        #region Methods
 
         public void PopulateMenu(ProjectItemBase item)
         {
             if (item == null) return;
 
             MenuItems.Clear();
-
             MenuItemBase parentMenuItem = null;
 
             foreach (var command in item.OptionCommands)
@@ -178,8 +160,63 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             }
         }
 
-        private void AddNewFile(string work, string fileExtension)
+        private void Refresh()
         {
+            Items.Clear();
+        }
+
+        public void Load(string path)
+        {
+            Refresh();
+        }
+
+        public void Clear()
+        {
+            Items.Clear();
+        }
+
+        #endregion
+
+        // Command handlers
+
+        #region Command handlers
+
+        Task ICommandHandler<NewCppSourceCommandDefinition>.Run(Command command)
+        {
+            return Task.FromResult(true);
+        }
+
+        void ICommandHandler<NewCppSourceCommandDefinition>.Update(Command command)
+        {
+            // Nothing to do
+        }
+
+        void ICommandHandler<NewCppHeaderCommandDefinition>.Update(Command command)
+        {
+            // nothing to do
+        }
+
+        Task ICommandHandler<NewCppHeaderCommandDefinition>.Run(Command command)
+        {
+            return Task.FromResult(true);
+        }
+
+        Task ICommandHandler<RemoveFileCommandDefinition>.Run(Command command)
+        {
+            // delete children
+            File.Delete((string) SelectedItem.Tag);
+            SelectedItem.Children.Clear();
+
+            // delete file from project tree
+            //????????????????????????????????????
+
+
+            return Task.FromResult(true);
+        }
+
+        void ICommandHandler<RemoveFileCommandDefinition>.Update(Command command)
+        {
+            // nothing to do
         }
 
         #endregion

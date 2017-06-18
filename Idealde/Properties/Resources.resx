@@ -315,4 +315,28 @@
   <data name="FileRemoveCommandTooltip" xml:space="preserve">
     <value>Remove file from project</value>
   </data>
+  <data name="ViewProjectExplorerCommadText" xml:space="preserve">
+    <value>Project Explorer</value>
+  </data>
+  <data name="ViewProjectExplorerCommandTooltip" xml:space="preserve">
+    <value>Open Project Explorer Tool Window</value>
+  </data>
+  <data name="FileNewCppProjectCommandText" xml:space="preserve">
+    <value>C++ Project</value>
+  </data>
+  <data name="FileNewCppProjectCommandTooltip" xml:space="preserve">
+    <value>Create New Empty C++Project</value>
+  </data>
+  <data name="BrowseProjectRootPathDisplayText" xml:space="preserve">
+    <value>Browse Project Root Path</value>
+  </data>
+  <data name="NewProjectWindowTitle" xml:space="preserve">
+    <value>New Project</value>
+  </data>
+  <data name="PleaseEnterProjectNameText" xml:space="preserve">
+    <value>Please enter project name</value>
+  </data>
+  <data name="ProjectRootDirectoryNotExistText" xml:space="preserve">
+    <value>Project root directory not exist</value>
+  </data>
 </root>

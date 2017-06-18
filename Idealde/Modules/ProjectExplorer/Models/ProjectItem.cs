@@ -48,7 +48,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
         {
             _commandService = IoC.Get<ICommandService>();
 
-            var projectController = IoC.Get<IProjectController>();
+            var projectController = IoC.Get<IProjectManager>();
             ProjectItemDefintion = projectController.GetProjectItemDefinition(projectItemDefinitionType);
         }
 

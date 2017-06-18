@@ -8,6 +8,7 @@ using Idealde.Framework.Commands;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
+using Idealde.Modules.CodeCompiler;
 using Idealde.Modules.CodeEditor;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.CodeEditor.ViewModels;
@@ -20,17 +21,17 @@ using Idealde.Modules.MainWindow.ViewModels;
 using Idealde.Modules.Output;
 using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
+using Idealde.Modules.ProjectExplorer;
+using Idealde.Modules.ProjectExplorer.Commands;
+using Idealde.Modules.ProjectExplorer.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
-using Idealde.Modules.ProjectExplorer;
-using Idealde.Modules.ProjectExplorer.ViewModels;
 using Idealde.Modules.StatusBar;
 using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBarTray;
 using Idealde.Modules.ToolBarTray.ViewModels;
 using Idealde.Modules.UndoRedo;
 using Microsoft.Practices.Unity;
-using Idealde.Modules.CodeCompiler;
 
 #endregion
 
@@ -76,6 +77,9 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, OpenFileCommandHandler>(OpenFileCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewProjectCommandHandler>(
+                NewCppProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //services
@@ -131,9 +135,12 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
 
             //project explorer
-            _container.RegisterType<IProjectController, ProjectController>(
+            _container.RegisterType<IProjectManager, ProjectManager>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IProjectExplorer, ProjectExplorerViewModel>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, ViewProjectExplorerCommandHandler>(
+                ViewProjectExplorerCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //undo redo

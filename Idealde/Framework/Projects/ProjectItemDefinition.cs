@@ -13,7 +13,6 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
     public abstract class ProjectItemDefinition:PropertyChangedBase
     {
-
         public abstract IEnumerable<CommandDefinition> CommandDefinitions { get; }
 
         public abstract ICommand ActiveCommand { get; }
