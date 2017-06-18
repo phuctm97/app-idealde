@@ -457,7 +457,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to File.
         /// </summary>
         public static string FileOpenFileCommandText {
             get {

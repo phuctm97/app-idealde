@@ -8,17 +8,18 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
+using Idealde.Modules.ProjectExplorer.Providers;
 
 #endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class ProjectSettingsViewModel : PersistedDocument
+    public class CppProjectSettingsViewModel : PersistedDocument
     {
         private string _foldersInclude;
         private string _libraryFiles;
-        private ProjectOutputType _outputType;
-        public IEnumerable<ProjectOutputType> ListOutputs { get; }
+        private CppProjectOutputType _outputType;
+        public IEnumerable<CppProjectOutputType> ListOutputs { get; }
 
         public string FoldersInclude
         {
@@ -46,7 +47,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             }
         }
 
-        public ProjectOutputType OutputType
+        public CppProjectOutputType OutputType
         {
             get { return _outputType; }
             set
@@ -59,9 +60,9 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             }
         }
 
-        public ProjectSettingsViewModel()
+        public CppProjectSettingsViewModel()
         {
-            ListOutputs = Enum.GetValues(typeof(ProjectOutputType)).Cast<ProjectOutputType>();
+            ListOutputs = Enum.GetValues(typeof(CppProjectOutputType)).Cast<CppProjectOutputType>();
         }
 
         protected override Task DoNew()
@@ -71,8 +72,10 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         protected override Task DoLoad()
         {
-            var projectManager = IoC.Get<IProjectManager>();
-            var projectInfo = projectManager.Load(FilePath);
+            var provider = IoC.Get<CppProjectProvider>();
+            CppProjectInfo projectInfo = (CppProjectInfo) provider.Load(FilePath);
+
+            if (string.IsNullOrWhiteSpace(projectInfo?.Path)) return Task.FromResult(false);
 
             foreach (var folder in projectInfo.IncludeDirectories)
             {
@@ -93,7 +96,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         protected override Task DoSave()
         {
-            var projectInfo = new ProjectInfo();
+            var projectInfo = new CppProjectInfo();
             projectInfo.IncludeDirectories.AddRange(FoldersInclude.Split(new[]
             {
                 Environment.NewLine
@@ -106,8 +109,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
             projectInfo.OutputType = projectInfo.OutputType;
 
-            var projectManager = IoC.Get<IProjectManager>();
-            projectManager.Save( projectInfo, FilePath);
+            var provider = IoC.Get<CppProjectProvider>();
+            provider.Save( projectInfo, FilePath);
 
             return Task.FromResult(true);
         }

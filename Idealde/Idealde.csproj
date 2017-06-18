@@ -151,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml">
+    <Page Include="Modules\ProjectExplorer\Views\CppProjectSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,9 +232,13 @@
     <Compile Include="Framework\Panes\ITool.cs" />
     <Compile Include="Framework\Panes\PersistedDocument.cs" />
     <Compile Include="Framework\Panes\Tool.cs" />
-    <Compile Include="Framework\Projects\IProjectManager.cs" />
+    <Compile Include="Framework\Projects\IProjectProvider.cs" />
+    <Compile Include="Framework\Projects\IProjectService.cs" />
     <Compile Include="Framework\Projects\ProjectInfo.cs" />
-    <Compile Include="Framework\Projects\ProjectManager.cs" />
+    <Compile Include="Modules\ProjectExplorer\Converters\EmptyStringToUnsetConverter.cs" />
+    <Compile Include="Modules\ProjectExplorer\Providers\CppProjectInfo.cs" />
+    <Compile Include="Modules\ProjectExplorer\Providers\CppProjectProvider.cs" />
+    <Compile Include="Framework\Projects\ProjectService.cs" />
     <Compile Include="Framework\Services\IEditorProvider.cs" />
     <Compile Include="Framework\Services\IMainWindow.cs" />
     <Compile Include="Framework\Services\IResourceManager.cs" />
@@ -303,7 +307,6 @@
     </Compile>
     <Compile Include="Modules\ProjectExplorer\Commands\OpenProjectCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\OpenProjectCommandHandler.cs" />
-    <Compile Include="Modules\ProjectExplorer\Commands\RemoveFileCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandHandler.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\NullableValueConverter.cs" />
@@ -313,12 +316,12 @@
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\NewProjectSettingsViewModel.cs" />
-    <Compile Include="Modules\ProjectExplorer\ViewModels\ProjectSettingsViewModel.cs" />
+    <Compile Include="Modules\ProjectExplorer\ViewModels\CppProjectSettingsViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\Views\NewProjectSettingsView.xaml.cs">
       <DependentUpon>NewProjectSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modules\ProjectExplorer\Views\ProjectSettingsView.xaml.cs">
-      <DependentUpon>ProjectSettingsView.xaml</DependentUpon>
+    <Compile Include="Modules\ProjectExplorer\Views\CppProjectSettingsView.xaml.cs">
+      <DependentUpon>CppProjectSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Settings\ISettingsEditor.cs" />
     <Compile Include="Modules\Settings\Options\Compiler\ViewModels\CompilerSettingsViewModel.cs" />

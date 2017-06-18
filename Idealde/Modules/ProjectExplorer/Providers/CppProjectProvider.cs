@@ -2,47 +2,65 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using Caliburn.Micro;
+using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
+using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 #endregion
 
-namespace Idealde.Framework.ProjectExplorer.Models
+namespace Idealde.Modules.ProjectExplorer.Providers
 {
-    public class ProjectManager : IProjectManager
+    public class CppProjectProvider : IProjectProvider
     {
-        // backing fields
-        private readonly Dictionary<Type, ProjectItemDefinition> _projectItemTypeToDefinitionLookup;
-
-        public ProjectManager()
-        {
-            _projectItemTypeToDefinitionLookup = new Dictionary<Type, ProjectItemDefinition>();
-        }
+        public string Name => "C++ Project";
 
         public IEnumerable<ProjectType> ProjectTypes
         {
-            get { yield return new ProjectType("C++ Project", ".cxproj"); }
+            get { yield return new ProjectType("CX Project", ".cxproj"); }
         }
 
-        public ProjectItemDefinition GetProjectItemDefinition(Type projectItemDefinitionType)
+        private bool ValidateExtension(string path)
         {
-            ProjectItemDefinition projectItemDefinition;
-            if (!_projectItemTypeToDefinitionLookup.TryGetValue(projectItemDefinitionType, out projectItemDefinition))
+            var extension = Path.GetExtension(path);
+            foreach (var projectType in ProjectTypes)
             {
-                projectItemDefinition = (ProjectItemDefinition) IoC.GetInstance(projectItemDefinitionType, string.Empty);
-                _projectItemTypeToDefinitionLookup.Add(projectItemDefinitionType, projectItemDefinition);
+                if (string.Equals(projectType.Extension, extension, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
             }
-            return projectItemDefinition;
+            return false;
         }
 
-        public ProjectInfo Load(string path)
+        private void CreateExtensionDirectoriesIfNotExist(string path)
         {
-            var projectFile = XElement.Load(path);
-            var projectInfo = new ProjectInfo();
+            var projectDirectory = Path.GetDirectoryName(path);
 
+            // create project output directory
+            foreach (var childDirectory in new[] {"Output", "Output\\obj", "Output\\bin"})
+            {
+                var d = $"{projectDirectory}\\{childDirectory}";
+                if (!Directory.Exists(d))
+                {
+                    Directory.CreateDirectory(d);
+                }
+            }
+        }
+
+        public ProjectInfoBase Load(string path)
+        {
+            if (!ValidateExtension(path))
+            {
+                return null;
+            }
+
+            var projectFile = XElement.Load(path);
+            var projectInfo = new CppProjectInfo(this);
+
+            // load files
             foreach (var file in projectFile.Descendants("FileItem"))
             {
                 var virtualPath = file.Element("VirtualPath")?.Value ?? string.Empty;
@@ -51,19 +69,22 @@ namespace Idealde.Framework.ProjectExplorer.Models
                 projectInfo.Files.Add(new FileInfo(virtualPath, realPath));
             }
 
+            // load include directories
             foreach (var folder in projectFile.Descendants("FolderItem"))
             {
                 projectInfo.IncludeDirectories.Add(folder?.Value ?? string.Empty);
             }
 
+            // load prebuilt libraries
             foreach (var libFile in projectFile.Descendants("LibFileItem"))
             {
                 projectInfo.PrebuiltLibraries.Add(libFile?.Value ?? string.Empty);
             }
 
+            // load output types
             foreach (var outputType in projectFile.Descendants("OutputItem"))
             {
-                var values = Enum.GetValues(typeof(ProjectOutputType)).Cast<ProjectOutputType>();
+                var values = Enum.GetValues(typeof(CppProjectOutputType)).Cast<CppProjectOutputType>();
                 foreach (var value in values)
                 {
                     if (value.ToString().ToLower() == outputType?.Value.ToLower())
@@ -74,25 +95,35 @@ namespace Idealde.Framework.ProjectExplorer.Models
                 }
             }
 
-            projectInfo.ProjectName = projectFile.Attribute ( "Name" ).Value.ToString ( );
+            // load project name
+            projectInfo.ProjectName = projectFile.Attribute("Name")?.Value;
+            projectInfo.Path = path;
+
+            // create extension directories
+            CreateExtensionDirectoriesIfNotExist(path);
 
             return projectInfo;
         }
 
-        public void Save(ProjectInfo info, string path)
+        public void Save(ProjectInfoBase info, string path)
         {
+            if (!(info is CppProjectInfo)) return;
+            var cppInfo = (CppProjectInfo)info;
+
             var projectFile = new XDocument(
                 new XDeclaration("1.0", "UTF-8", null),
-                new XElement("Project", new XAttribute("Name",info.ProjectName),
+                new XElement("Project", new XAttribute("Name", cppInfo.ProjectName),
                     new XElement("FileGroup"),
                     new XElement("FolderGroup"),
                     new XElement("LibraryFileGroup"),
                     new XElement("OutputGroup")
                 ));
 
+            // load root
             var root = projectFile.Root;
             if (root == null) return;
 
+            // save files
             var fileGroup = root.Element("FileGroup");
             if (fileGroup != null)
             {
@@ -105,32 +136,42 @@ namespace Idealde.Framework.ProjectExplorer.Models
                 }
             }
 
+            // save include directories
             var folderGroup = root.Element("FolderGroup");
             if (folderGroup != null)
             {
-                foreach (var folder in info.IncludeDirectories)
+                foreach (var folder in cppInfo.IncludeDirectories)
                 {
                     folderGroup.Add(new XElement("FolderItem", folder));
                 }
             }
 
+            // save prebuilt libraries
             var libraryGroup = root.Element("LibraryFileGroup");
             if (libraryGroup != null)
             {
-                foreach (var libraryFile in info.PrebuiltLibraries)
+                foreach (var libraryFile in cppInfo.PrebuiltLibraries)
                 {
                     libraryGroup.Add(new XElement("LibFileItem", libraryFile));
                 }
             }
 
+            // save output types
             var outputGroup = root.Element("OutputGroup");
             if (outputGroup != null)
             {
-               outputGroup.Add(new XElement("OutputItem", info.OutputType.ToString()));
+                outputGroup.Add(new XElement("OutputItem", cppInfo.OutputType.ToString()));
             }
 
+            // save
+            if (!ValidateExtension(path))
+            {
+                path = Path.ChangeExtension(path, ProjectTypes.First().Extension);
+            }
             projectFile.Save(path);
-        }
 
+            // create extension directories
+            CreateExtensionDirectoriesIfNotExist(path);
+        }
     }
 }

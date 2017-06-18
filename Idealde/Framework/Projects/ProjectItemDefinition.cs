@@ -9,9 +9,8 @@ using Idealde.Framework.Commands;
 #endregion
 
 namespace Idealde.Framework.ProjectExplorer.Models
-{ 
-
-    public abstract class ProjectItemDefinition:PropertyChangedBase
+{
+    public abstract class ProjectItemDefinition : PropertyChangedBase
     {
         public abstract IEnumerable<CommandDefinition> CommandDefinitions { get; }
 

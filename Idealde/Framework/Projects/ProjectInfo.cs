@@ -1,6 +1,7 @@
 ﻿#region Using Namespace
 
 using System.Collections.Generic;
+using Idealde.Framework.ProjectExplorer.Models;
 
 #endregion
 
@@ -19,32 +20,31 @@ namespace Idealde.Framework.Projects
         }
     }
 
-    public enum ProjectOutputType
+    public class ProjectType
     {
-        Dll,
-        Exe
+        public ProjectType(string name, string extension)
+        {
+            Name = name;
+            Extension = extension;
+        }
+
+        public string Name { get; }
+        public string Extension { get; }
     }
 
-    public class ProjectInfo
+    public abstract class ProjectInfoBase
     {
-        public List<FileInfo> Files { get; }
+        protected ProjectInfoBase(IProjectProvider provider)
+        {
+            Provider = provider;
+        }
 
-        public List<string> IncludeDirectories { get; }
-
-        public List<string> PrebuiltLibraries { get; }
-
-        public ProjectOutputType OutputType { get; set; }
+        public abstract IList<FileInfo> Files { get; }
 
         public string Path { get; set; }
 
         public string ProjectName { get; set; }
 
-        public ProjectInfo()
-        {
-            Files = new List<FileInfo>();
-            IncludeDirectories = new List<string>();
-            PrebuiltLibraries = new List<string>();
-            OutputType = ProjectOutputType.Exe;
-        }
+        public IProjectProvider Provider { get; }
     }
 }

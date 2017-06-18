@@ -142,7 +142,11 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileNewCppProjectMenu = new CommandMenuItem<NewCppProjectCommandDefinition>("File.New.CppProject");
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
-            MainMenu.AddMenuItem(fileNewMenu, fileNewCppProjectMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+            MainMenu.AddMenuItem(fileNewMenu,
+                fileNewCppProjectMenu,
+                new MenuItemSeparator("File.New.S1"),
+                fileNewCppHeaderMenu,
+                fileNewCppSourceMenu);
             //> File.New menu
 
             //< File.Open menu
@@ -229,7 +233,7 @@ namespace Idealde.Modules.Shell.ViewModels
                 new ToolBarItemSeparator("File.S1"),
                 fileOpenFileToolBarItem,
                 fileOpenProjectToolBarItme,
-                fileSaveToolBarItem, 
+                fileSaveToolBarItem,
                 fileSaveAsToolBarItem);
             //> File tool bar
 

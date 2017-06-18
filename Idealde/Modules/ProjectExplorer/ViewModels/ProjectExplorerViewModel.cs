@@ -20,20 +20,12 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
     public class ProjectExplorerViewModel : Tool, IProjectExplorer
     {
-        // Dependencies
-
-        #region Dependencies
-
-        private readonly IProjectManager _projectManager;
-
-        #endregion
-
         // Backing fields
 
         #region Backing fields
 
         private ProjectItemBase _selectedItem;
-        private ProjectInfo _currentProjectInfo;
+        private ProjectInfoBase _currentProjectInfo;
 
         #endregion
 
@@ -70,9 +62,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #region Initializations
 
-        public ProjectExplorerViewModel(IProjectManager projectManager)
+        public ProjectExplorerViewModel()
         {
-            _projectManager = projectManager;
             DisplayName = "Project Explorer";
             ProjectItems = new BindableCollection<ProjectItemBase>();
             MenuItems = new BindableCollection<MenuItemBase>();
@@ -84,7 +75,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #region Behaviors
 
-        public ProjectInfo CurrentProjectInfo
+        public ProjectInfoBase CurrentProjectInfo
         {
             get { return _currentProjectInfo; }
             set
@@ -173,8 +164,6 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         {
             ProjectItems.Clear();
 
-            // TODO: update name
-
             foreach (var fileInfo in CurrentProjectInfo.Files)
             {
                 var parent = GenerateAndGetFolder(fileInfo);
@@ -240,16 +229,15 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             return parentItem;
         }
 
-        public void LoadProject(string path)
+        public void LoadProject(string path, IProjectProvider provider)
         {
-            // load new project
-            var newProjectInfo = _projectManager.Load(path);
+            if (provider == null) return;
 
-            // TODO
-            newProjectInfo.Path = path;
+            // load new project
+            var newProjectInfo = provider.Load(path);
 
             // new project not exist
-            if (string.IsNullOrWhiteSpace(newProjectInfo.Path))
+            if (string.IsNullOrWhiteSpace(newProjectInfo?.Path))
             {
                 MessageBox.Show(Resources.ProjectFileNotExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -259,6 +247,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             if (CurrentProjectInfo != null)
             {
                 if (!ConfirmCloseCurrentProject()) return;
+                CloseCurrentProject();
             }
 
             // update current project
@@ -267,8 +256,9 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         private bool ConfirmCloseCurrentProject()
         {
-            var result = MessageBox.Show(string.Format(Resources.AreYouWantToCloseProjectText, "<ProjectName>"),
-                "Confirm", MessageBoxButton.YesNo);
+            var result =
+                MessageBox.Show(string.Format(Resources.AreYouWantToCloseProjectText, CurrentProjectInfo.ProjectName),
+                    "Confirm", MessageBoxButton.YesNo);
             if (result == MessageBoxResult.Yes)
                 return true;
             return false;

@@ -130,7 +130,7 @@
     <value>New</value>
   </data>
   <data name="FileOpenFileCommandText" xml:space="preserve">
-    <value>Open</value>
+    <value>File</value>
   </data>
   <data name="FileSaveAsCommandText" xml:space="preserve">
     <value>Save Selected Item As</value>

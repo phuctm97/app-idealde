@@ -26,7 +26,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
         public override string GetTooltip(object tag)
         {
             var name = tag?.ToString() ?? string.Empty;
-            return $"Folder {name}";
+            return name;
         }
 
         public override Uri GetIcon(bool isOpen, object tag)
