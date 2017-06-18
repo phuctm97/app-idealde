@@ -1,8 +1,9 @@
-﻿using System;
+﻿#region Using Namespace
+
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
@@ -10,18 +11,28 @@ using Idealde.Framework.Panes;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Services;
 using Idealde.Modules.CodeEditor;
+using Idealde.Properties;
+
+#endregion
 
 namespace Idealde.Modules.ProjectExplorer.Models
 {
-    public class FileProjectItemDefinition: ProjectItemDefinition
+    public class FileProjectItemDefinition : ProjectItemDefinition
     {
-        public override IEnumerable<CommandDefinition> CommandDefinitions { get { yield break; } }
+        public override IEnumerable<CommandDefinition> CommandDefinitions
+        {
+            get { yield break; }
+        }
+
         public override ICommand ActiveCommand { get; }
 
         public override string GetTooltip(object tag)
         {
-            string path = tag as string;
-            if (path == null) return string.Empty;
+            var path = tag as string ?? string.Empty;
+            if (!File.Exists(path))
+            {
+                return Resources.FileNotExistText;
+            }
 
             var extension = Path.GetExtension(path).ToLower();
             return extension + " file";
@@ -29,25 +40,31 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public override Uri GetIcon(bool isOpen, object tag)
         {
-            string path = tag as string;
+            var path = tag as string;
 
             // default file icon
 
             string iconSource;
-
-            var extension = path == null ? string.Empty : Path.GetExtension(path).ToLower();
-            switch (extension)
+            if (!File.Exists(path))
             {
-                case ".cpp":
-                case ".c":
-                case ".cxx":
-                case ".h":
-                case ".hpp":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/CppFile.png";
-                    break;
-                default:
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/File.png";
-                    break;
+                iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/BrokenlinktoFile.png";
+            }
+            else
+            {
+                var extension = path == null ? string.Empty : Path.GetExtension(path).ToLower();
+                switch (extension)
+                {
+                    case ".cpp":
+                    case ".c":
+                    case ".cxx":
+                    case ".h":
+                    case ".hpp":
+                        iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/CppFile.png";
+                        break;
+                    default:
+                        iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/File.png";
+                        break;
+                }
             }
 
             return new Uri(iconSource, UriKind.Absolute);
@@ -60,38 +77,43 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         private bool CanActive(object projectItem)
         {
+            var filePath = ((ProjectItemBase)projectItem)?.Tag as string;
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
             return true;
         }
 
         private void Active(object projectItem)
         {
-            var editor = IoC.Get<ICodeEditor>();
             var shell = IoC.Get<IShell>();
 
-            var filePath = ((ProjectItemBase)projectItem).Tag as string;
+            var filePath = ((ProjectItemBase) projectItem)?.Tag as string;
+            if (string.IsNullOrEmpty(filePath)) return;
+
             if (!File.Exists(filePath))
-            { 
-                MessageBox.Show("File not exists in current project");
+            {
+                MessageBox.Show(Resources.FileNotExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            editor.Load(filePath);
 
             foreach (var document in shell.Documents)
             {
                 var persistedDocument = document as IPersistedDocument;
                 if (persistedDocument == null) continue;
 
-                var editorFilePath = editor.FilePath.TrimEnd('\\').ToLower();
-                var persistedDocumentFilePath = persistedDocument.FilePath.TrimEnd('\\').ToLower();
+                var editorFilePath = filePath.Trim().TrimEnd('\\').ToLower();
+                var persistedDocumentFilePath = persistedDocument.FilePath.Trim().TrimEnd('\\').ToLower();
 
-                if (String.CompareOrdinal(editorFilePath, persistedDocumentFilePath) != 0) continue;
+                if (string.CompareOrdinal(editorFilePath, persistedDocumentFilePath) != 0) continue;
                 shell.OpenDocument(persistedDocument);
                 return;
             }
 
+            var editor = IoC.Get<ICodeEditor>();
+            editor.Load(filePath);
             shell.OpenDocument(editor);
         }
-
     }
 }

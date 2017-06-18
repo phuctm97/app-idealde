@@ -213,7 +213,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 ProjectItems.Add(parentItem);
             }
 
-            for (var i = 1; i < parentNames.Length - 1; i++)
+            for (var i = 1; i < parentNames.Length; i++)
             {
                 // find next item
                 var childItem = parentItem.Children.FirstOrDefault(it =>

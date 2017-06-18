@@ -448,6 +448,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File doesn&apos;t exist.
+        /// </summary>
+        public static string FileNotExistText {
+            get {
+                return ResourceManager.GetString("FileNotExistText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string FileOpenFileCommandText {

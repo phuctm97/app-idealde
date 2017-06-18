@@ -40,6 +40,9 @@ namespace Idealde.Modules.ProjectExplorer.Commands
             {
                 var projectExplorer = IoC.Get<IProjectExplorer>();
                 projectExplorer.LoadProject(dialog.FileName);
+
+                var shell = IoC.Get<IShell>();
+                shell.ShowTool(projectExplorer);
             }
 
             return Task.FromResult(true);
