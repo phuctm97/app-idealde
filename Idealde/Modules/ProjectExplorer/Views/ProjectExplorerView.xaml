@@ -150,7 +150,7 @@
     </UserControl.Resources>
 
     <!-- Project items treeview -->
-    <TreeView ItemsSource="{Binding Items}" x:Name="ProjectTree">
+    <TreeView ItemsSource="{Binding ProjectItems}" x:Name="ProjectTree">
         <i:Interaction.Behaviors>
             <behaviors:BindableTreeViewSelectedItemExpandingBehavior SelectedItem="{Binding SelectedItem, Mode=TwoWay}"/>
         </i:Interaction.Behaviors>

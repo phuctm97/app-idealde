@@ -38,6 +38,8 @@ namespace Idealde.Framework.Projects
 
         public ProjectOutputType OutputType { get; set; }
 
+        public string Path { get; set; }
+
         public ProjectInfo()
         {
             Files = new List<FileInfo>();

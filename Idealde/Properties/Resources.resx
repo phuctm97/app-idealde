@@ -129,7 +129,7 @@
   <data name="FileNewMenuText" xml:space="preserve">
     <value>New</value>
   </data>
-  <data name="FileOpenCommandText" xml:space="preserve">
+  <data name="FileOpenFileCommandText" xml:space="preserve">
     <value>Open</value>
   </data>
   <data name="FileSaveAsCommandText" xml:space="preserve">
@@ -168,7 +168,7 @@
   <data name="FileNewCppSourceCommandTooltip" xml:space="preserve">
     <value>Create New C++ .cpp Source File</value>
   </data>
-  <data name="FileOpenCommandTooltip" xml:space="preserve">
+  <data name="FileOpenFileCommandTooltip" xml:space="preserve">
     <value>Open An Existing File</value>
   </data>
   <data name="OpenFileDialogTitle" xml:space="preserve">
@@ -226,7 +226,7 @@
     <value />
   </data>
   <data name="EditSelectAllCommandText" xml:space="preserve">
-    <value>SelectAll</value>
+    <value>Select All</value>
   </data>
   <data name="EditSelectAllCommandTooltip" xml:space="preserve">
     <value />
@@ -338,5 +338,20 @@
   </data>
   <data name="ProjectRootDirectoryNotExistText" xml:space="preserve">
     <value>Project root directory not exist</value>
+  </data>
+  <data name="AreYouWantToCloseProjectText" xml:space="preserve">
+    <value>Are you want to close project {0}?</value>
+  </data>
+  <data name="ProjectFileNotExistText" xml:space="preserve">
+    <value>Project file doesn't exist.</value>
+  </data>
+  <data name="FileOpenProjectCommandText" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="FileOpenProjectCommandTooltip" xml:space="preserve">
+    <value>Open An Existing Project</value>
+  </data>
+  <data name="FileOpenMenuText" xml:space="preserve">
+    <value>Open</value>
   </data>
 </root>

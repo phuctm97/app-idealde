@@ -301,6 +301,8 @@
     <Compile Include="Modules\Output\Views\OutputView.xaml.cs">
       <DependentUpon>OutputView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modules\ProjectExplorer\Commands\OpenProjectCommandDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\OpenProjectCommandHandler.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\RemoveFileCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectExplorerCommandHandler.cs" />
@@ -334,8 +336,8 @@
     <Compile Include="Modules\Shell\Commands\ExitCommandHandler.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandDefinition.cs" />
     <Compile Include="Modules\CodeEditor\Commands\NewCodeFileCommandHandler.cs" />
-    <Compile Include="Modules\Shell\Commands\NewCppProjectCommandDefinition.cs" />
-    <Compile Include="Modules\Shell\Commands\NewProjectCommandHandler.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\NewCppProjectCommandDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\NewCppProjectCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\SaveFileAsCommandDefinition.cs" />
@@ -462,6 +464,13 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\NewProject.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\FolderClosed.png" />
+    <Resource Include="Resources\Images\FolderOpen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\OpenProject.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

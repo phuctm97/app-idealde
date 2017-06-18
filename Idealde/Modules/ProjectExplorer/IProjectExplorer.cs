@@ -8,16 +8,12 @@ namespace Idealde.Modules.ProjectExplorer
 {
     public interface IProjectExplorer : ITool
     {
-        ProjectInfo ProjectInfo { get; set; }
+        ProjectInfo CurrentProjectInfo { get; set; }
 
-        IObservableCollection<ProjectItemBase> Items { get; }
+        IObservableCollection<ProjectItemBase> ProjectItems { get; }
 
-        IObservableCollection<MenuItemBase> MenuItems { get; }
+        void LoadProject(string path);
 
-        void PopulateMenu(ProjectItemBase item);
-
-        void Load(string path);
-
-        void Clear();
+        void CloseCurrentProject();
     }
 }

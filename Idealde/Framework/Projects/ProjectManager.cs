@@ -22,6 +22,11 @@ namespace Idealde.Framework.ProjectExplorer.Models
             _projectItemTypeToDefinitionLookup = new Dictionary<Type, ProjectItemDefinition>();
         }
 
+        public IEnumerable<ProjectType> ProjectTypes
+        {
+            get { yield return new ProjectType("C++ Project", ".cxproj"); }
+        }
+
         public ProjectItemDefinition GetProjectItemDefinition(Type projectItemDefinitionType)
         {
             ProjectItemDefinition projectItemDefinition;
@@ -126,5 +131,6 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
             projectFile.Save(path);
         }
+
     }
 }

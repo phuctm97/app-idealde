@@ -24,42 +24,29 @@ namespace Idealde.Modules.ProjectExplorer.Models
             if (path == null) return string.Empty;
 
             var extension = Path.GetExtension(path).ToLower();
-
             return extension + " file";
         }
+
         public override Uri GetIcon(bool isOpen, object tag)
         {
             string path = tag as string;
 
             // default file icon
-            string iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/File.png";
 
-            if (path == null) return new Uri(iconSource, UriKind.Absolute);
+            string iconSource;
 
-            var extension = Path.GetExtension(path).ToLower();
-
+            var extension = path == null ? string.Empty : Path.GetExtension(path).ToLower();
             switch (extension)
             {
-                case "cpp":
+                case ".cpp":
+                case ".c":
+                case ".cxx":
+                case ".h":
+                case ".hpp":
                     iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/CppFile.png";
                     break;
-                case "cs":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/CsFile.png";
-                    break;
-                case "config":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/ConfigFile.png";
-                    break;
-                case "xml":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/XmlFile.png";
-                    break;
-                case "txt":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/TxtFile.png";
-                    break;
-                case "c":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/CFile.png";
-                    break;
-                case "h":
-                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/HeaderFile.png";
+                default:
+                    iconSource = "pack://application:,,,/Idealde;Component/Resources/Images/File.png";
                     break;
             }
 

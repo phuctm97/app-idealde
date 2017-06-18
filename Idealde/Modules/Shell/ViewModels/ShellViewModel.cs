@@ -17,6 +17,7 @@ using Idealde.Modules.StatusBar;
 using Idealde.Modules.ToolBarTray;
 using Idealde.Modules.ToolBarTray.Models;
 using Idealde.Modules.UndoRedo.Commands;
+using Idealde.ProjectExplorers.Shell.Commands;
 using Idealde.Properties;
 
 #endregion
@@ -123,7 +124,7 @@ namespace Idealde.Modules.Shell.ViewModels
             MainMenu.AddMenu(fileMenu);
 
             var fileNewMenu = new DisplayMenuItem("File.New", Resources.FileNewMenuText);
-            var fileOpenMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open");
+            var fileOpenMenu = new DisplayMenuItem("File.Open", Resources.FileOpenMenuText);
             var fileCloseMenu = new CommandMenuItem<CloseFileCommandDefinition>("File.Close");
             var fileSaveMenu = new CommandMenuItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsMenu = new CommandMenuItem<SaveFileAsCommandDefinition>("File.SaveAs");
@@ -143,6 +144,12 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
             MainMenu.AddMenuItem(fileNewMenu, fileNewCppProjectMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
             //> File.New menu
+
+            //< File.Open menu
+            var fileOpenProjectMenu = new CommandMenuItem<OpenProjectCommandDefinition>("File.Open.Project");
+            var fileOpenFileMenu = new CommandMenuItem<OpenFileCommandDefinition>("File.Open.File");
+            MainMenu.AddMenuItem(fileOpenMenu, fileOpenFileMenu, fileOpenProjectMenu);
+            //> File.Open menu
 
             //> File menu
 
@@ -212,15 +219,18 @@ namespace Idealde.Modules.Shell.ViewModels
                 = new CommandToolBarItem<NewCppHeaderCommandDefinition>("File.NewCppHeader", true);
             var fileNewCppSourceToolBarItem
                 = new CommandToolBarItem<NewCppSourceCommandDefinition>("File.NewCppSource", true);
-            var fileOpenToolBarItem = new CommandToolBarItem<OpenFileCommandDefinition>("File.Open");
+            var fileOpenFileToolBarItem = new CommandToolBarItem<OpenFileCommandDefinition>("File.OpenFile");
+            var fileOpenProjectToolBarItme = new CommandToolBarItem<OpenProjectCommandDefinition>("File.OpenProject");
             var fileSaveToolBarItem = new CommandToolBarItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsToolBarItem = new CommandToolBarItem<SaveFileAsCommandDefinition>("File.SaveAs");
             ToolBarTray.AddToolBarItem(fileToolBar,
                 fileNewCppHeaderToolBarItem,
                 fileNewCppSourceToolBarItem,
                 new ToolBarItemSeparator("File.S1"),
-                fileOpenToolBarItem,
-                fileSaveToolBarItem, fileSaveAsToolBarItem);
+                fileOpenFileToolBarItem,
+                fileOpenProjectToolBarItme,
+                fileSaveToolBarItem, 
+                fileSaveAsToolBarItem);
             //> File tool bar
 
             //< Run menu

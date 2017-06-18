@@ -31,6 +31,7 @@ using Idealde.Modules.StatusBar.ViewModels;
 using Idealde.Modules.ToolBarTray;
 using Idealde.Modules.ToolBarTray.ViewModels;
 using Idealde.Modules.UndoRedo;
+using Idealde.ProjectExplorers.Shell.Commands;
 using Microsoft.Practices.Unity;
 
 #endregion
@@ -77,9 +78,6 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, OpenFileCommandHandler>(OpenFileCommandDefinition.CommandName,
-                new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandHandler, NewProjectCommandHandler>(
-                NewCppProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //services
@@ -141,6 +139,12 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, ViewProjectExplorerCommandHandler>(
                 ViewProjectExplorerCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppProjectCommandHandler>(
+                NewCppProjectCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, OpenProjectCommandHandler>(
+                OpenProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //undo redo

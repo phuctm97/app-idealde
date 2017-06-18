@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region Using Namespace
+
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
+#endregion
 
 namespace Idealde.Modules.ProjectExplorer.Views
 {
     /// <summary>
-    /// Interaction logic for NewProjectSettingsView.xaml
+    ///     Interaction logic for NewProjectSettingsView.xaml
     /// </summary>
     public partial class NewProjectSettingsView : Window
     {

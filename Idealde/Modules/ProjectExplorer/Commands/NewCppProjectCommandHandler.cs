@@ -10,9 +10,9 @@ using Idealde.Modules.ProjectExplorer.ViewModels;
 
 #endregion
 
-namespace Idealde.Modules.Shell.Commands
+namespace Idealde.ProjectExplorers.Shell.Commands
 {
-    public class NewProjectCommandHandler
+    public class NewCppProjectCommandHandler
         : ICommandHandler<NewCppProjectCommandDefinition>
     {
         public void Update(Command command)

@@ -2,7 +2,7 @@
 using Idealde.Framework.Commands;
 using Idealde.Properties;
 
-namespace Idealde.Modules.Shell.Commands
+namespace Idealde.ProjectExplorers.Shell.Commands
 {
     public class NewCppProjectCommandDefinition : CommandDefinition
     {

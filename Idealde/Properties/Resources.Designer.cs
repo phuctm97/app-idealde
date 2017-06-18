@@ -70,6 +70,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you want to close project {0}?.
+        /// </summary>
+        public static string AreYouWantToCloseProjectText {
+            get {
+                return ResourceManager.GetString("AreYouWantToCloseProjectText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save {0} before exit?.
         /// </summary>
         public static string AskForSaveFileBeforeExit {
@@ -295,7 +304,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SelectAll.
+        ///   Looks up a localized string similar to Select All.
         /// </summary>
         public static string EditSelectAllCommandText {
             get {
@@ -441,18 +450,45 @@ namespace Idealde.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
-        public static string FileOpenCommandText {
+        public static string FileOpenFileCommandText {
             get {
-                return ResourceManager.GetString("FileOpenCommandText", resourceCulture);
+                return ResourceManager.GetString("FileOpenFileCommandText", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open An Existing File.
         /// </summary>
-        public static string FileOpenCommandTooltip {
+        public static string FileOpenFileCommandTooltip {
             get {
-                return ResourceManager.GetString("FileOpenCommandTooltip", resourceCulture);
+                return ResourceManager.GetString("FileOpenFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string FileOpenMenuText {
+            get {
+                return ResourceManager.GetString("FileOpenMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string FileOpenProjectCommandText {
+            get {
+                return ResourceManager.GetString("FileOpenProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open An Existing Project.
+        /// </summary>
+        public static string FileOpenProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileOpenProjectCommandTooltip", resourceCulture);
             }
         }
         
@@ -543,6 +579,15 @@ namespace Idealde.Properties {
         public static string PleaseEnterProjectNameText {
             get {
                 return ResourceManager.GetString("PleaseEnterProjectNameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project file doesn&apos;t exist..
+        /// </summary>
+        public static string ProjectFileNotExistText {
+            get {
+                return ResourceManager.GetString("ProjectFileNotExistText", resourceCulture);
             }
         }
         

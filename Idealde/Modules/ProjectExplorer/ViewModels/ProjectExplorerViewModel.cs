@@ -3,31 +3,37 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
+using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
-using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.MainMenu.Models;
-using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Models;
+using Idealde.Properties;
+using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 #endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class ProjectExplorerViewModel : Tool, IProjectExplorer,
-        ICommandHandler<NewCppHeaderCommandDefinition>,
-        ICommandHandler<RemoveFileCommandDefinition>,
-        ICommandHandler<NewCppSourceCommandDefinition>
+    public class ProjectExplorerViewModel : Tool, IProjectExplorer
     {
+        // Dependencies
+
+        #region Dependencies
+
+        private readonly IProjectManager _projectManager;
+
+        #endregion
+
         // Backing fields
 
         #region Backing fields
 
         private ProjectItemBase _selectedItem;
-        private ProjectInfo _projectInfo;
+        private ProjectInfo _currentProjectInfo;
 
         #endregion
 
@@ -39,24 +45,11 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #endregion
 
-        // Initializations
-
-        #region Initializations
-
-        public ProjectExplorerViewModel()
-        {
-            DisplayName = "Project Explorer";
-            Items = new BindableCollection<ProjectItemBase>();
-            MenuItems = new BindableCollection<MenuItemBase>();
-        }
-
-        #endregion
-
         // Bind models
 
         #region Bind models
 
-        public IObservableCollection<ProjectItemBase> Items { get; }
+        public IObservableCollection<ProjectItemBase> ProjectItems { get; }
 
         public IObservableCollection<MenuItemBase> MenuItems { get; }
 
@@ -73,17 +66,32 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #endregion
 
+        // Initializations
+
+        #region Initializations
+
+        public ProjectExplorerViewModel(IProjectManager projectManager)
+        {
+            _projectManager = projectManager;
+            DisplayName = "Project Explorer";
+            ProjectItems = new BindableCollection<ProjectItemBase>();
+            MenuItems = new BindableCollection<MenuItemBase>();
+        }
+
+        #endregion
+
         // Behaviors
 
         #region Behaviors
 
-        public ProjectInfo ProjectInfo
+        public ProjectInfo CurrentProjectInfo
         {
-            get { return _projectInfo; }
+            get { return _currentProjectInfo; }
             set
             {
-                _projectInfo = value;
-                Refresh();
+                if (value == null || Equals(_currentProjectInfo, value)) return;
+                _currentProjectInfo = value;
+                RefreshProject();
             }
         }
 
@@ -118,11 +126,12 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                         var parentNames = command.CommandDefinition.Name.Trim().Split(new[] {'|'},
                             StringSplitOptions.RemoveEmptyEntries);
 
-                        // find parent
+                        // reset parent
                         if (parentNames.Length == 0)
                         {
                             parentMenuItem = null;
                         }
+                        // find parent
                         else
                         {
                             parentMenuItem = MenuItems.FirstOrDefault(p => p.Name == parentNames.First());
@@ -160,63 +169,114 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             }
         }
 
-        private void Refresh()
+        private void RefreshProject()
         {
-            Items.Clear();
+            ProjectItems.Clear();
+
+            // TODO: update name
+
+            foreach (var fileInfo in CurrentProjectInfo.Files)
+            {
+                var parent = GenerateAndGetFolder(fileInfo);
+                if (parent == null) continue;
+
+                var fileName = Path.GetFileName(fileInfo.RealPath);
+                parent.Children.Add(new ProjectItem<FileProjectItemDefinition>
+                {
+                    Text = fileName,
+                    Tag = fileInfo.RealPath
+                });
+            }
         }
 
-        public void Load(string path)
+        private ProjectItemBase GenerateAndGetFolder(FileInfo fileInfo)
         {
-            Refresh();
+            var parentNames = fileInfo.VirtualPath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
+            if (parentNames.Length == 0) return null;
+
+            // find first item
+            var parentItem = ProjectItems.FirstOrDefault(i =>
+            {
+                var item = i as ProjectItem;
+                if (!(item?.ProjectItemDefintion is FolderProjectItemDefinition)) return false;
+
+                return string.Equals(item.Text, parentNames.First(), StringComparison.OrdinalIgnoreCase);
+            });
+
+            // create if not exist
+            if (parentItem == null)
+            {
+                parentItem = new ProjectItem<FolderProjectItemDefinition>
+                {
+                    Text = parentNames.First()
+                };
+                ProjectItems.Add(parentItem);
+            }
+
+            for (var i = 1; i < parentNames.Length - 1; i++)
+            {
+                // find next item
+                var childItem = parentItem.Children.FirstOrDefault(it =>
+                {
+                    var item = it as ProjectItem;
+                    if (!(item?.ProjectItemDefintion is FolderProjectItemDefinition)) return false;
+
+                    return string.Equals(item.Text, parentNames.First(), StringComparison.OrdinalIgnoreCase);
+                });
+
+                // create if not exist
+                if (childItem == null)
+                {
+                    childItem = new ProjectItem<FolderProjectItemDefinition>
+                    {
+                        Text = parentNames[i]
+                    };
+                    parentItem.Children.Add(childItem);
+                }
+
+                parentItem = childItem;
+            }
+
+            return parentItem;
         }
 
-        public void Clear()
+        public void LoadProject(string path)
         {
-            Items.Clear();
+            // load new project
+            var newProjectInfo = _projectManager.Load(path);
+
+            // TODO
+            newProjectInfo.Path = path;
+
+            // new project not exist
+            if (string.IsNullOrWhiteSpace(newProjectInfo.Path))
+            {
+                MessageBox.Show(Resources.ProjectFileNotExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // confirm close old project
+            if (CurrentProjectInfo != null)
+            {
+                if (!ConfirmCloseCurrentProject()) return;
+            }
+
+            // update current project
+            CurrentProjectInfo = newProjectInfo;
         }
 
-        #endregion
-
-        // Command handlers
-
-        #region Command handlers
-
-        Task ICommandHandler<NewCppSourceCommandDefinition>.Run(Command command)
+        private bool ConfirmCloseCurrentProject()
         {
-            return Task.FromResult(true);
+            var result = MessageBox.Show(string.Format(Resources.AreYouWantToCloseProjectText, "<ProjectName>"),
+                "Confirm", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+                return true;
+            return false;
         }
 
-        void ICommandHandler<NewCppSourceCommandDefinition>.Update(Command command)
+        public void CloseCurrentProject()
         {
-            // Nothing to do
-        }
-
-        void ICommandHandler<NewCppHeaderCommandDefinition>.Update(Command command)
-        {
-            // nothing to do
-        }
-
-        Task ICommandHandler<NewCppHeaderCommandDefinition>.Run(Command command)
-        {
-            return Task.FromResult(true);
-        }
-
-        Task ICommandHandler<RemoveFileCommandDefinition>.Run(Command command)
-        {
-            // delete children
-            File.Delete((string) SelectedItem.Tag);
-            SelectedItem.Children.Clear();
-
-            // delete file from project tree
-            //????????????????????????????????????
-
-
-            return Task.FromResult(true);
-        }
-
-        void ICommandHandler<RemoveFileCommandDefinition>.Update(Command command)
-        {
-            // nothing to do
+            ProjectItems.Clear();
         }
 
         #endregion
