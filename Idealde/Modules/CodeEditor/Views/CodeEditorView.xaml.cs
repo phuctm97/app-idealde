@@ -591,15 +591,6 @@ namespace Idealde.Modules.CodeEditor.Views
             return ScintillaEditor.Text;
         }
 
-        public void Undo()
-        {
-            ScintillaEditor.Undo();
-        }
-
-        public void Redo()
-        {
-            ScintillaEditor.Redo();
-        }
 
         public void EditorFocus()
         {
