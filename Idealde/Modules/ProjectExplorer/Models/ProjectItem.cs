@@ -18,9 +18,11 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public ProjectItemDefinition ProjectItemDefintion { get; }
 
-        public override Uri IconSource => ProjectItemDefintion.GetIcon(State);
+        public override object Tag { get; set; }
 
-        public override string Tooltip => ProjectItemDefintion.Tooltip;
+        public override Uri IconSource => ProjectItemDefintion.GetIcon(IsOpen,Tag);
+
+        public override string Tooltip => ProjectItemDefintion.GetTooltip(Tag);
 
         public override ICommand ActiveCommand => ProjectItemDefintion.ActiveCommand;
 
@@ -28,9 +30,10 @@ namespace Idealde.Modules.ProjectExplorer.Models
         {
             get
             {
-                return
-                    ProjectItemDefintion.CommandDefinitions.Select(
-                        commandDefinition => _commandService.GetCommand(commandDefinition));
+                foreach (var commandDefinition in ProjectItemDefintion.CommandDefinitions)
+                {
+                    yield return _commandService.GetCommand(commandDefinition);
+                }
             }
         }
 
@@ -48,6 +51,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
             var projectController = IoC.Get<IProjectController>();
             ProjectItemDefintion = projectController.GetProjectItemDefinition(projectItemDefinitionType);
         }
+
     }
 
     public class ProjectItem<TDefinition> : ProjectItem

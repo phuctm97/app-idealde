@@ -430,6 +430,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string FileRemoveCommandText {
+            get {
+                return ResourceManager.GetString("FileRemoveCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove file from project.
+        /// </summary>
+        public static string FileRemoveCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileRemoveCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Selected Item As.
         /// </summary>
         public static string FileSaveAsCommandText {

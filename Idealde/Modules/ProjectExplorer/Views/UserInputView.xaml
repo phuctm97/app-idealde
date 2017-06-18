@@ -1,0 +1,45 @@
+﻿<Window x:Class="Idealde.Modules.ProjectExplorer.Views.UserInputView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Idealde.Modules.ProjectExplorer.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        Background="{x:Static SystemColors.ControlBrush}"
+        Title="{Binding Title}" Height="150" Width="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="Enter name:" VerticalAlignment="Bottom"></TextBlock>
+            <TextBox Grid.Row="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                     Height="30" Text="{Binding FileName}"/>
+            <Rectangle Grid.Row="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
+                       VerticalAlignment="Bottom" Height="1"/>
+        </Grid>
+
+        <Grid Grid.Row="1" IsSharedSizeScope="True" HorizontalAlignment="Right" Margin="0 12 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition SharedSizeGroup="WindowButtons"/>
+                <ColumnDefinition SharedSizeGroup="WindowButtons"/>
+            </Grid.ColumnDefinitions>
+
+            
+            
+            <Button Grid.Column="0" MinWidth="80" Content="Ok"
+                    Margin="12 0 0 0" Padding="4" Command="{Binding OkCommand}"/>
+            <Button Grid.Column="1" Content="Cancel"
+                    Margin="12 0 0 0" Padding="4" Command="{Binding CancelCommand}"/>
+        </Grid>
+    </Grid>
+</Window>

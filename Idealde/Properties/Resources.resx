@@ -117,7 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="FileMenuText" xml:space="preserve">
     <value>File</value>
   </data>
@@ -309,5 +308,11 @@
   </data>
   <data name="CompilerSettingsPath" xml:space="preserve">
     <value />
+  </data>
+  <data name="FileRemoveCommandText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="FileRemoveCommandTooltip" xml:space="preserve">
+    <value>Remove file from project</value>
   </data>
 </root>

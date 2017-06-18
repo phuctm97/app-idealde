@@ -15,5 +15,8 @@ namespace Idealde.Modules.CodeEditor
         void Goto(int row, int column);
         void EditorFocus();
         string GetContent();
+
+        void Undo();
+        void Redo();
     }
 }
