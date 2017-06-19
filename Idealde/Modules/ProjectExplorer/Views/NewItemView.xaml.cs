@@ -23,5 +23,10 @@ namespace Idealde.Modules.ProjectExplorer.Views
         {
             InitializeComponent();
         }
+
+        private void OnNewItemLoaded(object sender, RoutedEventArgs e)
+        {
+            TextBoxName.Focus();
+        }
     }
 }

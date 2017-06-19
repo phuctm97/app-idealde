@@ -13,7 +13,8 @@
         HorizontalContentAlignment="Center" VerticalAlignment="Center"
         WindowStartupLocation="CenterOwner"
         WindowStyle="ToolWindow"
-        Background="{DynamicResource MainWindowCaptionActiveBackground}">
+        Background="{DynamicResource MainWindowCaptionActiveBackground}"
+        Loaded="OnNewItemLoaded">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
