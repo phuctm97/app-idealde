@@ -48,7 +48,7 @@ namespace Idealde.Modules.CodeCompiler
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     Arguments =
-                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {sourceFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\" 
+                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {tempFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\" 
                 },
                 EnableRaisingEvents = true
             };
