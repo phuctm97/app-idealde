@@ -7,13 +7,12 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Modules.ProjectExplorer.Providers;
-using Idealde.Properties;
 
 #endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public sealed class CppProjectSettingsViewModel : PersistedDocument
+    public sealed class CppProjectSettingsViewModel : PersistedDocument, IPersistedDocument
     {
         private string _foldersInclude;
         private string _libraryFiles;
@@ -29,6 +28,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 {
                     _foldersInclude = value;
                     NotifyOfPropertyChange(() => FoldersInclude);
+                    IsDirty = true;
                 }
             }
         }
@@ -42,6 +42,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 {
                     _libraryFiles = value;
                     NotifyOfPropertyChange(() => LibraryFiles);
+                    IsDirty = true;
                 }
             }
         }
@@ -55,6 +56,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 {
                     _outputType = value;
                     NotifyOfPropertyChange(() => LibraryFiles);
+                    IsDirty = true;
                 }
             }
         }
@@ -62,8 +64,9 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         public CppProjectSettingsViewModel()
         {
             ListOutputs = Enum.GetValues(typeof(CppProjectOutputType)).Cast<CppProjectOutputType>();
-
-            DisplayName = Resources.ProjectPropertiesDocumentName;
+            LibraryFiles = string.Empty;
+            FoldersInclude = string.Empty;
+            OutputType = CppProjectOutputType.Dll;
         }
 
         protected override Task DoNew()
@@ -95,14 +98,19 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             return Task.FromResult(true);
         }
 
-        protected override Task DoSave()
+        protected override async Task DoSave()
         {
-            var projectInfo = new CppProjectInfo();
+            var projectExplorer = IoC.Get<IProjectExplorer>();
+
+            var projectInfo = (CppProjectInfo) projectExplorer.CurrentProjectInfo;
+
+            projectInfo.IncludeDirectories.Clear();
             projectInfo.IncludeDirectories.AddRange(FoldersInclude.Split(new[]
             {
                 Environment.NewLine
             }, StringSplitOptions.RemoveEmptyEntries));
 
+            projectInfo.PrebuiltLibraries.Clear();
             projectInfo.PrebuiltLibraries.AddRange(LibraryFiles.Split(new[]
             {
                 Environment.NewLine
@@ -111,7 +119,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             projectInfo.OutputType = projectInfo.OutputType;
 
             var provider = IoC.Get<CppProjectProvider>();
-            return provider.Save(projectInfo, FilePath);
+            await provider.Save(projectInfo, FilePath);
         }
     }
 }

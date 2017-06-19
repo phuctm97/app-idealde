@@ -69,7 +69,16 @@ namespace Idealde.Modules.Compiler
 
             var cppProject = project as CppProjectInfo;
             var cppProvider = project.Provider as CppProjectProvider;
+            if (cppProject == null) return;
 
+            // libs
+            buildCommand += " " + string.Join(" ", cppProject.PrebuiltLibraries.Select(p => $"\"{p}\""));
+            // TODO: libpath
+
+            // includes
+            buildCommand += " " + string.Join(" ", cppProject.IncludeDirectories.Select(p => $"/I\"{p}\""));
+
+            // output
             buildCommand += " " + $"/Fe:\"{cppProvider?.GetBinPath(cppProject)}\\{cppProject?.ProjectName}.exe\"";
 
             // reset data
@@ -79,7 +88,7 @@ namespace Idealde.Modules.Compiler
 
             // generate cl
             var cl = GenerateCl(buildCommand);
-
+            
             // start cl
             StartCl(cl, cppProvider?.GetCompileDirectory(cppProject));
         }

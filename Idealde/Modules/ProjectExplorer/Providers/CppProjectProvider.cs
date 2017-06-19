@@ -11,6 +11,7 @@ using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
 using Idealde.Modules.Compiler;
 using Idealde.Modules.ProjectExplorer.Models;
+using Idealde.Modules.ProjectExplorer.ViewModels;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 #endregion
@@ -34,6 +35,8 @@ namespace Idealde.Modules.ProjectExplorer.Providers
         }
 
         public Type ProjectItemDefinitionType => typeof(CppProjectItemDefinition);
+
+        public Type PropertiesDocumentType => typeof(CppProjectSettingsViewModel);
 
         public IEnumerable<ProjectType> ProjectTypes
         {

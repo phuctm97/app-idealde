@@ -618,12 +618,16 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         async Task ICommandHandler<ViewProjectPropertiesCommandDefinition>.Run(Command command)
         {
             var shell = IoC.Get<IShell>();
-            var settingsDocument = shell.Documents.OfType<CppProjectSettingsViewModel>().FirstOrDefault();
+            var settingsDocument =
+                shell.Documents.OfType<IPersistedDocument>()
+                    .FirstOrDefault(p => p.GetType() == CurrentProjectInfo.Provider.PropertiesDocumentType);
 
             if (settingsDocument == null)
             {
-                settingsDocument = IoC.Get<CppProjectSettingsViewModel>();
-                await settingsDocument.Load(CurrentProjectInfo.ProjectName);
+                settingsDocument =
+                    (IPersistedDocument)
+                    IoC.GetInstance(CurrentProjectInfo.Provider.PropertiesDocumentType, string.Empty);
+                await settingsDocument.Load(CurrentProjectInfo.Path);
             }
 
             shell.OpenDocument(settingsDocument);

@@ -16,6 +16,8 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
         ICompiler Compiler { get; }
 
+        Type PropertiesDocumentType { get; }
+
         Type ProjectItemDefinitionType { get; }
 
         IEnumerable<ProjectType> ProjectTypes { get; }
