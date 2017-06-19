@@ -41,7 +41,6 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         private ICodeEditorView _view;
         private string _fileContent;
         private Lexer _fileLexer;
-        private string _outputFilePath;
 
         #endregion
 
@@ -148,73 +147,103 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
         void ICommandHandler<CompileSingleFileCommandDefinition>.Update(Command command)
         {
-            command.IsEnabled = CanCompileSingleFile(FilePath);
+            ICompiler compiler;
+            if (CanCompileSingleFile(FilePath, out compiler))
+            {
+                command.IsEnabled = true;
+                command.Tag = compiler;
+            }
+            else
+            {
+                command.IsEnabled = false;
+            }
         }
 
-        Task ICommandHandler<CompileSingleFileCommandDefinition>.Run(Command command)
+        async Task ICommandHandler<CompileSingleFileCommandDefinition>.Run(Command command)
         {
-            return CompileSingleFile(FilePath);
+            // copy current content to temp file
+            var fileManager = IoC.Get<IFileManager>();
+            var tempFilePath = fileManager.GetTempFilePath(FilePath);
+            await fileManager.Write(tempFilePath, GetContent());
+
+            // compile
+            var compiler = command.Tag as ICompiler;
+            await CompileSingleFile(compiler, tempFilePath);
         }
 
         void ICommandHandler<RunSingleFileCommandDefinition>.Update(Command command)
         {
-            command.IsEnabled = CanRunSingleFile(FilePath, out _outputFilePath);
+            string outputFileName;
+            if (CanRunSingleFile(FilePath, out outputFileName))
+            {
+                command.IsEnabled = true;
+                command.Tag = outputFileName;
+            }
+            else
+            {
+                command.IsEnabled = false;
+            }
         }
 
         Task ICommandHandler<RunSingleFileCommandDefinition>.Run(Command command)
         {
-            return RunSingleFile(_outputFilePath);
+            return RunSingleFile(command.Tag as string);
         }
 
         void ICommandHandler<CompileAndRunSingleFileCommandDefinition>.Update(Command command)
         {
-            command.IsEnabled = CanCompileSingleFile(FilePath);
+            ICompiler compiler;
+            if (CanCompileSingleFile(FilePath, out compiler))
+            {
+                command.IsEnabled = true;
+                command.Tag = compiler;
+            }
+            else
+            {
+                command.IsEnabled = false;
+            }
         }
 
         async Task ICommandHandler<CompileAndRunSingleFileCommandDefinition>.Run(Command command)
         {
-            if (!await CompileSingleFile(FilePath)) return;
+            // copy current content to temp file
+            var fileManager = IoC.Get<IFileManager>();
+            var tempFilePath = fileManager.GetTempFilePath(FilePath);
+            await fileManager.Write(tempFilePath, GetContent());
 
-            if (!CanRunSingleFile(FilePath, out _outputFilePath)) return;
+            // compile
+            var compiler = command.Tag as ICompiler;
+            if (!await CompileSingleFile(compiler, tempFilePath)) return;
+            
+            // run
+            string outputFilePath;
+            if (!CanRunSingleFile(FilePath, out outputFilePath)) return;
 
-            await RunSingleFile(_outputFilePath);
+            await RunSingleFile(outputFilePath);
         }
 
-        private bool CanCompileSingleFile(string filePath)
+        private bool CanCompileSingleFile(string filePath, out ICompiler outCompiler)
         {
-            if (string.IsNullOrWhiteSpace(filePath)) return false;
+            outCompiler = null;
 
-            var codeCompiler = IoC.Get<ICodeCompiler>();
-            return !codeCompiler.IsBusy && codeCompiler.CanCompileSingleFile(Path.GetExtension(filePath));
-        }
+            if (string.IsNullOrWhiteSpace(filePath)) { return false;}
 
-        private bool CanRunSingleFile(string filePath, out string outputFilePath)
-        {
-            if (string.IsNullOrWhiteSpace(filePath))
+            var compilers = IoC.GetAll<ICompiler>();
+            foreach (var compiler in compilers)
             {
-                outputFilePath = string.Empty;
-                return false;
-            }
-
-            outputFilePath = FilePath.Replace(Path.GetExtension(filePath), ".exe");
-            if (File.Exists(_outputFilePath))
-            {
-                return true;
-            }
-
-            outputFilePath = FilePath.Replace(Path.GetExtension(filePath), ".bat");
-            if (File.Exists(_outputFilePath))
-            {
-                return true;
+                if (!compiler.IsBusy && compiler.CanCompile(filePath))
+                {
+                    outCompiler = compiler;
+                    return true;
+                }
             }
 
             return false;
         }
 
-        private async Task<bool> CompileSingleFile(string filePath)
+        private async Task<bool> CompileSingleFile(ICompiler compiler, string filePath)
         {
             //dependencies
-            var codeCompiler = IoC.Get<ICodeCompiler>();
             var shell = IoC.Get<IShell>();
             var output = IoC.Get<IOutput>();
             var errorList = IoC.Get<IErrorList>();
@@ -258,7 +287,8 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 semaphore--;
                 if (!string.IsNullOrWhiteSpace(data))
                 {
-                    output.AppendLine($"> {data}");
+                    var data2 = ConvertTempPathToFilePath(filePath, FilePath, data);
+                    output.AppendLine($"> {data2}");
                 }
                 semaphore++;
             };
@@ -266,20 +296,24 @@ namespace Idealde.Modules.CodeEditor.ViewModels
             CompilerExitedEventHandler compileExitedHandler = null;
             compileExitedHandler = delegate(IEnumerable<CompileError> errors, IEnumerable<CompileError> warnings)
             {
-                //check for erros
+                //check for errors
                 var compileErrors = errors as IList<CompileError> ?? errors.ToList();
                 var compileWarnings = warnings as IList<CompileError> ?? warnings.ToList();
 
                 //show error(s)
                 foreach (var error in compileErrors)
                 {
-                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, error.Path, error.Line,
+                    var path = ConvertTempPathToFilePath(filePath, FilePath, error.Path);
+
+                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, path, error.Line,
                         error.Column);
                 }
                 //show warning(s)
                 foreach (var warning in compileWarnings)
                 {
-                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, warning.Path,
+                    var path = ConvertTempPathToFilePath(filePath, FilePath, warning.Path);
+
+                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, path,
                         warning.Line,
                         warning.Column);
                 }
@@ -305,37 +339,74 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 }
 
                 // release subcribed delegate
-                codeCompiler.OutputDataReceived -= outputReceivedHandler;
-                codeCompiler.OnExited -= compileExitedHandler;
+                compiler.OutputDataReceived -= outputReceivedHandler;
+                compiler.OnExited -= compileExitedHandler;
                 completed = true;
             };
-            codeCompiler.OutputDataReceived += outputReceivedHandler;
-            codeCompiler.OnExited += compileExitedHandler;
+            compiler.OutputDataReceived += outputReceivedHandler;
+            compiler.OnExited += compileExitedHandler;
 
             // compile
-            codeCompiler.CompileSingleFile(FilePath, GetContent());
+            compiler.Compile(filePath, Path.GetDirectoryName(FilePath));
 
             // wait for compilation finish
             while (!completed) await Task.Delay(25);
             return result;
         }
 
-        private Task RunSingleFile(string outputFilePath)
+        private bool CanRunSingleFile(string filePath, out string outputFileName)
         {
-            if (!File.Exists(outputFilePath)) return Task.FromResult(false);
+            if (string.IsNullOrWhiteSpace(filePath))
+            {
+                outputFileName = string.Empty;
+                return false;
+            }
 
-            var output = new Process
+            outputFileName = Path.ChangeExtension(filePath, ".exe");
+            if (File.Exists(outputFileName))
+            {
+                return true;
+            }
+
+            outputFileName = Path.ChangeExtension(filePath, ".bat");
+            if (File.Exists(outputFileName))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private Task RunSingleFile(string outputFileName)
+        {
+            if (!File.Exists(outputFileName)) return Task.FromResult(false);
+
+            var bin = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = outputFilePath,
+                    FileName = outputFileName,
                     UseShellExecute = true,
                     CreateNoWindow = false
                 }
             };
 
-            output.Start();
+            bin.Start();
             return Task.FromResult(true);
+        }
+
+        private string ConvertTempPathToFilePath(string tempPath, string filePath, string source)
+        {
+            do
+            {
+                var i = source.IndexOf(tempPath, StringComparison.OrdinalIgnoreCase);
+                if (i == -1) break;
+
+                source = source.Remove(i, tempPath.Length);
+                source = source.Insert(i, filePath);
+            } while (true);
+
+            return source;
         }
 
         #endregion

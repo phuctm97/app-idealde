@@ -4,43 +4,82 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
-using Idealde.Framework.Services;
-using Idealde.Properties;
+using Idealde.Framework.Projects;
+using Idealde.Modules.ProjectExplorer.Providers;
 
 #endregion
 
 namespace Idealde.Modules.CodeCompiler
 {
-    public class CodeCompiler : ICodeCompiler
+    public class CompileError
     {
-        // Dependencies
-        private readonly IFileManager _fileManager;
+        public CompileError(int line, int column, string code, string description, string path)
+        {
+            Line = line;
+            Column = column;
+            Code = code;
+            Description = description;
+            Path = path;
+        }
 
+        public string Path { get; }
+        public int Line { get; }
+        public int Column { get; }
+        public string Code { get; }
+        public string Description { get; }
+    }
+
+    public delegate void CompilerExitedEventHandler(IEnumerable<CompileError> errors, IEnumerable<CompileError> warnings
+    );
+
+    public class CppCompiler : ICompiler
+    {
         // Backing fields
-        private readonly string[] _regexSpecialCharacters;
-        private readonly List<string> _canCompileFileTypes;
         private readonly List<CompileError> _compileErrors;
         private readonly List<CompileError> _compileWarnings;
 
-        public bool CanCompileSingleFile(string extension)
+        // Events
+        public event EventHandler<string> OutputDataReceived;
+        public event CompilerExitedEventHandler OnExited;
+
+        // Initializations
+        public CppCompiler()
         {
-            return _canCompileFileTypes.Contains(extension);
+            IsBusy = false;
+
+            _compileErrors = new List<CompileError>();
+
+            _compileWarnings = new List<CompileError>();
         }
 
-        public async void CompileSingleFile(string sourceFilePath, string fileContent)
+        public bool IsBusy { get; private set; }
+
+        public bool CanCompile(ProjectInfoBase project)
         {
-            //write new content to temp file
-            var tempFilePath = _fileManager.GetTempFilePath(sourceFilePath);
-            await _fileManager.Write(tempFilePath, fileContent);
+            if (!(project is CppProjectInfo)) return false;
+            if (!(project?.Provider is CppProjectProvider)) return false;
+            return true;
+        }
 
-            //generate output directory
-            var sourceFileDirectory = Path.GetDirectoryName(sourceFilePath);
+        public bool CanCompile(string file)
+        {
+            return string.Equals(Path.GetExtension(file), ".cpp", StringComparison.OrdinalIgnoreCase);
+        }
 
+        public void Compile(ProjectInfoBase project)
+        {
+            // get all files
+            var files = project.Files.Select(f => f.RealPath);
+        }
+
+        public void Compile(string file, string outputPath)
+        {
             //config cl
             var cl = new Process
             {
-                StartInfo = new ProcessStartInfo()
+                StartInfo = new ProcessStartInfo
                 {
                     FileName = "cmd",
                     RedirectStandardOutput = true,
@@ -48,7 +87,7 @@ namespace Idealde.Modules.CodeCompiler
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     Arguments =
-                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {tempFilePath} /Fo:{sourceFileDirectory}\\ /Fe:{sourceFileDirectory}\\" 
+                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {file} /Fo:{outputPath}\\ /Fe:{outputPath}\\"
                 },
                 EnableRaisingEvents = true
             };
@@ -160,41 +199,6 @@ namespace Idealde.Modules.CodeCompiler
                 }
                 _compileWarnings.Add(new CompileError(line, column, code, description, path));
             }
-        }
-
-        public event EventHandler<string> OutputDataReceived;
-
-        public event CompilerExitedEventHandler OnExited;
-
-        public bool IsBusy { get; private set; }
-
-        public CodeCompiler(IFileManager fileManager)
-        {
-            _fileManager = fileManager;
-
-            IsBusy = false;
-
-            _canCompileFileTypes = new List<string>();
-
-            _compileErrors = new List<CompileError>();
-
-            _compileWarnings = new List<CompileError>();
-
-            _regexSpecialCharacters = new[]
-            {
-                "\\",
-                ".", "$", "^", "{", "[", "(", "|", ")", "]", "}", "*", "+", "?"
-            };
-
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            _canCompileFileTypes.AddRange(new[]
-            {
-                ".cpp"
-            });
         }
     }
 }

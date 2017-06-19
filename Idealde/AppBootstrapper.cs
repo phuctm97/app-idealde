@@ -156,7 +156,7 @@ namespace Idealde
                 new TransientLifetimeManager());
 
             //code compiler
-            _container.RegisterType<ICodeCompiler, CodeCompiler>(
+            _container.RegisterType<ICompiler, CppCompiler>( "Cpp",
                 new ContainerControlledLifetimeManager());
         }
 
