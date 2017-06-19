@@ -31,6 +31,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
         #region Dependencies
 
         private readonly ILanguageDefinitionManager _languageDefinitionManager;
+        private readonly IFileManager _fileManager;
 
         #endregion
 
@@ -48,9 +49,10 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
         #region Initializations
 
-        public CodeEditorViewModel(ILanguageDefinitionManager languageDefinitionManager)
+        public CodeEditorViewModel(ILanguageDefinitionManager languageDefinitionManager, IFileManager fileManager)
         {
             _languageDefinitionManager = languageDefinitionManager;
+            _fileManager = fileManager;
             _fileContent = string.Empty;
         }
 
@@ -161,14 +163,18 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
         async Task ICommandHandler<CompileSingleFileCommandDefinition>.Run(Command command)
         {
-            // copy current content to temp file
-            var fileManager = IoC.Get<IFileManager>();
-            var tempFilePath = fileManager.GetTempFilePath(FilePath);
-            await fileManager.Write(tempFilePath, GetContent());
+            // backup original content
+            var originalContent = await _fileManager.ReadToEnd(FilePath);
+
+            // write new content
+            await _fileManager.Write(FilePath, GetContent());
 
             // compile
             var compiler = command.Tag as ICompiler;
-            await CompileSingleFile(compiler, tempFilePath);
+            await CompileSingleFile(compiler, FilePath);
+
+            // rollback original content
+            await _fileManager.Write(FilePath, originalContent);
         }
 
         void ICommandHandler<RunSingleFileCommandDefinition>.Update(Command command)
@@ -206,15 +212,19 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
         async Task ICommandHandler<CompileAndRunSingleFileCommandDefinition>.Run(Command command)
         {
-            // copy current content to temp file
-            var fileManager = IoC.Get<IFileManager>();
-            var tempFilePath = fileManager.GetTempFilePath(FilePath);
-            await fileManager.Write(tempFilePath, GetContent());
+            // backup original content
+            var originalContent = await _fileManager.ReadToEnd(FilePath);
+
+            // write new content
+            await _fileManager.Write(FilePath, GetContent());
 
             // compile
             var compiler = command.Tag as ICompiler;
-            if (!await CompileSingleFile(compiler, tempFilePath)) return;
-            
+            if (!await CompileSingleFile(compiler, FilePath)) return;
+
+            // rollback original content
+            await _fileManager.Write(FilePath, originalContent);
+
             // run
             string outputFilePath;
             if (!CanRunSingleFile(FilePath, out outputFilePath)) return;
@@ -287,8 +297,7 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 semaphore--;
                 if (!string.IsNullOrWhiteSpace(data))
                 {
-                    var data2 = ConvertTempPathToFilePath(filePath, FilePath, data);
-                    output.AppendLine($"> {data2}");
+                    output.AppendLine($"> {data}");
                 }
                 semaphore++;
             };
@@ -303,17 +312,13 @@ namespace Idealde.Modules.CodeEditor.ViewModels
                 //show error(s)
                 foreach (var error in compileErrors)
                 {
-                    var path = ConvertTempPathToFilePath(filePath, FilePath, error.Path);
-
-                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, path, error.Line,
+                    errorList.AddItem(ErrorListItemType.Error, error.Code, error.Description, error.Path, error.Line,
                         error.Column);
                 }
                 //show warning(s)
                 foreach (var warning in compileWarnings)
                 {
-                    var path = ConvertTempPathToFilePath(filePath, FilePath, warning.Path);
-
-                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, path,
+                    errorList.AddItem(ErrorListItemType.Warning, warning.Code, warning.Description, warning.Path,
                         warning.Line,
                         warning.Column);
                 }
@@ -393,20 +398,6 @@ namespace Idealde.Modules.CodeEditor.ViewModels
 
             bin.Start();
             return Task.FromResult(true);
-        }
-
-        private string ConvertTempPathToFilePath(string tempPath, string filePath, string source)
-        {
-            do
-            {
-                var i = source.IndexOf(tempPath, StringComparison.OrdinalIgnoreCase);
-                if (i == -1) break;
-
-                source = source.Remove(i, tempPath.Length);
-                source = source.Insert(i, filePath);
-            } while (true);
-
-            return source;
         }
 
         #endregion
