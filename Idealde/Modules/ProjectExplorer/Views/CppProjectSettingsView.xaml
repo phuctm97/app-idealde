@@ -6,49 +6,94 @@
              xmlns:local="clr-namespace:Idealde.Modules.ProjectExplorer.Views"
              mc:Ignorable="d"
              d:DesignHeight="400"
-             d:DesignWidth="600">
-    <Grid>
-        <GroupBox Header="Settings">
-            <StackPanel Orientation="Vertical"
-                        Margin="15">
-                <StackPanel Orientation="Horizontal"
-                            Margin="15">
-                    <Label x:Name="lbFoldesInclude"
-                           Content="Folders Include"
-                           Width="100" />
-                    <TextBox x:Name="txtFoldersInclude"
-                             AcceptsReturn="True"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Auto"
-                             Height="80"
-                             Text="{Binding FoldersInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                             Width="300" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="15">
-                    <Label x:Name="lbLibraryFiles"
-                           Content="Library Files"
-                           Width="100" />
-                    <TextBox x:Name="txbLibraryFiles"
-                             AcceptsReturn="True"
-                             HorizontalScrollBarVisibility="Auto"
-                             VerticalScrollBarVisibility="Auto"
-                             Height="80"
-                             Text="{Binding LibraryFiles,UpdateSourceTrigger=PropertyChanged}"
-                             Width="300" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal"
-                            Margin="15">
-                    <Label x:Name="lbOutputType"
-                           Content="Output Type"
-                           Width="100" />
-                    <ComboBox x:Name="cboOutputs"
-                              SelectedItem="{Binding OutputType,UpdateSourceTrigger=PropertyChanged}"
-                              ItemsSource="{Binding ListOutputs}"
-                              Height="25"
-                              Width="155" />
-                </StackPanel>
-            </StackPanel>
-        </GroupBox>
+             d:DesignWidth="600"
+             Background="{x:Static SystemColors.ControlBrush}">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="lbFoldesInclude" Grid.Column="0"
+                       Text="Folders Include"
+                       VerticalAlignment="Center" HorizontalAlignment="Right"
+                       FontSize="18"
+                       Margin="0 0 15 0" />
+            <TextBox x:Name="txtFoldersInclude" Grid.Column="1"
+                     AcceptsReturn="True" Margin="10"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto"
+                     Text="{Binding FoldersInclude,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+            
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.ColumnSpan="2" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
+                       VerticalAlignment="Center" 
+                       Margin="100 0 100 0"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="lbLibraryFiles" Grid.Column="0"
+                       Text="Library Files"
+                       FontSize="18" Margin="0 0 15 0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right" />
+            <TextBox x:Name="txbLibraryFiles" Grid.Column="1"
+                     AcceptsReturn="True" Margin="10"
+                     HorizontalScrollBarVisibility="Auto"
+                     VerticalScrollBarVisibility="Auto"
+                     Text="{Binding LibraryFiles,UpdateSourceTrigger=PropertyChanged}" />
+
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Rectangle Grid.ColumnSpan="2" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
+                       VerticalAlignment="Center" 
+                       Margin="100 0 100 0"/>
+        </Grid>
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="lbOutputType" Grid.Column="0"
+                       Text="Output Type"
+                       Margin="0 0 15 0"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       FontSize="18" />
+            <ComboBox x:Name="cboOutputs" Grid.Column="1"
+                      SelectedItem="{Binding OutputType,UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding ListOutputs}"
+                      Width="250" Margin="10"
+                      FontSize="18"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Left"
+                      VerticalContentAlignment="Center" />
+        </Grid>
+
     </Grid>
 </UserControl>
