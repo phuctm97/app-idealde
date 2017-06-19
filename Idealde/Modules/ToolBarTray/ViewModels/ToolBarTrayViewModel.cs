@@ -72,7 +72,7 @@ namespace Idealde.Modules.ToolBarTray.ViewModels
         public void AddToolBarItem(ToolBar parent, params ToolBarItemBase[] toolBarItemsBase)
         {
             foreach (var toolBarItem in toolBarItemsBase)
-            {
+            { 
                 parent.Items.Add(toolBarItem);
             }
         }
