@@ -11,6 +11,7 @@ using Idealde.Framework.Panes;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Services;
 using Idealde.Modules.CodeEditor;
+using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Properties;
 
 #endregion
@@ -19,9 +20,11 @@ namespace Idealde.Modules.ProjectExplorer.Models
 {
     public class FileProjectItemDefinition : ProjectItemDefinition
     {
+        private readonly ICommandService _commandService;
+
         public override IEnumerable<CommandDefinition> CommandDefinitions
         {
-            get { yield break; }
+            get { yield return _commandService.GetCommandDefinition(typeof(RemoveFileCommandDefinition)); }
         }
 
         public override ICommand ActiveCommand { get; }
@@ -70,8 +73,9 @@ namespace Idealde.Modules.ProjectExplorer.Models
             return new Uri(iconSource, UriKind.Absolute);
         }
 
-        public FileProjectItemDefinition()
+        public FileProjectItemDefinition(ICommandService commandService)
         {
+            _commandService = commandService;
             ActiveCommand = new RelayCommand(Active, CanActive);
         }
 

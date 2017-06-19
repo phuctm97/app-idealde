@@ -124,7 +124,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you want to close project {0}?.
+        ///   Looks up a localized string similar to Do you want to close project {0}?.
         /// </summary>
         public static string AreYouWantToCloseProjectText {
             get {
@@ -246,6 +246,24 @@ namespace Idealde.Properties {
         public static string CreateProjectFailedText {
             get {
                 return ResourceManager.GetString("CreateProjectFailedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove folder will remove all its containing folder. Continue?.
+        /// </summary>
+        public static string DoYouWantToRemoveFolderText {
+            get {
+                return ResourceManager.GetString("DoYouWantToRemoveFolderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove {0}?.
+        /// </summary>
+        public static string DoYouWantToRemoveText {
+            get {
+                return ResourceManager.GetString("DoYouWantToRemoveText", resourceCulture);
             }
         }
         
@@ -705,6 +723,42 @@ namespace Idealde.Properties {
         public static string ProjectRootDirectoryNotExistText {
             get {
                 return ResourceManager.GetString("ProjectRootDirectoryNotExistText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Current Project.
+        /// </summary>
+        public static string ProjectSaveCommandText {
+            get {
+                return ResourceManager.GetString("ProjectSaveCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ProjectSaveCommandTooltip {
+            get {
+                return ResourceManager.GetString("ProjectSaveCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string RemoveFileCommandText {
+            get {
+                return ResourceManager.GetString("RemoveFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RemoveFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("RemoveFileCommandTooltip", resourceCulture);
             }
         }
         

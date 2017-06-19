@@ -16,6 +16,7 @@ using Idealde.Modules.CodeEditor;
 using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Models;
+using Idealde.Modules.Shell.Commands;
 using Idealde.Properties;
 using Microsoft.Win32;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
@@ -28,7 +29,9 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         ICommandHandler<AddFolderToProjectCommandDefinition>,
         ICommandHandler<AddNewCppHeaderToProjectCommandDefinition>,
         ICommandHandler<AddNewCppSourceToProjectCommandDefinition>,
-        ICommandHandler<AddExistingFileToProjectCommandDefinition>
+        ICommandHandler<AddExistingFileToProjectCommandDefinition>,
+        ICommandHandler<RemoveFileCommandDefinition>,
+        ICommandHandler<SaveFileCommandDefinition>
     {
         // Backing fields
 
@@ -85,12 +88,14 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         #region Behaviors
 
+        private bool _projectIsDirty;
+
         public ProjectInfoBase CurrentProjectInfo
         {
             get { return _currentProjectInfo; }
             set
             {
-                if (value == null || Equals(_currentProjectInfo, value)) return;
+                if (Equals(_currentProjectInfo, value)) return;
                 _currentProjectInfo = value;
                 RefreshProject();
             }
@@ -173,6 +178,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         private void RefreshProject()
         {
+            _projectIsDirty = false;
             ProjectItems.Clear();
             ProjectItems.Add(CurrentProjectInfo.ProjectItem);
 
@@ -182,7 +188,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 if (parent == null) continue;
 
                 var fileName = Path.GetFileName(fileInfo.RealPath);
-                parent.Children.Add(new ProjectItem<FileProjectItemDefinition>
+                parent.AddChild(new ProjectItem<FileProjectItemDefinition>
                 {
                     Text = fileName,
                     Tag = fileInfo.RealPath
@@ -193,7 +199,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         private ProjectItemBase GenerateAndGetFolder(FileInfo fileInfo)
         {
             var parentNames = fileInfo.VirtualPath.Split(new[] {'\\'}, StringSplitOptions.RemoveEmptyEntries);
-            if (parentNames.Length == 0) return null;
+            if (parentNames.Length == 0) return CurrentProjectInfo.ProjectItem;
 
             // find first item
             var parentItem = CurrentProjectInfo.ProjectItem.Children.FirstOrDefault(i =>
@@ -211,7 +217,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 {
                     Text = parentNames.First()
                 };
-                CurrentProjectInfo.ProjectItem.Children.Add(parentItem);
+                CurrentProjectInfo.ProjectItem.AddChild(parentItem);
             }
 
             for (var i = 1; i < parentNames.Length; i++)
@@ -232,7 +238,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                     {
                         Text = parentNames[i]
                     };
-                    parentItem.Children.Add(childItem);
+                    parentItem.AddChild(childItem);
                 }
 
                 parentItem = childItem;
@@ -278,7 +284,54 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         public void CloseCurrentProject()
         {
+            if (_projectIsDirty)
+            {
+                var result =
+                    MessageBox.Show(string.Format(Resources.AskForSaveFileBeforeExit, CurrentProjectInfo.ProjectName),
+                        "Confirm", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    SaveCurrentProject();
+                }
+            }
+
             ProjectItems.Clear();
+        }
+
+        private void SaveCurrentProject()
+        {
+            // reset files
+            CurrentProjectInfo.Files.Clear();
+
+            var stack = new Stack<ProjectItemBase>();
+
+            stack.Push(CurrentProjectInfo.ProjectItem);
+            while (stack.Count > 0)
+            {
+                var parentItem = stack.Pop();
+                if (parentItem == null) continue;
+
+                foreach (var item in parentItem.Children.OfType<ProjectItem>())
+                {
+                    if (item.ProjectItemDefintion is FileProjectItemDefinition)
+                    {
+                        var virtualPath = TravVirtualPath(item);
+                        var fileName = item.Tag as string;
+                        if (string.IsNullOrWhiteSpace(fileName)) continue;
+
+                        CurrentProjectInfo.Files.Add(new FileInfo(virtualPath, fileName));
+                    }
+                    else if (item.ProjectItemDefintion is FolderProjectItemDefinition)
+                    {
+                        stack.Push(item);
+                    }
+                }
+            }
+
+            var provider = CurrentProjectInfo.Provider;
+            provider.Save(CurrentProjectInfo, CurrentProjectInfo.Path);
+
+            _projectIsDirty = false;
         }
 
         void ICommandHandler<AddFolderToProjectCommandDefinition>.Update(Command command)
@@ -307,7 +360,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
             // create new item
             var newItem = new ProjectItem<FolderProjectItemDefinition> {Text = newItemName};
-            item.Children.Add(newItem);
+            item.AddChild(newItem);
 
             item.IsOpen = true;
             SelectedItem = newItem;
@@ -373,7 +426,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 Text = newItemName,
                 Tag = newItemPath
             };
-            parent.Children.Add(newItem);
+            parent.AddChild(newItem);
+            _projectIsDirty = true;
 
             parent.IsOpen = true;
             SelectedItem = newItem;
@@ -428,7 +482,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                     Text = Path.GetFileName(fileName),
                     Tag = fileName
                 };
-                parent.Children.Add(newItem);
+                parent.AddChild(newItem);
+                _projectIsDirty = true;
 
                 if (firstItem == null)
                 {
@@ -481,6 +536,78 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             }
 
             return null;
+        }
+
+        private string TravVirtualPath(ProjectItemBase item)
+        {
+            var path = string.Empty;
+            while (item.Parent != null && item.Parent != CurrentProjectInfo.ProjectItem)
+            {
+                path = item.Parent.Text.Trim() + "\\" + path;
+                item = item.Parent;
+            }
+
+            return path;
+        }
+
+        void ICommandHandler<RemoveFileCommandDefinition>.Update(Command command)
+        {
+        }
+
+        Task ICommandHandler<RemoveFileCommandDefinition>.Run(Command command)
+        {
+            // get project item active this command
+            var item = command.Tag as ProjectItem;
+            if (item == null) return Task.FromResult(false);
+
+            var parent = item.Parent;
+            if (parent == null) return Task.FromResult(false);
+
+            if (item.ProjectItemDefintion is FolderProjectItemDefinition && ConfirmRemoveFolder())
+            {
+                parent.Children.Remove(item);
+                if (item.Children.Count > 0)
+                {
+                    _projectIsDirty = true;
+                }
+            }
+            else if (item.ProjectItemDefintion is FileProjectItemDefinition && ConfirmRemoveFile(item.Text))
+            {
+                parent.Children.Remove(item);
+                _projectIsDirty = true;
+            }
+
+            return Task.FromResult(true);
+        }
+
+        private bool ConfirmRemoveFile(string name)
+        {
+            var result = MessageBox.Show(
+                string.Format(Resources.DoYouWantToRemoveText, name), "Confirm", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes) return true;
+            return false;
+        }
+
+        private bool ConfirmRemoveFolder()
+        {
+            var result = MessageBox.Show(Resources.DoYouWantToRemoveFolderText, "Confirm", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes) return true;
+            return false;
+        }
+
+        void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
+        {
+            command.Text = Resources.ProjectSaveCommandText;
+            command.Tooltip = Resources.ProjectSaveCommandTooltip;
+            if (string.IsNullOrWhiteSpace(command.Tooltip)) command.Tooltip = command.Text;
+
+            command.IsEnabled = CurrentProjectInfo != null && _projectIsDirty;
+        }
+
+        Task ICommandHandler<SaveFileCommandDefinition>.Run(Command command)
+        {
+            SaveCurrentProject();
+            return Task.FromResult(true);
         }
 
         #endregion

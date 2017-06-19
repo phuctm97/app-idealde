@@ -340,7 +340,7 @@
     <value>Project root directory not exist</value>
   </data>
   <data name="AreYouWantToCloseProjectText" xml:space="preserve">
-    <value>Are you want to close project {0}?</value>
+    <value>Do you want to close project {0}?</value>
   </data>
   <data name="ProjectFileNotExistText" xml:space="preserve">
     <value>Project file doesn't exist.</value>
@@ -391,6 +391,24 @@
     <value>Existing File</value>
   </data>
   <data name="AddExistingFileCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoveFileCommandText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveFileCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DoYouWantToRemoveFolderText" xml:space="preserve">
+    <value>Remove folder will remove all its containing folder. Continue?</value>
+  </data>
+  <data name="DoYouWantToRemoveText" xml:space="preserve">
+    <value>Do you want to remove {0}?</value>
+  </data>
+  <data name="ProjectSaveCommandText" xml:space="preserve">
+    <value>Save Current Project</value>
+  </data>
+  <data name="ProjectSaveCommandTooltip" xml:space="preserve">
     <value />
   </data>
 </root>

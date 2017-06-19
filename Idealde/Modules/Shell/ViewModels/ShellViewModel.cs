@@ -219,6 +219,8 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileToolBar = new ToolBar("File");
             ToolBarTray.AddToolBar(fileToolBar);
 
+            var fileNewCppProjectToolBarItem =
+                new CommandToolBarItem<NewCppProjectCommandDefinition>("File.NewCppProject", true);
             var fileNewCppHeaderToolBarItem
                 = new CommandToolBarItem<NewCppHeaderCommandDefinition>("File.NewCppHeader", true);
             var fileNewCppSourceToolBarItem
@@ -228,6 +230,7 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileSaveToolBarItem = new CommandToolBarItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsToolBarItem = new CommandToolBarItem<SaveFileAsCommandDefinition>("File.SaveAs");
             ToolBarTray.AddToolBarItem(fileToolBar,
+                fileNewCppProjectToolBarItem,
                 fileNewCppHeaderToolBarItem,
                 fileNewCppSourceToolBarItem,
                 new ToolBarItemSeparator("File.S1"),

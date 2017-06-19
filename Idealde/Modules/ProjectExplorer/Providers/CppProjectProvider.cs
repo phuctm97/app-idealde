@@ -63,12 +63,18 @@ namespace Idealde.Modules.ProjectExplorer.Providers
 
             var projectFile = XElement.Load(path);
             var projectInfo = new CppProjectInfo(this);
+            var projectDirectory = Path.GetDirectoryName(path);
 
             // load files
             foreach (var file in projectFile.Descendants("FileItem"))
             {
                 var virtualPath = file.Element("VirtualPath")?.Value ?? string.Empty;
                 var realPath = file.Element("RealPath")?.Value ?? string.Empty;
+
+                if (realPath.StartsWith(".\\"))
+                {
+                    realPath = projectDirectory + realPath.Remove(0, 1);
+                }
 
                 projectInfo.Files.Add(new FileInfo(virtualPath, realPath));
             }
@@ -124,6 +130,8 @@ namespace Idealde.Modules.ProjectExplorer.Providers
                     new XElement("OutputGroup")
                 ));
 
+            var projectDirectory = Path.GetDirectoryName(path) ?? string.Empty;
+
             // load root
             var root = projectFile.Root;
             if (root == null) return string.Empty;
@@ -134,9 +142,15 @@ namespace Idealde.Modules.ProjectExplorer.Providers
             {
                 foreach (var file in info.Files)
                 {
+                    var realPath = file.RealPath;
+                    if (realPath.StartsWith(projectDirectory, StringComparison.OrdinalIgnoreCase))
+                    {
+                        realPath = "." + realPath.Remove(0, projectDirectory.Length);
+                    }
+
                     fileGroup.Add(new XElement("FileItem",
                         new XElement("VirtualPath", file.VirtualPath),
-                        new XElement("RealPath", file.RealPath)
+                        new XElement("RealPath", realPath)
                     ));
                 }
             }

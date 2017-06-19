@@ -122,6 +122,7 @@ namespace Idealde.Framework.Panes
         void ICommandHandler<SaveFileCommandDefinition>.Update(Command command)
         {
             command.IsEnabled = IsNew || IsDirty;
+            command.Text = Resources.FileSaveCommandText;
             command.Tooltip = string.Format(Resources.FileSaveCommandTooltip, FileName);
         }
 

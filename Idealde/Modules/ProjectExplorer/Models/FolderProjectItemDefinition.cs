@@ -22,6 +22,10 @@ namespace Idealde.Modules.ProjectExplorer.Models
             get
             {
                 yield return new FakeCommandDefinition("|Add");
+                yield return new FakeCommandDefinition("");
+                yield return new FakeCommandDefinition("|");
+                yield return _commandService.GetCommandDefinition(typeof(RemoveFileCommandDefinition));
+                yield return new FakeCommandDefinition("");
                 yield return new FakeCommandDefinition("|");
                 yield return new FakeCommandDefinition("|Properties");
                 yield return new FakeCommandDefinition("|Add");
@@ -38,8 +42,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public override string GetTooltip(object tag)
         {
-            var name = tag?.ToString() ?? string.Empty;
-            return name;
+            return string.Empty;
         }
 
         public override Uri GetIcon(bool isOpen, object tag)
