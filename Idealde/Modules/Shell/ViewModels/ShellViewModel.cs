@@ -5,7 +5,7 @@ using Caliburn.Micro;
 using Idealde.Framework.Panes;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
-using Idealde.Modules.CodeCompiler.Commands;
+using Idealde.Modules.Compiler.Commands;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.MainMenu;

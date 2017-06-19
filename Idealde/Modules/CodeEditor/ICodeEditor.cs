@@ -1,6 +1,6 @@
 ﻿using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
-using Idealde.Modules.CodeCompiler.Commands;
+using Idealde.Modules.Compiler.Commands;
 using ScintillaNET;
 
 namespace Idealde.Modules.CodeEditor

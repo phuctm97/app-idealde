@@ -6,15 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using Idealde.Framework.Panes;
-using Idealde.Framework.ProjectExplorer.Models;
-using Idealde.Framework.Projects;
 using Idealde.Modules.ProjectExplorer.Providers;
+using Idealde.Properties;
 
 #endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class CppProjectSettingsViewModel : PersistedDocument
+    public sealed class CppProjectSettingsViewModel : PersistedDocument
     {
         private string _foldersInclude;
         private string _libraryFiles;
@@ -63,6 +62,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         public CppProjectSettingsViewModel()
         {
             ListOutputs = Enum.GetValues(typeof(CppProjectOutputType)).Cast<CppProjectOutputType>();
+
+            DisplayName = Resources.ProjectPropertiesDocumentName;
         }
 
         protected override Task DoNew()
@@ -73,7 +74,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         protected override Task DoLoad()
         {
             var provider = IoC.Get<CppProjectProvider>();
-            CppProjectInfo projectInfo = (CppProjectInfo) provider.Load(FilePath);
+            var projectInfo = (CppProjectInfo) provider.Load(FilePath);
 
             if (string.IsNullOrWhiteSpace(projectInfo?.Path)) return Task.FromResult(false);
 
@@ -110,7 +111,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             projectInfo.OutputType = projectInfo.OutputType;
 
             var provider = IoC.Get<CppProjectProvider>();
-            return provider.Save( projectInfo, FilePath);
+            return provider.Save(projectInfo, FilePath);
         }
     }
 }

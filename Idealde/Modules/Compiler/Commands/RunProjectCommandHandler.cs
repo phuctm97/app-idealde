@@ -9,7 +9,7 @@ using Idealde.Modules.ProjectExplorer;
 
 #endregion
 
-namespace Idealde.Modules.CodeCompiler.Commands
+namespace Idealde.Modules.Compiler.Commands
 {
     public class RunProjectCommandHandler :
         ICommandHandler<RunProjectCommandDefinition>

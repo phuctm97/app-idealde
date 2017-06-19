@@ -6,7 +6,7 @@ using Idealde.Properties;
 
 #endregion
 
-namespace Idealde.Modules.CodeCompiler.Commands
+namespace Idealde.Modules.Compiler.Commands
 {
     public class RunProjectCommandDefinition : CommandDefinition
     {

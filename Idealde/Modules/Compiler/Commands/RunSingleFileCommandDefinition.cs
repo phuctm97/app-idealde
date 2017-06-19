@@ -2,7 +2,7 @@
 using Idealde.Framework.Commands;
 using Idealde.Properties;
 
-namespace Idealde.Modules.CodeCompiler.Commands
+namespace Idealde.Modules.Compiler.Commands
 {
     public class RunSingleFileCommandDefinition : CommandDefinition
     {

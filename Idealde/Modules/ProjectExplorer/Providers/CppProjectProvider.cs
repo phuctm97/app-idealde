@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Caliburn.Micro;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
-using Idealde.Modules.CodeCompiler;
+using Idealde.Modules.Compiler;
 using Idealde.Modules.ProjectExplorer.Models;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
 

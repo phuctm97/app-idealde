@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Idealde.Framework.Projects;
-using Idealde.Modules.CodeCompiler;
+using Idealde.Modules.Compiler;
 
 #endregion
 

@@ -31,7 +31,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         ICommandHandler<AddNewCppSourceToProjectCommandDefinition>,
         ICommandHandler<AddExistingFileToProjectCommandDefinition>,
         ICommandHandler<RemoveFileCommandDefinition>,
-        ICommandHandler<SaveFileCommandDefinition>
+        ICommandHandler<SaveFileCommandDefinition>,
+        ICommandHandler<ViewProjectPropertiesCommandDefinition>
     {
         // Backing fields
 
@@ -608,6 +609,24 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         {
             SaveCurrentProject();
             return Task.FromResult(true);
+        }
+
+        void ICommandHandler<ViewProjectPropertiesCommandDefinition>.Update(Command command)
+        {
+        }
+
+        async Task ICommandHandler<ViewProjectPropertiesCommandDefinition>.Run(Command command)
+        {
+            var shell = IoC.Get<IShell>();
+            var settingsDocument = shell.Documents.OfType<CppProjectSettingsViewModel>().FirstOrDefault();
+
+            if (settingsDocument == null)
+            {
+                settingsDocument = IoC.Get<CppProjectSettingsViewModel>();
+                await settingsDocument.Load(CurrentProjectInfo.ProjectName);
+            }
+
+            shell.OpenDocument(settingsDocument);
         }
 
         #endregion

@@ -763,6 +763,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string ProjectPropertiesDocumentName {
+            get {
+                return ResourceManager.GetString("ProjectPropertiesDocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project root directory not exist.
         /// </summary>
         public static string ProjectRootDirectoryNotExistText {
@@ -975,6 +984,24 @@ namespace Idealde.Properties {
         public static string ViewProjectExplorerCommandTooltip {
             get {
                 return ResourceManager.GetString("ViewProjectExplorerCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Properties.
+        /// </summary>
+        public static string ViewProjectPropertiesCommandText {
+            get {
+                return ResourceManager.GetString("ViewProjectPropertiesCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ViewProjectPropertiesCommandTooltip {
+            get {
+                return ResourceManager.GetString("ViewProjectPropertiesCommandTooltip", resourceCulture);
             }
         }
         

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Idealde.Framework.Projects;
 
-namespace Idealde.Modules.CodeCompiler
+namespace Idealde.Modules.Compiler
 {
     public class CompileError
     {

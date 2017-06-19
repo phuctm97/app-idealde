@@ -11,7 +11,7 @@ using Idealde.Modules.ProjectExplorer.Providers;
 
 #endregion
 
-namespace Idealde.Modules.CodeCompiler
+namespace Idealde.Modules.Compiler
 {
     public class CppCompiler : ICompiler
     {

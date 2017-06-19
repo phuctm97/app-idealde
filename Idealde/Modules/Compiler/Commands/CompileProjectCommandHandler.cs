@@ -12,7 +12,7 @@ using Idealde.Modules.ProjectExplorer;
 using Idealde.Modules.StatusBar;
 using Idealde.Properties;
 
-namespace Idealde.Modules.CodeCompiler.Commands
+namespace Idealde.Modules.Compiler.Commands
 {
     public class CompileProjectCommandHandler
         : ICommandHandler<CompileProjectCommandDefinition>

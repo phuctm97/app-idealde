@@ -426,4 +426,13 @@
   <data name="CompileProjectStartOutput" xml:space="preserve">
     <value>Compile project start</value>
   </data>
+  <data name="ViewProjectPropertiesCommandText" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="ViewProjectPropertiesCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ProjectPropertiesDocumentName" xml:space="preserve">
+    <value>Properties</value>
+  </data>
 </root>

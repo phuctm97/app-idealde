@@ -41,7 +41,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         protected override void OnInitialize()
         {
-            DisplayName = "New Project";
+            DisplayName = Resources.NewProjectWindowTitle;
 
             ProjectName = string.Empty;
 
