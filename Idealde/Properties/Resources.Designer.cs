@@ -61,6 +61,60 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existing File.
+        /// </summary>
+        public static string AddExistingFileCommandText {
+            get {
+                return ResourceManager.GetString("AddExistingFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddExistingFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddExistingFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New C++ Header (.h).
+        /// </summary>
+        public static string AddNewCppHeaderToProjectCommandText {
+            get {
+                return ResourceManager.GetString("AddNewCppHeaderToProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddNewCppHeaderToProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddNewCppHeaderToProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New C++ Source (.cpp).
+        /// </summary>
+        public static string AddNewCppSourceToProjectCommandText {
+            get {
+                return ResourceManager.GetString("AddNewCppSourceToProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddNewCppSourceToProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddNewCppSourceToProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Idealde.
         /// </summary>
         public static string AppName {
@@ -70,7 +124,7 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you want to close project {0}?.
+        ///   Looks up a localized string similar to Do you want to close project {0}?.
         /// </summary>
         public static string AreYouWantToCloseProjectText {
             get {
@@ -183,6 +237,33 @@ namespace Idealde.Properties {
         public static string CreateNewFileText {
             get {
                 return ResourceManager.GetString("CreateNewFileText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cann&apos;t create project.
+        /// </summary>
+        public static string CreateProjectFailedText {
+            get {
+                return ResourceManager.GetString("CreateProjectFailedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove folder will remove all its containing folder. Continue?.
+        /// </summary>
+        public static string DoYouWantToRemoveFolderText {
+            get {
+                return ResourceManager.GetString("DoYouWantToRemoveFolderText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove {0}?.
+        /// </summary>
+        public static string DoYouWantToRemoveText {
+            get {
+                return ResourceManager.GetString("DoYouWantToRemoveText", resourceCulture);
             }
         }
         
@@ -439,6 +520,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string FileNewFolderCommandText {
+            get {
+                return ResourceManager.GetString("FileNewFolderCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new folder.
+        /// </summary>
+        public static string FileNewFolderCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileNewFolderCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
         public static string FileNewMenuText {
@@ -448,7 +547,16 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to File doesn&apos;t exist.
+        /// </summary>
+        public static string FileNotExistText {
+            get {
+                return ResourceManager.GetString("FileNotExistText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
         /// </summary>
         public static string FileOpenFileCommandText {
             get {
@@ -556,6 +664,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Item.
+        /// </summary>
+        public static string NewItemWindowTitle {
+            get {
+                return ResourceManager.GetString("NewItemWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Project.
         /// </summary>
         public static string NewProjectWindowTitle {
@@ -570,6 +687,15 @@ namespace Idealde.Properties {
         public static string OpenFileDialogTitle {
             get {
                 return ResourceManager.GetString("OpenFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter item name.
+        /// </summary>
+        public static string PleaseEnterItemNameText {
+            get {
+                return ResourceManager.GetString("PleaseEnterItemNameText", resourceCulture);
             }
         }
         
@@ -597,6 +723,42 @@ namespace Idealde.Properties {
         public static string ProjectRootDirectoryNotExistText {
             get {
                 return ResourceManager.GetString("ProjectRootDirectoryNotExistText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Current Project.
+        /// </summary>
+        public static string ProjectSaveCommandText {
+            get {
+                return ResourceManager.GetString("ProjectSaveCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ProjectSaveCommandTooltip {
+            get {
+                return ResourceManager.GetString("ProjectSaveCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        public static string RemoveFileCommandText {
+            get {
+                return ResourceManager.GetString("RemoveFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RemoveFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("RemoveFileCommandTooltip", resourceCulture);
             }
         }
         
@@ -678,6 +840,15 @@ namespace Idealde.Properties {
         public static string RunSingleFileCommandTooltip {
             get {
                 return ResourceManager.GetString("RunSingleFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The same name item existed.
+        /// </summary>
+        public static string TheSameNameItemExistText {
+            get {
+                return ResourceManager.GetString("TheSameNameItemExistText", resourceCulture);
             }
         }
         

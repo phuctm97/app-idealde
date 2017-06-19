@@ -142,7 +142,11 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileNewCppProjectMenu = new CommandMenuItem<NewCppProjectCommandDefinition>("File.New.CppProject");
             var fileNewCppHeaderMenu = new CommandMenuItem<NewCppHeaderCommandDefinition>("File.New.CppHeader");
             var fileNewCppSourceMenu = new CommandMenuItem<NewCppSourceCommandDefinition>("File.New.CppSource");
-            MainMenu.AddMenuItem(fileNewMenu, fileNewCppProjectMenu, fileNewCppHeaderMenu, fileNewCppSourceMenu);
+            MainMenu.AddMenuItem(fileNewMenu,
+                fileNewCppProjectMenu,
+                new MenuItemSeparator("File.New.S1"),
+                fileNewCppHeaderMenu,
+                fileNewCppSourceMenu);
             //> File.New menu
 
             //< File.Open menu
@@ -215,6 +219,8 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileToolBar = new ToolBar("File");
             ToolBarTray.AddToolBar(fileToolBar);
 
+            var fileNewCppProjectToolBarItem =
+                new CommandToolBarItem<NewCppProjectCommandDefinition>("File.NewCppProject", true);
             var fileNewCppHeaderToolBarItem
                 = new CommandToolBarItem<NewCppHeaderCommandDefinition>("File.NewCppHeader", true);
             var fileNewCppSourceToolBarItem
@@ -224,12 +230,13 @@ namespace Idealde.Modules.Shell.ViewModels
             var fileSaveToolBarItem = new CommandToolBarItem<SaveFileCommandDefinition>("File.Save");
             var fileSaveAsToolBarItem = new CommandToolBarItem<SaveFileAsCommandDefinition>("File.SaveAs");
             ToolBarTray.AddToolBarItem(fileToolBar,
+                fileNewCppProjectToolBarItem,
                 fileNewCppHeaderToolBarItem,
                 fileNewCppSourceToolBarItem,
                 new ToolBarItemSeparator("File.S1"),
                 fileOpenFileToolBarItem,
                 fileOpenProjectToolBarItme,
-                fileSaveToolBarItem, 
+                fileSaveToolBarItem,
                 fileSaveAsToolBarItem);
             //> File tool bar
 

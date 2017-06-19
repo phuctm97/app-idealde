@@ -130,7 +130,7 @@
     <value>New</value>
   </data>
   <data name="FileOpenFileCommandText" xml:space="preserve">
-    <value>Open</value>
+    <value>File</value>
   </data>
   <data name="FileSaveAsCommandText" xml:space="preserve">
     <value>Save Selected Item As</value>
@@ -340,7 +340,7 @@
     <value>Project root directory not exist</value>
   </data>
   <data name="AreYouWantToCloseProjectText" xml:space="preserve">
-    <value>Are you want to close project {0}?</value>
+    <value>Do you want to close project {0}?</value>
   </data>
   <data name="ProjectFileNotExistText" xml:space="preserve">
     <value>Project file doesn't exist.</value>
@@ -353,5 +353,62 @@
   </data>
   <data name="FileOpenMenuText" xml:space="preserve">
     <value>Open</value>
+  </data>
+  <data name="FileNotExistText" xml:space="preserve">
+    <value>File doesn't exist</value>
+  </data>
+  <data name="CreateProjectFailedText" xml:space="preserve">
+    <value>Cann't create project</value>
+  </data>
+  <data name="FileNewFolderCommandText" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="FileNewFolderCommandTooltip" xml:space="preserve">
+    <value>Create new folder</value>
+  </data>
+  <data name="NewItemWindowTitle" xml:space="preserve">
+    <value>New Item</value>
+  </data>
+  <data name="PleaseEnterItemNameText" xml:space="preserve">
+    <value>Please enter item name</value>
+  </data>
+  <data name="TheSameNameItemExistText" xml:space="preserve">
+    <value>The same name item existed</value>
+  </data>
+  <data name="AddNewCppHeaderToProjectCommandText" xml:space="preserve">
+    <value>New C++ Header (.h)</value>
+  </data>
+  <data name="AddNewCppHeaderToProjectCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddNewCppSourceToProjectCommandText" xml:space="preserve">
+    <value>New C++ Source (.cpp)</value>
+  </data>
+  <data name="AddNewCppSourceToProjectCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddExistingFileCommandText" xml:space="preserve">
+    <value>Existing File</value>
+  </data>
+  <data name="AddExistingFileCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RemoveFileCommandText" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveFileCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="DoYouWantToRemoveFolderText" xml:space="preserve">
+    <value>Remove folder will remove all its containing folder. Continue?</value>
+  </data>
+  <data name="DoYouWantToRemoveText" xml:space="preserve">
+    <value>Do you want to remove {0}?</value>
+  </data>
+  <data name="ProjectSaveCommandText" xml:space="preserve">
+    <value>Save Current Project</value>
+  </data>
+  <data name="ProjectSaveCommandTooltip" xml:space="preserve">
+    <value />
   </data>
 </root>

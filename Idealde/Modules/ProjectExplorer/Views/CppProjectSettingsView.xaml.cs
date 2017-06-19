@@ -18,9 +18,9 @@ namespace Idealde.Modules.ProjectExplorer.Views
     /// <summary>
     /// Interaction logic for ProjectSettingsView.xaml
     /// </summary>
-    public partial class ProjectSettingsView : UserControl
+    public partial class CppProjectSettingsView : UserControl
     {
-        public ProjectSettingsView()
+        public CppProjectSettingsView()
         {
             InitializeComponent();
         }

@@ -14,6 +14,6 @@ namespace Idealde.ProjectExplorers.Shell.Commands
 
         public override string Text => Resources.FileNewCppProjectCommandText;
 
-        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/NewProject.bmp");
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/CppProject.png");
     }
 }

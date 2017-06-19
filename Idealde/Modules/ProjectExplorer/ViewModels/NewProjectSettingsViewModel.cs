@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region Using Namespace
+
+using System;
 using System.IO;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Properties;
+
+#endregion
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
@@ -11,6 +15,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
     {
         private string _projectName;
         private string _projectRootDirectory;
+        private bool _closing;
 
         public string ProjectName
         {
@@ -40,26 +45,42 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
             ProjectName = string.Empty;
 
-            ProjectRootDirectory = string.Empty; 
+            ProjectRootDirectory = string.Empty;
+
+            _closing = false;
 
             base.OnInitialize();
         }
 
         public override void TryClose(bool? dialogResult = default(bool?))
         {
-            if (string.IsNullOrWhiteSpace(ProjectName))
+            if (dialogResult != null)
             {
-                MessageBox.Show(Resources.PleaseEnterProjectNameText);
-                return;
-            }
-
-            if (!Directory.Exists(ProjectRootDirectory))
-            {
-                MessageBox.Show(Resources.ProjectRootDirectoryNotExistText);
-                return;
+                _closing = dialogResult.Value;
             }
 
             base.TryClose(dialogResult);
+        }
+
+        public override void CanClose(Action<bool> callback)
+        {
+            var canClose = true;
+
+            if (_closing)
+            {
+                if (string.IsNullOrWhiteSpace(ProjectName))
+                {
+                    canClose = false;
+                    MessageBox.Show(Resources.PleaseEnterProjectNameText);
+                }
+                else if (!Directory.Exists(ProjectRootDirectory))
+                {
+                    canClose = false;
+                    MessageBox.Show(Resources.ProjectRootDirectoryNotExistText);
+                }
+            }
+
+            callback(canClose);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿#region Using Namespace
 
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -22,24 +23,40 @@ namespace Idealde.Modules.ProjectExplorer.Commands
 
         public Task Run(Command command)
         {
-            var projectManager = IoC.Get<IProjectManager>();
+            var providers = IoC.GetAll<IProjectProvider>().ToList();
 
             var dialog = new OpenFileDialog
             {
                 Title = Resources.OpenFileDialogTitle,
-                Filter = "All Supported Files|" + string.Join(";", projectManager.ProjectTypes
+                Multiselect = false,
+                Filter = "All Supported Files|" + string.Join(";", providers.SelectMany(p => p.ProjectTypes)
                              .Select(t => $"*{t.Extension}"))
             };
 
-            foreach (var projectType in projectManager.ProjectTypes)
+            // generate filters
+            foreach (var provider in providers)
             {
-                dialog.Filter += "|" + projectType.Name + "|" + projectType.Extension;
+                dialog.Filter += "|" + provider.Name + "|" +
+                                 string.Join(";", provider.ProjectTypes.Select(t => $"*{t.Extension}"));
             }
 
             if (dialog.ShowDialog() == true)
             {
+                // find provider
+                var extension = Path.GetExtension(dialog.FileName);
                 var projectExplorer = IoC.Get<IProjectExplorer>();
-                projectExplorer.LoadProject(dialog.FileName);
+                var projectProvider =
+                    providers.First(
+                        p =>
+                            p.ProjectTypes.Any(
+                                t =>
+                                    string.Equals(t.Extension, extension,
+                                        System.StringComparison.InvariantCultureIgnoreCase)));
+
+                projectExplorer.LoadProject(dialog.FileName, projectProvider);
+
+                var shell = IoC.Get<IShell>();
+                shell.ShowTool(projectExplorer);
             }
 
             return Task.FromResult(true);

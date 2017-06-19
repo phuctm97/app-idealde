@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
-using Idealde.Framework.ProjectExplorer.Models;
 
 #endregion
 
@@ -26,12 +25,14 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         #region Bind properties
 
+        public ProjectItemBase Parent { get; set; }
+
         public abstract object Tag { get; set; }
 
         public abstract Uri IconSource { get; }
 
         public abstract string Tooltip { get; }
-         
+
         public abstract ICommand ActiveCommand { get; }
 
         public abstract IEnumerable<Command> OptionCommands { get; }
@@ -52,7 +53,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
             get { return _isOpen; }
             set
             {
-                if (value == _isOpen || Children.Count==0) return;
+                if (value == _isOpen || Children.Count == 0) return;
                 _isOpen = value;
                 NotifyOfPropertyChange(() => IsOpen);
                 NotifyOfPropertyChange(() => IconSource);
@@ -67,7 +68,6 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public IObservableCollection<ProjectItemBase> Children { get; }
 
-        
         #endregion
 
         protected ProjectItemBase()
@@ -76,6 +76,12 @@ namespace Idealde.Modules.ProjectExplorer.Models
             IsOpen = false;
         }
 
+        public void AddChild(ProjectItemBase child)
+        {
+            if (child == null) return;
 
+            Children.Add(child);
+            child.Parent = this;
+        }
     }
 }

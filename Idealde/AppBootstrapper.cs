@@ -6,6 +6,7 @@ using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.ProjectExplorer.Models;
+using Idealde.Framework.Projects;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.CodeCompiler;
@@ -23,6 +24,7 @@ using Idealde.Modules.Output.Commands;
 using Idealde.Modules.Output.ViewModels;
 using Idealde.Modules.ProjectExplorer;
 using Idealde.Modules.ProjectExplorer.Commands;
+using Idealde.Modules.ProjectExplorer.Providers;
 using Idealde.Modules.ProjectExplorer.ViewModels;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
@@ -133,18 +135,20 @@ namespace Idealde
                 new ContainerControlledLifetimeManager());
 
             //project explorer
-            _container.RegisterType<IProjectManager, ProjectManager>(
+            _container.RegisterType<IProjectService, ProjectService>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IProjectExplorer, ProjectExplorerViewModel>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, ViewProjectExplorerCommandHandler>(
                 ViewProjectExplorerCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
-            _container.RegisterType<ICommandHandler, NewCppProjectCommandHandler>(
-                NewCppProjectCommandDefinition.CommandName,
-                new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, OpenProjectCommandHandler>(
                 OpenProjectCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IProjectProvider, CppProjectProvider>( "Cpp",
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, NewCppProjectCommandHandler>(
+                NewCppProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //undo redo
@@ -152,7 +156,7 @@ namespace Idealde
                 new TransientLifetimeManager());
 
             //code compiler
-            _container.RegisterType<ICodeCompiler, CodeCompiler>(
+            _container.RegisterType<ICompiler, CppCompiler>( "Cpp",
                 new ContainerControlledLifetimeManager());
         }
 

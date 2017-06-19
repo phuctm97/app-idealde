@@ -1,6 +1,8 @@
 ﻿#region Using Namespace
 
 using System.Collections.Generic;
+using Idealde.Framework.ProjectExplorer.Models;
+using Idealde.Modules.ProjectExplorer.Models;
 
 #endregion
 
@@ -8,44 +10,47 @@ namespace Idealde.Framework.Projects
 {
     public class FileInfo
     {
-        public string Name { set; get; }
-
         public string VirtualPath { set; get; }
 
         public string RealPath { set; get; }
 
-        public FileInfo(string name, string virtualPath, string realPath)
+        public FileInfo(string virtualPath, string realPath)
         {
-            Name = name;
             VirtualPath = virtualPath;
             RealPath = realPath;
         }
     }
 
-    public enum ProjectOutputType
+    public class ProjectType
     {
-        Dll,
-        Exe
+        public ProjectType(string name, string extension)
+        {
+            Name = name;
+            Extension = extension;
+        }
+
+        public string Name { get; }
+        public string Extension { get; }
     }
 
-    public class ProjectInfo
+    public abstract class ProjectInfoBase
     {
-        public List<FileInfo> Files { get; }
+        protected ProjectInfoBase(IProjectProvider provider)
+        {
+            Provider = provider;
+            if (provider == null) return;
 
-        public List<string> IncludeDirectories { get; }
+            ProjectItem = new ProjectItem(provider.ProjectItemDefinitionType);
+        }
 
-        public List<string> PrebuiltLibraries { get; }
+        public ProjectItemBase ProjectItem { get; }
 
-        public ProjectOutputType OutputType { get; set; }
+        public abstract IList<FileInfo> Files { get; }
 
         public string Path { get; set; }
 
-        public ProjectInfo()
-        {
-            Files = new List<FileInfo>();
-            IncludeDirectories = new List<string>();
-            PrebuiltLibraries = new List<string>();
-            OutputType = ProjectOutputType.Exe;
-        }
+        public string ProjectName { get; set; }
+
+        public IProjectProvider Provider { get; }
     }
 }

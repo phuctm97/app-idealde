@@ -2,11 +2,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.ProjectExplorer.Models;
+using Idealde.Framework.Projects;
 
 #endregion
 
@@ -20,7 +20,7 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public override object Tag { get; set; }
 
-        public override Uri IconSource => ProjectItemDefintion.GetIcon(IsOpen,Tag);
+        public override Uri IconSource => ProjectItemDefintion.GetIcon(IsOpen, Tag);
 
         public override string Tooltip => ProjectItemDefintion.GetTooltip(Tag);
 
@@ -48,10 +48,9 @@ namespace Idealde.Modules.ProjectExplorer.Models
         {
             _commandService = IoC.Get<ICommandService>();
 
-            var projectController = IoC.Get<IProjectManager>();
-            ProjectItemDefintion = projectController.GetProjectItemDefinition(projectItemDefinitionType);
+            var projectService = IoC.Get<IProjectService>();
+            ProjectItemDefintion = projectService.GetProjectItemDefinition(projectItemDefinitionType);
         }
-
     }
 
     public class ProjectItem<TDefinition> : ProjectItem
