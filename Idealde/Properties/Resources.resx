@@ -435,4 +435,7 @@
   <data name="ProjectPropertiesDocumentName" xml:space="preserve">
     <value>Properties</value>
   </data>
+  <data name="ToolsMenuText" xml:space="preserve">
+    <value>Tools</value>
+  </data>
 </root>

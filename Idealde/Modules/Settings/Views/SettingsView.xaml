@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviors="clr-namespace:Idealde.Framework.Behaviors"
         xmlns:cal="http://www.caliburnproject.org"
-        Width="760" Height="500"
+        Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" 
         MinWidth="512" MinHeight="300"
         WindowStartupLocation="CenterOwner"
         ShowInTaskbar="False"

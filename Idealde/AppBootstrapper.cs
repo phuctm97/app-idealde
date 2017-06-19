@@ -14,6 +14,7 @@ using Idealde.Modules.Compiler.Commands;
 using Idealde.Modules.CodeEditor;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.CodeEditor.ViewModels;
+using Idealde.Modules.Compiler.ViewModels;
 using Idealde.Modules.ErrorList;
 using Idealde.Modules.ErrorList.Commands;
 using Idealde.Modules.ErrorList.ViewModels;
@@ -27,6 +28,7 @@ using Idealde.Modules.ProjectExplorer;
 using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Providers;
 using Idealde.Modules.ProjectExplorer.ViewModels;
+using Idealde.Modules.Settings;
 using Idealde.Modules.Shell.Commands;
 using Idealde.Modules.Shell.ViewModels;
 using Idealde.Modules.StatusBar;
@@ -81,6 +83,9 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, ExitCommandHandler>(ExitCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandHandler, OpenFileCommandHandler>(OpenFileCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, OpenSettingsCommandHandler>(
+                OpenSettingsCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
 
             //services
@@ -165,6 +170,10 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, RunProjectCommandHandler>(
                 RunProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+
+            //settings
+            _container.RegisterType<ISettingsEditor, CompilerSettingsViewModel>("Compiler",
+                new TransientLifetimeManager());
         }
 
         protected override object GetInstance(Type service, string key)

@@ -131,6 +131,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\Compiler\Views\CompilerSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\ErrorList\Views\ErrorListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -245,6 +249,10 @@
     <Compile Include="Modules\Compiler\Commands\RunProjectCommandHandler.cs" />
     <Compile Include="Modules\Compiler\CppCompiler.cs" />
     <Compile Include="Modules\Compiler\ICompiler.cs" />
+    <Compile Include="Modules\Compiler\ViewModels\CompilerSettingsViewModel.cs" />
+    <Compile Include="Modules\Compiler\Views\CompilerSettingsView.xaml.cs">
+      <DependentUpon>CompilerSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\ProjectExplorer\Commands\AddFileToProjectCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\RemoveFileCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\ViewProjectPropertiesCommandDefinition.cs" />
@@ -359,6 +367,8 @@
     <Compile Include="Modules\ProjectExplorer\Commands\NewCppProjectCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\OpenFileCommandHandler.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenSettingsCommandDefinition.cs" />
+    <Compile Include="Modules\Shell\Commands\OpenSettingsCommandHandler.cs" />
     <Compile Include="Modules\Shell\Commands\SaveFileAsCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Commands\SaveFileCommandDefinition.cs" />
     <Compile Include="Modules\Shell\Controls\LayoutInitializer.cs" />

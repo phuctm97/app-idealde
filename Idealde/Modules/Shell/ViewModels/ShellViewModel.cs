@@ -217,6 +217,14 @@ namespace Idealde.Modules.Shell.ViewModels
                 runCompileProjectMenu,
                 runRunProjectMenu);
             //> Run menu
+
+            //< Tools menu
+            var toolsMenu = new Menu("Tool", Resources.ToolsMenuText);
+            MainMenu.AddMenu(toolsMenu);
+
+            var toolsSettingsMenu = new CommandMenuItem<OpenSettingsCommandDefinition>("Tool.Settings");
+            MainMenu.AddMenuItem(toolsMenu, toolsSettingsMenu);
+            //> Tools menu
         }
 
         private void BuildToolBarTray()

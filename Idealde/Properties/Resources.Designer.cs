@@ -907,6 +907,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string ToolsMenuText {
+            get {
+                return ResourceManager.GetString("ToolsMenuText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unknown.
         /// </summary>
         public static string UnknownDisplayText {
