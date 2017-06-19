@@ -7,8 +7,10 @@
              mc:Ignorable="d"
              d:DesignHeight="400"
              d:DesignWidth="600">
-    <Grid>
-        <GroupBox Header="Settings">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            
+        </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical"
                         Margin="15">
                 <StackPanel Orientation="Horizontal"
@@ -49,6 +51,5 @@
                               Width="155" />
                 </StackPanel>
             </StackPanel>
-        </GroupBox>
     </Grid>
 </UserControl>
