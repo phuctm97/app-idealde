@@ -236,6 +236,7 @@
     <Compile Include="Framework\Projects\IProjectService.cs" />
     <Compile Include="Framework\Projects\ProjectInfo.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\EmptyStringToUnsetConverter.cs" />
+    <Compile Include="Modules\ProjectExplorer\Models\CppProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Providers\CppProjectInfo.cs" />
     <Compile Include="Modules\ProjectExplorer\Providers\CppProjectProvider.cs" />
     <Compile Include="Framework\Projects\ProjectService.cs" />
@@ -477,6 +478,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\BrokenlinktoFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CppProject.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

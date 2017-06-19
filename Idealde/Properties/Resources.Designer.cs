@@ -187,6 +187,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cann&apos;t create project.
+        /// </summary>
+        public static string CreateProjectFailedText {
+            get {
+                return ResourceManager.GetString("CreateProjectFailedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string EditCopyCommandText {

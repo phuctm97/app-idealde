@@ -2,11 +2,15 @@
 
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Projects;
+using Idealde.Framework.Services;
+using Idealde.Modules.ProjectExplorer;
 using Idealde.Modules.ProjectExplorer.Providers;
 using Idealde.Modules.ProjectExplorer.ViewModels;
+using Idealde.Properties;
 
 #endregion
 
@@ -19,14 +23,14 @@ namespace Idealde.ProjectExplorers.Shell.Commands
         {
         }
 
-        public Task Run(Command command)
+        public async Task Run(Command command)
         {
             var windowManager = IoC.Get<IWindowManager>();
 
             // show new dialog
             var dialog = IoC.Get<NewProjectSettingsViewModel>();
             var result = windowManager.ShowDialog(dialog) ?? false;
-            if (!result) return Task.FromResult(false);
+            if (!result) return;
 
             // create project directory
             var rootDirectory = dialog.ProjectRootDirectory.Trim();
@@ -41,12 +45,21 @@ namespace Idealde.ProjectExplorers.Shell.Commands
 
             // create empty project info file
             var provider = IoC.Get<CppProjectProvider>();
-            var emptyProjectInfo = new CppProjectInfo(provider);
-            emptyProjectInfo.ProjectName = projectName;
+            var emptyProjectInfo = new CppProjectInfo(provider) {ProjectName = projectName};
 
-            provider.Save(emptyProjectInfo, projectInfoFilePath);
+            projectInfoFilePath = await provider.Save(emptyProjectInfo, projectInfoFilePath);
+            if (string.IsNullOrEmpty(projectInfoFilePath))
+            {
+                MessageBox.Show(Resources.CreateProjectFailedText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-            return Task.FromResult(true);
+            // load new project
+            var projectExplorer = IoC.Get<IProjectExplorer>();
+            projectExplorer.LoadProject(projectInfoFilePath, provider);
+
+            var shell = IoC.Get<IShell>();
+            shell.ShowTool(projectExplorer);
         }
     }
 }

@@ -357,4 +357,7 @@
   <data name="FileNotExistText" xml:space="preserve">
     <value>File doesn't exist</value>
   </data>
+  <data name="CreateProjectFailedText" xml:space="preserve">
+    <value>Cann't create project</value>
+  </data>
 </root>

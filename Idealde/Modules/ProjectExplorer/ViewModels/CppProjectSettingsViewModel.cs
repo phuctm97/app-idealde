@@ -110,9 +110,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             projectInfo.OutputType = projectInfo.OutputType;
 
             var provider = IoC.Get<CppProjectProvider>();
-            provider.Save( projectInfo, FilePath);
-
-            return Task.FromResult(true);
+            return provider.Save( projectInfo, FilePath);
         }
     }
 }

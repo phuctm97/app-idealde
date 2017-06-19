@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
+using Idealde.Modules.ProjectExplorer.Models;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 #endregion
@@ -16,6 +18,8 @@ namespace Idealde.Modules.ProjectExplorer.Providers
     public class CppProjectProvider : IProjectProvider
     {
         public string Name => "C++ Project";
+
+        public Type ProjectItemDefinitionType => typeof(CppProjectItemDefinition);
 
         public IEnumerable<ProjectType> ProjectTypes
         {
@@ -97,6 +101,7 @@ namespace Idealde.Modules.ProjectExplorer.Providers
 
             // load project name
             projectInfo.ProjectName = projectFile.Attribute("Name")?.Value;
+            projectInfo.ProjectItem.Text = projectInfo.ProjectName;
             projectInfo.Path = path;
 
             // create extension directories
@@ -105,9 +110,9 @@ namespace Idealde.Modules.ProjectExplorer.Providers
             return projectInfo;
         }
 
-        public void Save(ProjectInfoBase info, string path)
+        public async Task<string> Save(ProjectInfoBase info, string path)
         {
-            if (!(info is CppProjectInfo)) return;
+            if (!(info is CppProjectInfo)) return string.Empty;
             var cppInfo = (CppProjectInfo)info;
 
             var projectFile = new XDocument(
@@ -121,7 +126,7 @@ namespace Idealde.Modules.ProjectExplorer.Providers
 
             // load root
             var root = projectFile.Root;
-            if (root == null) return;
+            if (root == null) return string.Empty;
 
             // save files
             var fileGroup = root.Element("FileGroup");
@@ -172,6 +177,15 @@ namespace Idealde.Modules.ProjectExplorer.Providers
 
             // create extension directories
             CreateExtensionDirectoriesIfNotExist(path);
+
+            int timeToLives = 2000;
+            while (timeToLives > 0 && (!File.Exists(path)))
+            {
+                await Task.Delay(25);
+                timeToLives -= 25;
+            }
+
+            return path;
         }
     }
 }

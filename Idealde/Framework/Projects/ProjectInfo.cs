@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Idealde.Framework.ProjectExplorer.Models;
+using Idealde.Modules.ProjectExplorer.Models;
 
 #endregion
 
@@ -37,7 +38,12 @@ namespace Idealde.Framework.Projects
         protected ProjectInfoBase(IProjectProvider provider)
         {
             Provider = provider;
+            if (provider == null) return;
+
+            ProjectItem = new ProjectItem(provider.ProjectItemDefinitionType);
         }
+
+        public ProjectItemBase ProjectItem { get; }
 
         public abstract IList<FileInfo> Files { get; }
 

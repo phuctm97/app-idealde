@@ -163,6 +163,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         private void RefreshProject()
         {
             ProjectItems.Clear();
+            ProjectItems.Add(CurrentProjectInfo.ProjectItem);
 
             foreach (var fileInfo in CurrentProjectInfo.Files)
             {
@@ -184,7 +185,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             if (parentNames.Length == 0) return null;
 
             // find first item
-            var parentItem = ProjectItems.FirstOrDefault(i =>
+            var parentItem = CurrentProjectInfo.ProjectItem.Children.FirstOrDefault(i =>
             {
                 var item = i as ProjectItem;
                 if (!(item?.ProjectItemDefintion is FolderProjectItemDefinition)) return false;
@@ -199,7 +200,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 {
                     Text = parentNames.First()
                 };
-                ProjectItems.Add(parentItem);
+                CurrentProjectInfo.ProjectItem.Children.Add(parentItem);
             }
 
             for (var i = 1; i < parentNames.Length; i++)
