@@ -69,7 +69,7 @@ namespace Idealde.Modules.UndoRedo
                     return;
             }
         }
-
+         
         private void Push(IObservableCollection<IUndoableAction> stack, IUndoableAction action)
         {
             UndoStack.Add(action);

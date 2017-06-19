@@ -72,6 +72,7 @@
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
+                        <Setter Property="Focusable" Value="False"/>
                     </Style>
                 </controls:MenuItemStyleSelector.SeparatorStyle>
                 <controls:MenuItemStyleSelector.MenuItemStyle>
