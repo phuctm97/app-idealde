@@ -166,7 +166,10 @@ namespace Idealde.Modules.ErrorList.ViewModels
         private void OnErrorItemQuery(object sender, ErrorListItem e)
         {
             var shell = IoC.Get<IShell>();
-            var editor = shell?.ActiveItem as ICodeEditor;
+
+            var editor =
+                shell.Documents.OfType<ICodeEditor>()
+                    .FirstOrDefault(p => string.Equals(p.FilePath, e.Path, StringComparison.OrdinalIgnoreCase));
             if (editor == null) return;
 
             shell.OpenDocument(editor);

@@ -241,6 +241,8 @@
     <Compile Include="Framework\Projects\ProjectInfo.cs" />
     <Compile Include="Modules\CodeCompiler\Commands\CompileProjectCommandDefinition.cs" />
     <Compile Include="Modules\CodeCompiler\Commands\CompileProjectCommandHandler.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\RunProjectCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\RunProjectCommandHandler.cs" />
     <Compile Include="Modules\CodeCompiler\CppCompiler.cs" />
     <Compile Include="Modules\CodeCompiler\ICompiler.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\AddFileToProjectCommandDefinition.cs" />

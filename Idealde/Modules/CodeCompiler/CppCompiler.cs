@@ -70,7 +70,7 @@ namespace Idealde.Modules.CodeCompiler
             var cppProject = project as CppProjectInfo;
             var cppProvider = project.Provider as CppProjectProvider;
 
-            buildCommand += " " + $"/Fe:\"{cppProvider?.GetOutputBinPath(cppProject)}\\{cppProject?.ProjectName}.exe\"";
+            buildCommand += " " + $"/Fe:\"{cppProvider?.GetBinPath(cppProject)}\\{cppProject?.ProjectName}.exe\"";
 
             // reset data
             IsBusy = true;
@@ -81,7 +81,7 @@ namespace Idealde.Modules.CodeCompiler
             var cl = GenerateCl(buildCommand);
 
             // start cl
-            StartCl(cl, cppProvider?.GetOutputObjPath(cppProject));
+            StartCl(cl, cppProvider?.GetCompileDirectory(cppProject));
         }
 
         public void Compile(string file, string outputPath)

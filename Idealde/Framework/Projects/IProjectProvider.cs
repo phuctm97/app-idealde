@@ -20,6 +20,10 @@ namespace Idealde.Framework.ProjectExplorer.Models
 
         IEnumerable<ProjectType> ProjectTypes { get; }
 
+        string GetBinPath(ProjectInfoBase project);
+
+        string GetCompileDirectory(ProjectInfoBase project);
+
         ProjectInfoBase Load(string path);
 
         Task<string> Save(ProjectInfoBase info, string path);

@@ -207,13 +207,15 @@ namespace Idealde.Modules.Shell.ViewModels
             var runCompileAndRunSingleFileMenu =
                 new CommandMenuItem<CompileAndRunSingleFileCommandDefinition>("Run.CompileAndRunSingleFile");
             var runCompileProjectMenu = new CommandMenuItem<CompileProjectCommandDefinition>("Run.CompileProject");
+            var runRunProjectMenu = new CommandMenuItem<RunProjectCommandDefinition>("Run.RunProject");
 
             MainMenu.AddMenuItem(runMenu,
                 runCompileSingleFileMenu,
                 runRunSingleFileMenu,
                 runCompileAndRunSingleFileMenu,
                 new MenuItemSeparator("Run.S1"),
-                runCompileProjectMenu);
+                runCompileProjectMenu,
+                runRunProjectMenu);
             //> Run menu
         }
 
@@ -252,9 +254,16 @@ namespace Idealde.Modules.Shell.ViewModels
                 new CommandToolBarItem<CompileSingleFileCommandDefinition>("Run.CompileSingleFile");
             var runRunSingleFileToolBar =
                 new CommandToolBarItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
+            var runCompileProjectToolBarItem =
+                new CommandToolBarItem<CompileProjectCommandDefinition>("Run.CompileProject");
+            var runRunProjectToolBarItem =
+                new CommandToolBarItem<RunProjectCommandDefinition>("Run.RunProject");
             ToolBarTray.AddToolBarItem(runToolBar,
                 runCompileSingleFileToolBarItem,
-                runRunSingleFileToolBar);
+                runRunSingleFileToolBar,
+                new ToolBarItemSeparator("Run.S1"),
+                runCompileProjectToolBarItem,
+                runRunProjectToolBarItem);
             //> Run menu
         }
 

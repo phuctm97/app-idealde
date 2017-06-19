@@ -162,6 +162,9 @@ namespace Idealde
             _container.RegisterType<ICommandHandler, CompileProjectCommandHandler>(
                 CompileProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, RunProjectCommandHandler>(
+                RunProjectCommandDefinition.CommandName,
+                new ContainerControlledLifetimeManager());
         }
 
         protected override object GetInstance(Type service, string key)

@@ -21,16 +21,16 @@ namespace Idealde.Modules.ProjectExplorer.Providers
     {
         public string Name => "C++ Project";
 
-        public string GetOutputObjPath(CppProjectInfo projectInfo)
+        public string GetBinPath(ProjectInfoBase project)
         {
-            CreateExtensionDirectoriesIfNotExist(projectInfo.Path);
-            return $"{Path.GetDirectoryName(projectInfo.Path)}\\Output\\obj";
+            CreateExtensionDirectoriesIfNotExist(project.Path);
+            return $"{Path.GetDirectoryName(project.Path)}\\Output\\bin";
         }
 
-        public string GetOutputBinPath(CppProjectInfo projectInfo)
+        public string GetCompileDirectory(ProjectInfoBase project)
         {
-            CreateExtensionDirectoriesIfNotExist(projectInfo.Path);
-            return $"{Path.GetDirectoryName(projectInfo.Path)}\\Output\\bin";
+            CreateExtensionDirectoriesIfNotExist(project.Path);
+            return $"{Path.GetDirectoryName(project.Path)}\\Output\\obj";
         }
 
         public Type ProjectItemDefinitionType => typeof(CppProjectItemDefinition);
@@ -135,7 +135,7 @@ namespace Idealde.Modules.ProjectExplorer.Providers
         public async Task<string> Save(ProjectInfoBase info, string path)
         {
             if (!(info is CppProjectInfo)) return string.Empty;
-            var cppInfo = (CppProjectInfo)info;
+            var cppInfo = (CppProjectInfo) info;
 
             var projectFile = new XDocument(
                 new XDeclaration("1.0", "UTF-8", null),
@@ -208,8 +208,8 @@ namespace Idealde.Modules.ProjectExplorer.Providers
             // create extension directories
             CreateExtensionDirectoriesIfNotExist(path);
 
-            int timeToLives = 2000;
-            while (timeToLives > 0 && (!File.Exists(path)))
+            var timeToLives = 2000;
+            while (timeToLives > 0 && !File.Exists(path))
             {
                 await Task.Delay(25);
                 timeToLives -= 25;
