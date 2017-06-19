@@ -438,4 +438,10 @@
   <data name="ToolsMenuText" xml:space="preserve">
     <value>Tools</value>
   </data>
+  <data name="RunProjectCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RunProjectCommandText" xml:space="preserve">
+    <value>Run Project</value>
+  </data>
 </root>

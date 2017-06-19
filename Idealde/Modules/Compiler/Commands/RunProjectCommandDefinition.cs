@@ -14,9 +14,9 @@ namespace Idealde.Modules.Compiler.Commands
 
         public override string Name => CommandName;
 
-        public override string Tooltip => Resources.CompileProjectCommandTooltip;
+        public override string Tooltip => Resources.RunProjectCommandTooltip;
 
-        public override string Text => Resources.CompileProjectCommandText;
+        public override string Text => Resources.RunProjectCommandText;
 
         public override Uri IconSource
             => new Uri("pack://application:,,,/Idealde;component/Resources/Images/Running.png");

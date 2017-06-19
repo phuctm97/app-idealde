@@ -862,6 +862,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run Project.
+        /// </summary>
+        public static string RunProjectCommandText {
+            get {
+                return ResourceManager.GetString("RunProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RunProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("RunProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rebuild.
         /// </summary>
         public static string RunRebuildCommandText {
