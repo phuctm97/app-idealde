@@ -36,6 +36,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             base.OnInitialize();
         }
 
+
+
         public override void TryClose(bool? dialogResult = default(bool?))
         {
             if (dialogResult != null)
