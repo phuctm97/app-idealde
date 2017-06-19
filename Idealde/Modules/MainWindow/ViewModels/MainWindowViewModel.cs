@@ -15,6 +15,8 @@ namespace Idealde.Modules.MainWindow.ViewModels
         // Dependencies
 
         #region Dependencies
+
+        private readonly IResourceManager _resourceManager;
         #endregion
 
         // Backing fields
@@ -102,8 +104,9 @@ namespace Idealde.Modules.MainWindow.ViewModels
 
         #region Initializations
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IResourceManager resourceManager)
         {
+            _resourceManager = resourceManager;
             Title = @"Idealde";
 
             Width = 1280;
@@ -122,6 +125,7 @@ namespace Idealde.Modules.MainWindow.ViewModels
 
         protected override void OnViewLoaded(object view)
         {
+            Icon = _resourceManager.GetBitmap("Resources\\Images\\Idealde.ico");
             base.OnViewLoaded(view);
         }
 
