@@ -43,7 +43,7 @@
             </Grid.ColumnDefinitions>
             <Rectangle Grid.ColumnSpan="2" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
                        VerticalAlignment="Center" 
-                       Margin="70 0 70 0"/>
+                       Margin="100 0 100 0"/>
         </Grid>
 
         <Grid Grid.Row="3">
@@ -71,7 +71,7 @@
             </Grid.ColumnDefinitions>
             <Rectangle Grid.ColumnSpan="2" Height="1" Fill="{x:Static SystemColors.ActiveBorderBrush}"
                        VerticalAlignment="Center" 
-                       Margin="70 0 70 0"/>
+                       Margin="100 0 100 0"/>
         </Grid>
 
         <Grid Grid.Row="5">
