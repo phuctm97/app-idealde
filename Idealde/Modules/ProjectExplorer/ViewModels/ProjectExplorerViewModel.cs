@@ -3,13 +3,17 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Idealde.Framework.Commands;
 using Idealde.Framework.Panes;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
+using Idealde.Framework.Services;
+using Idealde.Modules.CodeEditor;
 using Idealde.Modules.MainMenu.Models;
+using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Models;
 using Idealde.Properties;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
@@ -18,7 +22,10 @@ using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 namespace Idealde.Modules.ProjectExplorer.ViewModels
 {
-    public class ProjectExplorerViewModel : Tool, IProjectExplorer
+    public class ProjectExplorerViewModel : Tool, IProjectExplorer,
+        ICommandHandler<AddFolderToProjectCommandDefinition>,
+        ICommandHandler<AddNewCppHeaderToProjectCommandDefinition>,
+        ICommandHandler<AddNewCppSourceToProjectCommandDefinition>
     {
         // Backing fields
 
@@ -149,6 +156,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
                 else
                 {
                     newMenuItem = new CommandMenuItem(string.Empty, command);
+                    command.Tag = item;
                 }
 
                 if (newMenuItem == null) continue;
@@ -268,6 +276,117 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
         public void CloseCurrentProject()
         {
             ProjectItems.Clear();
+        }
+
+        private void AddFolder(ProjectInfoBase parent, string name)
+        {
+            
+        }
+
+        void ICommandHandler<AddFolderToProjectCommandDefinition>.Update(Command command)
+        {
+        }
+
+        Task ICommandHandler<AddFolderToProjectCommandDefinition>.Run(Command command)
+        {
+            // get project item active this command
+            var item = command.Tag as ProjectItem;
+            if (item == null) return Task.FromResult(false);
+
+            // show dialog for new name
+            var dialog = IoC.Get<NewItemViewModel>();
+            var windowManager = IoC.Get<IWindowManager>();
+            var result = windowManager.ShowDialog(dialog) ?? false;
+            if (!result) return Task.FromResult(false);
+
+            // check duplicated name
+            var newItemName = dialog.Name.Trim();
+            if(item.Children.Any(p => string.Equals(p.Text, newItemName, StringComparison.OrdinalIgnoreCase)))
+            {
+                MessageBox.Show(Resources.TheSameNameItemExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return Task.FromResult(false);
+            }
+
+            // create new item
+            var newItem = new ProjectItem<FolderProjectItemDefinition>() {Text = newItemName};
+            item.Children.Add(newItem);
+
+            item.IsOpen = true;
+            SelectedItem = newItem;
+            return Task.FromResult(true);
+        }
+
+        void ICommandHandler<AddNewCppHeaderToProjectCommandDefinition>.Update(Command command)
+        {
+        }
+
+        async Task ICommandHandler<AddNewCppHeaderToProjectCommandDefinition>.Run(Command command)
+        {
+            // get project item active this command
+            var item = command.Tag as ProjectItem;
+            if (item == null) return;
+
+            await AddNewFile(item, ".h");
+        }
+
+        void ICommandHandler<AddNewCppSourceToProjectCommandDefinition>.Update(Command command)
+        {
+
+        }
+
+        async Task ICommandHandler<AddNewCppSourceToProjectCommandDefinition>.Run(Command command)
+        {
+            // get project item active this command
+            var item = command.Tag as ProjectItem;
+            if (item == null) return;
+
+            await AddNewFile(item, ".cpp");
+        }
+
+        private async Task AddNewFile(ProjectItem parent, string extension)
+        {
+            // show dialog for new name
+            var dialog = IoC.Get<NewItemViewModel>();
+            var windowManager = IoC.Get<IWindowManager>();
+            var result = windowManager.ShowDialog(dialog) ?? false;
+            if (!result) return;
+
+            // check duplicated name
+            var newItemName = dialog.Name.Trim();
+            if (!newItemName.EndsWith(extension, StringComparison.OrdinalIgnoreCase))
+            {
+                newItemName += extension;
+            }
+            var newItemPath = Path.GetDirectoryName(CurrentProjectInfo.Path) + "\\" + newItemName;
+
+            if (parent.Children.Any(p => string.Equals(p.Text, newItemName, StringComparison.OrdinalIgnoreCase))
+                || File.Exists(newItemPath))
+            {
+                MessageBox.Show(Resources.TheSameNameItemExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // create new file
+            var newFile = File.Create(newItemPath);
+            newFile?.Close();
+
+            // create new item
+            var newItem = new ProjectItem<FileProjectItemDefinition>()
+            {
+                Text = newItemName,
+                Tag = newItemPath
+            };
+            parent.Children.Add(newItem);
+
+            parent.IsOpen = true;
+            SelectedItem = newItem;
+
+            // open document
+            var editor = IoC.Get<ICodeEditor>();
+            await editor.Load(newItemPath);
+
+            var shell = IoC.Get<IShell>();
+            shell.OpenDocument(editor);
         }
 
         #endregion

@@ -147,6 +147,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Modules\ProjectExplorer\Views\NewItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Modules\ProjectExplorer\Views\NewProjectSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,6 +239,7 @@
     <Compile Include="Framework\Projects\IProjectProvider.cs" />
     <Compile Include="Framework\Projects\IProjectService.cs" />
     <Compile Include="Framework\Projects\ProjectInfo.cs" />
+    <Compile Include="Modules\ProjectExplorer\Commands\AddFileToProjectCommandDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Converters\EmptyStringToUnsetConverter.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\CppProjectItemDefinition.cs" />
     <Compile Include="Modules\ProjectExplorer\Providers\CppProjectInfo.cs" />
@@ -316,8 +321,12 @@
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItem.cs" />
     <Compile Include="Modules\ProjectExplorer\Models\ProjectItemBase.cs" />
     <Compile Include="Framework\Projects\ProjectItemDefinition.cs" />
+    <Compile Include="Modules\ProjectExplorer\ViewModels\NewItemViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\NewProjectSettingsViewModel.cs" />
     <Compile Include="Modules\ProjectExplorer\ViewModels\CppProjectSettingsViewModel.cs" />
+    <Compile Include="Modules\ProjectExplorer\Views\NewItemView.xaml.cs">
+      <DependentUpon>NewItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\ProjectExplorer\Views\NewProjectSettingsView.xaml.cs">
       <DependentUpon>NewProjectSettingsView.xaml</DependentUpon>
     </Compile>

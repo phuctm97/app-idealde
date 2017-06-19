@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 using Idealde.Framework.Commands;
 using Idealde.Framework.ProjectExplorer.Models;
+using Idealde.Modules.ProjectExplorer.Commands;
 
 #endregion
 
@@ -18,7 +19,14 @@ namespace Idealde.Modules.ProjectExplorer.Models
 
         public override IEnumerable<CommandDefinition> CommandDefinitions
         {
-            get { yield break; }
+            get
+            {
+                yield return new FakeCommandDefinition("|Add");
+                yield return _commandService.GetCommandDefinition(typeof(AddFolderToProjectCommandDefinition));
+                yield return new FakeCommandDefinition("|");
+                yield return _commandService.GetCommandDefinition(typeof(AddNewCppHeaderToProjectCommandDefinition));
+                yield return _commandService.GetCommandDefinition(typeof(AddNewCppSourceToProjectCommandDefinition));
+            }
         }
 
         public override ICommand ActiveCommand => null;

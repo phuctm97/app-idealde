@@ -360,4 +360,31 @@
   <data name="CreateProjectFailedText" xml:space="preserve">
     <value>Cann't create project</value>
   </data>
+  <data name="FileNewFolderCommandText" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="FileNewFolderCommandTooltip" xml:space="preserve">
+    <value>Create new folder</value>
+  </data>
+  <data name="NewItemWindowTitle" xml:space="preserve">
+    <value>New Item</value>
+  </data>
+  <data name="PleaseEnterItemNameText" xml:space="preserve">
+    <value>Please enter item name</value>
+  </data>
+  <data name="TheSameNameItemExistText" xml:space="preserve">
+    <value>The same name item existed</value>
+  </data>
+  <data name="AddNewCppHeaderToProjectCommandText" xml:space="preserve">
+    <value>New C++ Header (.h)</value>
+  </data>
+  <data name="AddNewCppHeaderToProjectCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddNewCppSourceToProjectCommandText" xml:space="preserve">
+    <value>New C++ Source (.cpp)</value>
+  </data>
+  <data name="AddNewCppSourceToProjectCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
 </root>

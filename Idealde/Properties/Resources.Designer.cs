@@ -61,6 +61,42 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New C++ Header (.h).
+        /// </summary>
+        public static string AddNewCppHeaderToProjectCommandText {
+            get {
+                return ResourceManager.GetString("AddNewCppHeaderToProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddNewCppHeaderToProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddNewCppHeaderToProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New C++ Source (.cpp).
+        /// </summary>
+        public static string AddNewCppSourceToProjectCommandText {
+            get {
+                return ResourceManager.GetString("AddNewCppSourceToProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddNewCppSourceToProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddNewCppSourceToProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Idealde.
         /// </summary>
         public static string AppName {
@@ -448,6 +484,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        public static string FileNewFolderCommandText {
+            get {
+                return ResourceManager.GetString("FileNewFolderCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new folder.
+        /// </summary>
+        public static string FileNewFolderCommandTooltip {
+            get {
+                return ResourceManager.GetString("FileNewFolderCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
         public static string FileNewMenuText {
@@ -574,6 +628,15 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New Item.
+        /// </summary>
+        public static string NewItemWindowTitle {
+            get {
+                return ResourceManager.GetString("NewItemWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Project.
         /// </summary>
         public static string NewProjectWindowTitle {
@@ -588,6 +651,15 @@ namespace Idealde.Properties {
         public static string OpenFileDialogTitle {
             get {
                 return ResourceManager.GetString("OpenFileDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please enter item name.
+        /// </summary>
+        public static string PleaseEnterItemNameText {
+            get {
+                return ResourceManager.GetString("PleaseEnterItemNameText", resourceCulture);
             }
         }
         
@@ -696,6 +768,15 @@ namespace Idealde.Properties {
         public static string RunSingleFileCommandTooltip {
             get {
                 return ResourceManager.GetString("RunSingleFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The same name item existed.
+        /// </summary>
+        public static string TheSameNameItemExistText {
+            get {
+                return ResourceManager.GetString("TheSameNameItemExistText", resourceCulture);
             }
         }
         
