@@ -25,11 +25,15 @@ namespace Idealde.Modules.ProjectExplorer.Models
             get
             {
                 yield return new FakeCommandDefinition("|Add");
+                yield return new FakeCommandDefinition("|");
+                yield return new FakeCommandDefinition("|Properties");
+                yield return new FakeCommandDefinition("|Add");
                 yield return _commandService.GetCommandDefinition(typeof(AddFolderToProjectCommandDefinition));
                 yield return new FakeCommandDefinition("|");
                 yield return _commandService.GetCommandDefinition(typeof(AddNewCppHeaderToProjectCommandDefinition));
                 yield return _commandService.GetCommandDefinition(typeof(AddNewCppSourceToProjectCommandDefinition));
-                yield return new FakeCommandDefinition("|Properties");
+                yield return new FakeCommandDefinition("|");
+                yield return _commandService.GetCommandDefinition(typeof(AddExistingFileToProjectCommandDefinition));
             }
         }
 

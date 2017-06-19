@@ -61,6 +61,24 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Existing File.
+        /// </summary>
+        public static string AddExistingFileCommandText {
+            get {
+                return ResourceManager.GetString("AddExistingFileCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AddExistingFileCommandTooltip {
+            get {
+                return ResourceManager.GetString("AddExistingFileCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New C++ Header (.h).
         /// </summary>
         public static string AddNewCppHeaderToProjectCommandText {

@@ -42,4 +42,17 @@ namespace Idealde.Modules.ProjectExplorer.Commands
 
         public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/CppFile.png");
     }
+
+    public class AddExistingFileToProjectCommandDefinition : CommandDefinition
+    {
+        public const string CommandName = "Project.Add.ExistingFile";
+
+        public override string Name => CommandName;
+
+        public override string Tooltip => Resources.AddExistingFileCommandTooltip;
+
+        public override string Text => Resources.AddExistingFileCommandText;
+
+        public override Uri IconSource => new Uri("pack://application:,,,/Idealde;component/Resources/Images/File.png");
+    }
 }

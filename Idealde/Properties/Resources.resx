@@ -387,4 +387,10 @@
   <data name="AddNewCppSourceToProjectCommandTooltip" xml:space="preserve">
     <value />
   </data>
+  <data name="AddExistingFileCommandText" xml:space="preserve">
+    <value>Existing File</value>
+  </data>
+  <data name="AddExistingFileCommandTooltip" xml:space="preserve">
+    <value />
+  </data>
 </root>

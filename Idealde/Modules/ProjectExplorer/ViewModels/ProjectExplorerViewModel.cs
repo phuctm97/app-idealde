@@ -1,6 +1,7 @@
 ﻿#region Using Namespace
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using Idealde.Modules.MainMenu.Models;
 using Idealde.Modules.ProjectExplorer.Commands;
 using Idealde.Modules.ProjectExplorer.Models;
 using Idealde.Properties;
+using Microsoft.Win32;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
 
 #endregion
@@ -25,7 +27,8 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
     public class ProjectExplorerViewModel : Tool, IProjectExplorer,
         ICommandHandler<AddFolderToProjectCommandDefinition>,
         ICommandHandler<AddNewCppHeaderToProjectCommandDefinition>,
-        ICommandHandler<AddNewCppSourceToProjectCommandDefinition>
+        ICommandHandler<AddNewCppSourceToProjectCommandDefinition>,
+        ICommandHandler<AddExistingFileToProjectCommandDefinition>
     {
         // Backing fields
 
@@ -278,11 +281,6 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             ProjectItems.Clear();
         }
 
-        private void AddFolder(ProjectInfoBase parent, string name)
-        {
-            
-        }
-
         void ICommandHandler<AddFolderToProjectCommandDefinition>.Update(Command command)
         {
         }
@@ -301,14 +299,14 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
             // check duplicated name
             var newItemName = dialog.Name.Trim();
-            if(item.Children.Any(p => string.Equals(p.Text, newItemName, StringComparison.OrdinalIgnoreCase)))
+            if (item.Children.Any(p => string.Equals(p.Text, newItemName, StringComparison.OrdinalIgnoreCase)))
             {
                 MessageBox.Show(Resources.TheSameNameItemExistText, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return Task.FromResult(false);
             }
 
             // create new item
-            var newItem = new ProjectItem<FolderProjectItemDefinition>() {Text = newItemName};
+            var newItem = new ProjectItem<FolderProjectItemDefinition> {Text = newItemName};
             item.Children.Add(newItem);
 
             item.IsOpen = true;
@@ -331,7 +329,6 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
         void ICommandHandler<AddNewCppSourceToProjectCommandDefinition>.Update(Command command)
         {
-
         }
 
         async Task ICommandHandler<AddNewCppSourceToProjectCommandDefinition>.Run(Command command)
@@ -371,7 +368,7 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
             newFile?.Close();
 
             // create new item
-            var newItem = new ProjectItem<FileProjectItemDefinition>()
+            var newItem = new ProjectItem<FileProjectItemDefinition>
             {
                 Text = newItemName,
                 Tag = newItemPath
@@ -387,6 +384,103 @@ namespace Idealde.Modules.ProjectExplorer.ViewModels
 
             var shell = IoC.Get<IShell>();
             shell.OpenDocument(editor);
+        }
+
+        void ICommandHandler<AddExistingFileToProjectCommandDefinition>.Update(Command command)
+        {
+        }
+
+        Task ICommandHandler<AddExistingFileToProjectCommandDefinition>.Run(Command command)
+        {
+            // get project item active this command
+            var item = command.Tag as ProjectItem;
+            if (item == null) return Task.FromResult(false);
+
+            return AddExistingFile(item);
+        }
+
+        private async Task AddExistingFile(ProjectItem parent)
+        {
+            // show dialog to open files
+            var dialog = new OpenFileDialog {Multiselect = true, CheckFileExists = true, CheckPathExists = true};
+            var result = dialog.ShowDialog() ?? false;
+            if (!result) return;
+
+            // first file added to open
+            ProjectItem firstItem = null;
+
+            // add all selected files
+            foreach (var fileName in dialog.FileNames)
+            {
+                if (string.IsNullOrWhiteSpace(fileName)) continue;
+
+                // check duplicated name
+                if (TravAllItems(fileName) != null)
+                {
+                    MessageBox.Show(Resources.TheSameNameItemExistText, "Error", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    continue;
+                }
+
+                // create and add new item
+                var newItem = new ProjectItem<FileProjectItemDefinition>
+                {
+                    Text = Path.GetFileName(fileName),
+                    Tag = fileName
+                };
+                parent.Children.Add(newItem);
+
+                if (firstItem == null)
+                {
+                    firstItem = newItem;
+                }
+            }
+
+            if (firstItem != null)
+            {
+                parent.IsOpen = true;
+                SelectedItem = firstItem;
+
+                var editor = IoC.Get<ICodeEditor>();
+                await editor.Load(firstItem.Tag as string);
+
+                var shell = IoC.Get<IShell>();
+                shell.OpenDocument(editor);
+            }
+        }
+
+        private ProjectItem TravAllItems(string tag)
+        {
+            tag = tag.Trim().TrimEnd('\\');
+
+            var stack = new Stack<ProjectItem>();
+            foreach (var item in ProjectItems.OfType<ProjectItem>())
+            {
+                var itemTag = item.Tag as string;
+                if (string.Equals(itemTag?.Trim().TrimEnd('\\'), tag, StringComparison.OrdinalIgnoreCase))
+                {
+                    return item;
+                }
+
+                stack.Push(item);
+            }
+
+            while (stack.Count > 0)
+            {
+                var parentItem = stack.Pop();
+                foreach (var item in parentItem.Children.OfType<ProjectItem>())
+                {
+                    var itemTag = item.Tag as string;
+                    if (string.Equals(itemTag?.Trim().TrimEnd('\\'), tag, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return item;
+                    }
+
+                    stack.Push(item);
+                }
+            }
+
+            return null;
         }
 
         #endregion
