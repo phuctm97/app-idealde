@@ -72,9 +72,47 @@ namespace Idealde.Modules.CodeCompiler
         {
             // get all files
             var files = project.Files.Select(f => f.RealPath);
+
+            // generate build command
+            var buildCommand = "cl /EHsc";
+            buildCommand += " " + string.Join(" ", files.Select(p => $"\"{p}\""));
+
+            var cppProject = project as CppProjectInfo;
+            var cppProvider = project.Provider as CppProjectProvider;
+
+            buildCommand += " " +
+                            $"/Fo:{cppProvider?.GetOutputObjPath(cppProject)}\\ /Fe:{cppProvider?.GetOutputBinPath(cppProject)}\\";
+
+            // reset data
+            IsBusy = true;
+            _compileErrors.Clear();
+            _compileWarnings.Clear();
+
+            // generate cl
+            var cl = GenerateCl(buildCommand);
+
+            // start cl
+            StartCl(cl);
         }
 
         public void Compile(string file, string outputPath)
+        {
+            // generate build command
+            var buildCommand = $"cl /EHsc {file} /Fo:{outputPath}\\ /Fe:{outputPath}\\";
+
+            //reset data
+            IsBusy = true;
+            _compileErrors.Clear();
+            _compileWarnings.Clear();
+
+            // generate cl
+            var cl = GenerateCl(buildCommand);
+
+            // start cl
+            StartCl(cl);
+        }
+
+        private Process GenerateCl(string buildCommand)
         {
             //config cl
             var cl = new Process
@@ -86,8 +124,7 @@ namespace Idealde.Modules.CodeCompiler
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
-                    Arguments =
-                        $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && cl /EHsc {file} /Fo:{outputPath}\\ /Fe:{outputPath}\\"
+                    Arguments = $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && {buildCommand}"
                 },
                 EnableRaisingEvents = true
             };
@@ -95,12 +132,11 @@ namespace Idealde.Modules.CodeCompiler
             cl.ErrorDataReceived += OnCompilerOutputDataReceived;
             cl.Exited += OnCompilerExited;
 
-            //reset data
-            IsBusy = true;
-            _compileErrors.Clear();
-            _compileWarnings.Clear();
+            return cl;
+        }
 
-            // start cl
+        private void StartCl(Process cl)
+        {
             cl.Start();
             cl.BeginOutputReadLine();
             cl.BeginErrorReadLine();

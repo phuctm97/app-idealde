@@ -19,6 +19,18 @@ namespace Idealde.Modules.ProjectExplorer.Providers
     {
         public string Name => "C++ Project";
 
+        public string GetOutputObjPath(CppProjectInfo projectInfo)
+        {
+            CreateExtensionDirectoriesIfNotExist(projectInfo.Path);
+            return $"{Path.GetDirectoryName(projectInfo.Path)}\\Output\\obj";
+        }
+
+        public string GetOutputBinPath(CppProjectInfo projectInfo)
+        {
+            CreateExtensionDirectoriesIfNotExist(projectInfo.Path);
+            return $"{Path.GetDirectoryName(projectInfo.Path)}\\Output\\bin";
+        }
+
         public Type ProjectItemDefinitionType => typeof(CppProjectItemDefinition);
 
         public IEnumerable<ProjectType> ProjectTypes
