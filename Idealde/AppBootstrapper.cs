@@ -10,6 +10,7 @@ using Idealde.Framework.Projects;
 using Idealde.Framework.Services;
 using Idealde.Framework.Themes;
 using Idealde.Modules.CodeCompiler;
+using Idealde.Modules.CodeCompiler.Commands;
 using Idealde.Modules.CodeEditor;
 using Idealde.Modules.CodeEditor.Commands;
 using Idealde.Modules.CodeEditor.ViewModels;
@@ -155,8 +156,11 @@ namespace Idealde
             _container.RegisterType<IUndoRedoManager, UndoRedoManager>(
                 new TransientLifetimeManager());
 
-            //code compiler
+            //compiler
             _container.RegisterType<ICompiler, CppCompiler>( "Cpp",
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<ICommandHandler, CompileProjectCommandHandler>(
+                CompileProjectCommandDefinition.CommandName,
                 new ContainerControlledLifetimeManager());
         }
 

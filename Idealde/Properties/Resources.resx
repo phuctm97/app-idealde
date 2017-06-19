@@ -411,4 +411,19 @@
   <data name="ProjectSaveCommandTooltip" xml:space="preserve">
     <value />
   </data>
+  <data name="CompileProjectCommandText" xml:space="preserve">
+    <value>Compile Project</value>
+  </data>
+  <data name="CompileProjectCommandTooltip" xml:space="preserve">
+    <value>Compile Current Active Project</value>
+  </data>
+  <data name="CompileProjectFailedOutput" xml:space="preserve">
+    <value>Compile failed</value>
+  </data>
+  <data name="CompileProjectFinishSuccessfullyOutput" xml:space="preserve">
+    <value>Compile successfully</value>
+  </data>
+  <data name="CompileProjectStartOutput" xml:space="preserve">
+    <value>Compile project start</value>
+  </data>
 </root>

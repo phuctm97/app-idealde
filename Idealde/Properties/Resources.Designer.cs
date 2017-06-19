@@ -169,6 +169,51 @@ namespace Idealde.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Compile Project.
+        /// </summary>
+        public static string CompileProjectCommandText {
+            get {
+                return ResourceManager.GetString("CompileProjectCommandText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile Current Active Project.
+        /// </summary>
+        public static string CompileProjectCommandTooltip {
+            get {
+                return ResourceManager.GetString("CompileProjectCommandTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile failed.
+        /// </summary>
+        public static string CompileProjectFailedOutput {
+            get {
+                return ResourceManager.GetString("CompileProjectFailedOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile successfully.
+        /// </summary>
+        public static string CompileProjectFinishSuccessfullyOutput {
+            get {
+                return ResourceManager.GetString("CompileProjectFinishSuccessfullyOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Compile project start.
+        /// </summary>
+        public static string CompileProjectStartOutput {
+            get {
+                return ResourceManager.GetString("CompileProjectStartOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Compiler.
         /// </summary>
         public static string CompilerSettingsName {

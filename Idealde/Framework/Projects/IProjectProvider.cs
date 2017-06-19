@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Idealde.Framework.Projects;
+using Idealde.Modules.CodeCompiler;
 
 #endregion
 
@@ -12,6 +13,8 @@ namespace Idealde.Framework.ProjectExplorer.Models
     public interface IProjectProvider
     {
         string Name { get; }
+
+        ICompiler Compiler { get; }
 
         Type ProjectItemDefinitionType { get; }
 

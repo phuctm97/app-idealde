@@ -239,6 +239,8 @@
     <Compile Include="Framework\Projects\IProjectProvider.cs" />
     <Compile Include="Framework\Projects\IProjectService.cs" />
     <Compile Include="Framework\Projects\ProjectInfo.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileProjectCommandDefinition.cs" />
+    <Compile Include="Modules\CodeCompiler\Commands\CompileProjectCommandHandler.cs" />
     <Compile Include="Modules\CodeCompiler\CppCompiler.cs" />
     <Compile Include="Modules\CodeCompiler\ICompiler.cs" />
     <Compile Include="Modules\ProjectExplorer\Commands\AddFileToProjectCommandDefinition.cs" />
@@ -494,6 +496,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BuildSolution.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

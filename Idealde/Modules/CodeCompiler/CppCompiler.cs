@@ -13,27 +13,6 @@ using Idealde.Modules.ProjectExplorer.Providers;
 
 namespace Idealde.Modules.CodeCompiler
 {
-    public class CompileError
-    {
-        public CompileError(int line, int column, string code, string description, string path)
-        {
-            Line = line;
-            Column = column;
-            Code = code;
-            Description = description;
-            Path = path;
-        }
-
-        public string Path { get; }
-        public int Line { get; }
-        public int Column { get; }
-        public string Code { get; }
-        public string Description { get; }
-    }
-
-    public delegate void CompilerExitedEventHandler(IEnumerable<CompileError> errors, IEnumerable<CompileError> warnings
-    );
-
     public class CppCompiler : ICompiler
     {
         // Backing fields
@@ -71,7 +50,18 @@ namespace Idealde.Modules.CodeCompiler
         public void Compile(ProjectInfoBase project)
         {
             // get all files
-            var files = project.Files.Select(f => f.RealPath);
+            var files = new List<string>();
+            foreach (var projectFile in project.Files)
+            {
+                var extension = Path.GetExtension(projectFile.RealPath);
+                if (string.Equals(extension, ".c", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(extension, ".cxx", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(extension, ".cc", StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(extension, ".cpp", StringComparison.OrdinalIgnoreCase))
+                {
+                    files.Add(projectFile.RealPath);
+                }
+            }
 
             // generate build command
             var buildCommand = "cl /EHsc";
@@ -80,8 +70,7 @@ namespace Idealde.Modules.CodeCompiler
             var cppProject = project as CppProjectInfo;
             var cppProvider = project.Provider as CppProjectProvider;
 
-            buildCommand += " " +
-                            $"/Fo:{cppProvider?.GetOutputObjPath(cppProject)}\\ /Fe:{cppProvider?.GetOutputBinPath(cppProject)}\\";
+            buildCommand += " " + $"/Fe:\"{cppProvider?.GetOutputBinPath(cppProject)}\\{cppProject?.ProjectName}.exe\"";
 
             // reset data
             IsBusy = true;
@@ -92,13 +81,13 @@ namespace Idealde.Modules.CodeCompiler
             var cl = GenerateCl(buildCommand);
 
             // start cl
-            StartCl(cl);
+            StartCl(cl, cppProvider?.GetOutputObjPath(cppProject));
         }
 
         public void Compile(string file, string outputPath)
         {
             // generate build command
-            var buildCommand = $"cl /EHsc {file} /Fo:{outputPath}\\ /Fe:{outputPath}\\";
+            var buildCommand = $"cl /EHsc \"{file}\"";
 
             //reset data
             IsBusy = true;
@@ -109,7 +98,7 @@ namespace Idealde.Modules.CodeCompiler
             var cl = GenerateCl(buildCommand);
 
             // start cl
-            StartCl(cl);
+            StartCl(cl, outputPath);
         }
 
         private Process GenerateCl(string buildCommand)
@@ -124,7 +113,7 @@ namespace Idealde.Modules.CodeCompiler
                     RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true,
-                    Arguments = $"/c \"{Properties.Settings.Default.VCVarSallPath}\" && {buildCommand}"
+                    Arguments = $"/c \"\"{Properties.Settings.Default.VCVarSallPath}\" & {buildCommand}\""
                 },
                 EnableRaisingEvents = true
             };
@@ -135,8 +124,9 @@ namespace Idealde.Modules.CodeCompiler
             return cl;
         }
 
-        private void StartCl(Process cl)
+        private void StartCl(Process cl, string workingDirectory)
         {
+            cl.StartInfo.WorkingDirectory = workingDirectory;
             cl.Start();
             cl.BeginOutputReadLine();
             cl.BeginErrorReadLine();

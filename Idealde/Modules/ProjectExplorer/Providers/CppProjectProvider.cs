@@ -6,8 +6,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Caliburn.Micro;
 using Idealde.Framework.ProjectExplorer.Models;
 using Idealde.Framework.Projects;
+using Idealde.Modules.CodeCompiler;
 using Idealde.Modules.ProjectExplorer.Models;
 using FileInfo = Idealde.Framework.Projects.FileInfo;
 
@@ -37,6 +39,8 @@ namespace Idealde.Modules.ProjectExplorer.Providers
         {
             get { yield return new ProjectType("CX Project", ".cxproj"); }
         }
+
+        public ICompiler Compiler => IoC.Get<CppCompiler>();
 
         private bool ValidateExtension(string path)
         {

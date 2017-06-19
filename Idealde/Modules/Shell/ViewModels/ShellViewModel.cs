@@ -206,10 +206,14 @@ namespace Idealde.Modules.Shell.ViewModels
                 new CommandMenuItem<RunSingleFileCommandDefinition>("Run.RunSingleFile");
             var runCompileAndRunSingleFileMenu =
                 new CommandMenuItem<CompileAndRunSingleFileCommandDefinition>("Run.CompileAndRunSingleFile");
+            var runCompileProjectMenu = new CommandMenuItem<CompileProjectCommandDefinition>("Run.CompileProject");
+
             MainMenu.AddMenuItem(runMenu,
                 runCompileSingleFileMenu,
                 runRunSingleFileMenu,
-                runCompileAndRunSingleFileMenu);
+                runCompileAndRunSingleFileMenu,
+                new MenuItemSeparator("Run.S1"),
+                runCompileProjectMenu);
             //> Run menu
         }
 
